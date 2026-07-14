@@ -12,14 +12,15 @@ STEP 1 OF 3: Generate the TOP VIEW (Bird's-Eye View) cognitive map.
 - Y axis: depth (near-far in the scene)
 - Grid size: 10x10 (coordinates 0-9)
 
-List all significant objects with their (x, y) positions and names.
+List all significant objects with their (x, y) positions, names, and SIZE (how many grid cells the object occupies in width x depth).
 Use standard object names (table, chair, door, window, sofa, bed, lamp, etc.)
 
 Output format as JSON array:
-[{{"x": 3, "y": 5, "name": "table"}}, ...]
+[{{"x": 3, "y": 5, "name": "table", "size": [2, 2]}}, ...]
 
 RULES:
 - Place objects proportionally to their real-world positions
+- Include estimated size for each object (width x depth in grid cells, e.g. [2, 2] for a table)
 - Use integer coordinates 0-9
 - Include ALL notable objects in the scene
 - Output ONLY the JSON array, nothing else'''
@@ -40,10 +41,10 @@ STEP 2 OF 3: Generate the FRONT VIEW (elevation) cognitive map.
 - Grid size: 10x10 (coordinates 0-9)
 
 Use the top view X positions as anchors. Objects at x=3 in top view should also be at x=3 in front view.
-List all significant objects with their (x, z) positions.
+List all significant objects with their (x, z) positions, names, and SIZE (how many grid cells the object occupies in width x height).
 
 Output format as JSON array:
-[{{"x": 3, "z": 2, "name": "table"}}, ...]
+[{{"x": 3, "z": 2, "name": "table", "size": [2, 1]}}, ...]
 
 RULES:
 - X coordinates MUST match the top view for the same object
@@ -61,10 +62,10 @@ STEP 2 OF 3: Generate the FRONT VIEW (elevation) cognitive map.
 - Z axis: height (floor-ceiling)
 - Grid size: 10x10 (coordinates 0-9)
 
-List all significant objects with their (x, z) positions.
+List all significant objects with their (x, z) positions, names, and SIZE (how many grid cells the object occupies in width x height).
 
 Output format as JSON array:
-[{{"x": 3, "z": 2, "name": "table"}}, ...]
+[{{"x": 3, "z": 2, "name": "table", "size": [2, 1]}}, ...]
 
 RULES:
 - Use integer coordinates 0-9
@@ -91,10 +92,10 @@ STEP 3 OF 3: Generate the SIDE VIEW (profile) cognitive map.
 - Grid size: 10x10 (coordinates 0-9)
 
 Use the top view Y positions AND front view Z positions as anchors.
-List all significant objects with their (y, z) positions.
+List all significant objects with their (y, z) positions, names, and SIZE (how many grid cells the object occupies in depth x height).
 
 Output format as JSON array:
-[{{"y": 5, "z": 2, "name": "table"}}, ...]
+[{{"y": 5, "z": 2, "name": "table", "size": [2, 1]}}, ...]
 
 RULES:
 - Y coordinates MUST match top view for the same object
@@ -112,10 +113,10 @@ STEP 3 OF 3: Generate the SIDE VIEW (profile) cognitive map.
 - Z axis: height (floor-ceiling)
 - Grid size: 10x10 (coordinates 0-9)
 
-List all significant objects with their (y, z) positions.
+List all significant objects with their (y, z) positions, names, and SIZE (how many grid cells the object occupies in depth x height).
 
 Output format as JSON array:
-[{{"y": 5, "z": 2, "name": "table"}}, ...]
+[{{"y": 5, "z": 2, "name": "table", "size": [2, 1]}}, ...]
 
 RULES:
 - Use integer coordinates 0-9
