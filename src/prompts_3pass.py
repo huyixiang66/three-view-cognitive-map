@@ -40,14 +40,14 @@ STEP 2 OF 3: Generate the FRONT VIEW (elevation) cognitive map.
 - Z axis: height (floor-ceiling)
 - Grid size: 10x10 (coordinates 0-9)
 
-Use the top view X positions as anchors. Objects at x=3 in top view should also be at x=3 in front view.
+Use the first frame as the x-axis reference. The x-coordinate in the front view should be consistent with the first frame direction.
 List all significant objects with their (x, z) positions, names, and SIZE (how many grid cells the object occupies in width x height).
 
 Output format as JSON array:
 [{{"x": 3, "z": 2, "name": "table", "size": [2, 1]}}, ...]
 
 RULES:
-- X coordinates MUST match the top view for the same object
+- X axis MUST be consistent with the first frame of the video (right direction = positive x)
 - Z coordinate represents height (0=floor, 9=ceiling)
 - Output ONLY the JSON array, nothing else'''
 
@@ -91,15 +91,15 @@ STEP 3 OF 3: Generate the SIDE VIEW (profile) cognitive map.
 - Z axis: height (SAME as front view z-axis)
 - Grid size: 10x10 (coordinates 0-9)
 
-Use the top view Y positions AND front view Z positions as anchors.
+Y axis is consistent with the first frame depth direction. Z axis is consistent with vertical direction.
 List all significant objects with their (y, z) positions, names, and SIZE (how many grid cells the object occupies in depth x height).
 
 Output format as JSON array:
 [{{"y": 5, "z": 2, "name": "table", "size": [2, 1]}}, ...]
 
 RULES:
-- Y coordinates MUST match top view for the same object
-- Z coordinates MUST match front view for the same object
+- Y axis MUST be consistent with the first frame depth direction
+- Z axis MUST be consistent with the vertical direction
 - Output ONLY the JSON array, nothing else'''
 
 SIDE_VIEW_PROMPT_NOSHARED = '''You are a spatial reasoning assistant. Generate the SIDE VIEW cognitive map.
