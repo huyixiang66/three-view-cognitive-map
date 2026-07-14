@@ -26,14 +26,23 @@ def load_samples(path):
 
 def test_gemini_api(api_key):
     try:
-        import google.generativeai as genai
-        genai.configure(api_key=api_key)
-        model = genai.GenerativeModel('gemini-2.0-flash')
-        resp = model.generate_content('Say hello in one word.')
-        print(f'Gemini API OK: {resp.text.strip()}')
+        import openai
+        client = openai.OpenAI(
+            api_key=api_key,
+            base_url='https://ws-2728hpbg48zqni4r.cn-beijing.maas.aliyuncs.com/compatible-mode/v1',
+            timeout=30.0
+        )
+        resp = client.chat.completions.create(
+            model='qwen-turbo',
+            messages=[{'role':'user','content':'Say hello in one word.'}]
+        )
+        print(f'Qwen API OK: {resp.choices[0].message.content.strip()}')
         return True
     except ImportError:
-        print('ERROR: google-generativeai not installed. Run: pip install google-generativeai')
+        print('ERROR: openai not installed. Run: pip install openai')
+        return False
+    except Exception as e:
+        print(f'ERROR: API failed: {e}')
         return False
     except Exception as e:
         print(f'ERROR: Gemini API failed: {e}')
@@ -76,14 +85,23 @@ def load_samples(path):
 
 def test_gemini_api(api_key):
     try:
-        import google.generativeai as genai
-        genai.configure(api_key=api_key)
-        model = genai.GenerativeModel('gemini-2.0-flash')
-        resp = model.generate_content('Say hello in one word.')
-        print(f'Gemini API OK: {resp.text.strip()}')
+        import openai
+        client = openai.OpenAI(
+            api_key=api_key,
+            base_url='https://ws-2728hpbg48zqni4r.cn-beijing.maas.aliyuncs.com/compatible-mode/v1',
+            timeout=30.0
+        )
+        resp = client.chat.completions.create(
+            model='qwen-turbo',
+            messages=[{'role':'user','content':'Say hello in one word.'}]
+        )
+        print(f'Qwen API OK: {resp.choices[0].message.content.strip()}')
         return True
     except ImportError:
-        print('ERROR: google-generativeai not installed. Run: pip install google-generativeai')
+        print('ERROR: openai not installed. Run: pip install openai')
+        return False
+    except Exception as e:
+        print(f'ERROR: API failed: {e}')
         return False
     except Exception as e:
         print(f'ERROR: Gemini API failed: {e}')
@@ -130,8 +148,8 @@ def get_baseline_prompt_template(question_type):
 def run_baseline(model, video_input, question, question_type):
     template = get_baseline_prompt_template(question_type)
     prompt = template.format(video_input=video_input, question=question)
-    resp = model.generate_content(prompt)
-    return resp.text.strip()
+    resp = model.chat.completions.create(model="qwen-turbo", messages=[{"role":"user","content":prompt}]).choices[0].message.content
+    return resp.strip()
 
 
 def run_three_pass_shared(model, video_input, question, question_type):
@@ -145,8 +163,8 @@ def run_three_pass_shared(model, video_input, question, question_type):
     # Pass 1: Top View
     prompt1 = TOP_VIEW_PROMPT.format(video_input=video_input)
     try:
-        resp1 = model.generate_content(prompt1)
-        top_data = parse_cogmap(resp1.text)
+        resp1 = model.chat.completions.create(model="qwen-turbo", messages=[{"role":"user","content":prompt1}]).choices[0].message.content
+        top_data = parse_cogmap(resp1)
         if top_data is not None:
             results['top_view'] = json.dumps(top_data, ensure_ascii=False)
         else:
@@ -164,8 +182,8 @@ def run_three_pass_shared(model, video_input, question, question_type):
         top_view_result=results['top_view']
     )
     try:
-        resp2 = model.generate_content(prompt2)
-        front_data = parse_cogmap(resp2.text)
+        resp2 = model.chat.completions.create(model="qwen-turbo", messages=[{"role":"user","content":prompt2}]).choices[0].message.content
+        front_data = parse_cogmap(resp2)
         if front_data is not None:
             results['front_view'] = json.dumps(front_data, ensure_ascii=False)
         else:
@@ -184,8 +202,8 @@ def run_three_pass_shared(model, video_input, question, question_type):
         front_view_result=results['front_view']
     )
     try:
-        resp3 = model.generate_content(prompt3)
-        side_data = parse_cogmap(resp3.text)
+        resp3 = model.chat.completions.create(model="qwen-turbo", messages=[{"role":"user","content":prompt3}]).choices[0].message.content
+        side_data = parse_cogmap(resp3)
         if side_data is not None:
             results['side_view'] = json.dumps(side_data, ensure_ascii=False)
         else:
@@ -206,8 +224,8 @@ def run_three_pass_shared(model, video_input, question, question_type):
         question=question
     )
     try:
-        resp4 = model.generate_content(prompt4)
-        results['answer'] = resp4.text.strip()
+        resp4 = model.chat.completions.create(model="qwen-turbo", messages=[{"role":"user","content":prompt4}]).choices[0].message.content
+        results['answer'] = resp4.strip()
     except Exception as e:
         results['errors'].append(f'ANSWER_EXCEPTION: {e}')
         results['answer'] = None
@@ -226,8 +244,8 @@ def run_three_pass_noshared(model, video_input, question, question_type):
     # Pass 1: Top View (same as shared)
     prompt1 = TOP_VIEW_PROMPT.format(video_input=video_input)
     try:
-        resp1 = model.generate_content(prompt1)
-        top_data = parse_cogmap(resp1.text)
+        resp1 = model.chat.completions.create(model="qwen-turbo", messages=[{"role":"user","content":prompt1}]).choices[0].message.content
+        top_data = parse_cogmap(resp1)
         if top_data is not None:
             results['top_view'] = json.dumps(top_data, ensure_ascii=False)
         else:
@@ -242,8 +260,8 @@ def run_three_pass_noshared(model, video_input, question, question_type):
     # Pass 2: Front View (NO shared top view info)
     prompt2 = FRONT_VIEW_PROMPT_NOSHARED.format(video_input=video_input)
     try:
-        resp2 = model.generate_content(prompt2)
-        front_data = parse_cogmap(resp2.text)
+        resp2 = model.chat.completions.create(model="qwen-turbo", messages=[{"role":"user","content":prompt2}]).choices[0].message.content
+        front_data = parse_cogmap(resp2)
         if front_data is not None:
             results['front_view'] = json.dumps(front_data, ensure_ascii=False)
         else:
@@ -258,8 +276,8 @@ def run_three_pass_noshared(model, video_input, question, question_type):
     # Pass 3: Side View (NO shared top/front view info)
     prompt3 = SIDE_VIEW_PROMPT_NOSHARED.format(video_input=video_input)
     try:
-        resp3 = model.generate_content(prompt3)
-        side_data = parse_cogmap(resp3.text)
+        resp3 = model.chat.completions.create(model="qwen-turbo", messages=[{"role":"user","content":prompt3}]).choices[0].message.content
+        side_data = parse_cogmap(resp3)
         if side_data is not None:
             results['side_view'] = json.dumps(side_data, ensure_ascii=False)
         else:
@@ -280,8 +298,8 @@ def run_three_pass_noshared(model, video_input, question, question_type):
         question=question
     )
     try:
-        resp4 = model.generate_content(prompt4)
-        results['answer'] = resp4.text.strip()
+        resp4 = model.chat.completions.create(model="qwen-turbo", messages=[{"role":"user","content":prompt4}]).choices[0].message.content
+        results['answer'] = resp4.strip()
     except Exception as e:
         results['errors'].append(f'ANSWER_EXCEPTION: {e}')
         results['answer'] = None
@@ -333,9 +351,12 @@ def main():
     if not test_gemini_api(args.api_key):
         sys.exit(1)
 
-    import google.generativeai as genai
-    genai.configure(api_key=args.api_key)
-    model = genai.GenerativeModel('gemini-2.0-flash')
+    import openai
+    model = openai.OpenAI(
+        api_key=args.api_key,
+        base_url='https://ws-2728hpbg48zqni4r.cn-beijing.maas.aliyuncs.com/compatible-mode/v1',
+        timeout=30.0
+    )
 
     samples = load_samples(args.samples)
     test_samples = samples[:args.n]
