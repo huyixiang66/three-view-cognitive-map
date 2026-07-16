@@ -5,3 +5,10 @@
 .env/
 .DS_Store
 tmp/
+results.json
+src/results_*.json
+src/*_backup.py
+src/debug_pipeline*.py
+src/prompts.py
+src/test_pipeline_offline.py
+viz/test_write.py
