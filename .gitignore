@@ -12,3 +12,7 @@ src/debug_pipeline*.py
 src/prompts.py
 src/test_pipeline_offline.py
 viz/test_write.py
+
+src/debug_*.json
+
+plan.md
