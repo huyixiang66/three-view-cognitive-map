@@ -124,53 +124,27 @@ RULES:
 
 # === ANSWER PROMPTS for each metric type ===
 
-ANSWER_PROMPT_ABS_DISTANCE = '''Based on the three-view cognitive map below, answer the question.
-
-FRONT VIEW (x-z plane):
-{front_view}
-
-TOP VIEW (x-y plane):
-{top_view}
-
-SIDE VIEW (y-z plane):
-{side_view}
-
-QUESTION: {question}
+ANSWER_PROMPT_ABS_DISTANCE = '''QUESTION: {question}
 
 Estimate the distance and provide your answer as a number in meters.
-Answer with a single number (e.g., 2.5).'''
+Answer with a single number (e.g., 2.5).
+Always end your response with ANSWER: followed by the number.'''
 
-ANSWER_PROMPT_REL_DISTANCE = '''Based on the three-view cognitive map below, answer the question.
+ANSWER_PROMPT_REL_DISTANCE = '''QUESTION: {question}
 
-FRONT VIEW (x-z plane):
-{front_view}
-
-TOP VIEW (x-y plane):
-{top_view}
-
-SIDE VIEW (y-z plane):
-{side_view}
-
-QUESTION: {question}
+{options}
 
 Compare the distances and provide your answer.
-Answer with A or B.'''
+Answer with the option letter (A, B, C, or D).
+Always end your response with ANSWER: followed by the letter.'''
 
-ANSWER_PROMPT_REL_DIRECTION = '''Based on the three-view cognitive map below, answer the question.
+ANSWER_PROMPT_REL_DIRECTION = '''QUESTION: {question}
 
-FRONT VIEW (x-z plane):
-{front_view}
-
-TOP VIEW (x-y plane):
-{top_view}
-
-SIDE VIEW (y-z plane):
-{side_view}
-
-QUESTION: {question}
+{options}
 
 Determine the relative direction and provide your answer.
-Answer with the option letter (A, B, C, or D).'''
+Answer with the option letter (A, B, C, or D).
+Always end your response with ANSWER: followed by the letter.'''
 
 # === BASELINE PROMPTS (no cognitive map) ===
 

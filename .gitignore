@@ -16,3 +16,5 @@ viz/test_write.py
 src/debug_*.json
 
 plan.md
+
+.env

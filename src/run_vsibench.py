@@ -5,6 +5,20 @@ import os
 import re
 import time
 
+# Load .env file from project root
+_env_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".env")
+if os.path.exists(_env_path):
+    with open(_env_path, "r", encoding="utf-8") as _f:
+        for _line in _f:
+            _line = _line.strip()
+            if _line and not _line.startswith("#") and "=" in _line:
+                _k, _v = _line.split("=", 1)
+                _k = _k.strip().strip(chr(65279))  # strip BOM
+                _v = _v.strip().strip('"').strip("\'")
+                if _k and not os.environ.get(_k):
+                    os.environ[_k] = _v
+
+
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from prompts_3pass import (
     TOP_VIEW_PROMPT,
@@ -351,13 +365,14 @@ def run_experiment_true_session(sample, mode, model_name, sleep_between_calls=3.
     if mode == 'vlm_shared':
         # True shared memory: append question to the ongoing multi-turn chat history
         # The model "remembers" the full conversation of building the map
+        opts = sample.get("options", [])
+        options_text = chr(10).join(opts) if opts else ""
         preamble = (
             'Earlier you built a three-view cognitive map of this room from the video. '
             'Based on the cognitive map you built above in our conversation, answer the question.\n'
         )
         user_msg = preamble + template.format(
-            front_view='', top_view='', side_view='',
-            question=question
+            question=question, options=options_text
         )
         messages.append({'role': 'user', 'content': user_msg})
         raw_answer = call_api(model_name, messages, sleep_time=sleep_between_calls)
@@ -367,14 +382,15 @@ def run_experiment_true_session(sample, mode, model_name, sleep_between_calls=3.
         # True no shared memory: start a brand-new clean session
         # Only the final cogmap text is provided as context, no chat history
         new_messages = [{'role': 'system', 'content': SYSTEM_PROMPT}]
+        opts = sample.get("options", [])
+        options_text = chr(10).join(opts) if opts else ""
         preamble = (
             'You are given a three-view cognitive map of a room:\n\n'
             '%s\n\n'
             'Based on the cognitive map above, answer the question.\n'
         ) % cogmap_text
         user_msg = preamble + template.format(
-            front_view='', top_view='', side_view='',
-            question=question
+            question=question, options=options_text
         )
         new_messages.append({'role': 'user', 'content': user_msg})
         raw_answer = call_api(model_name, new_messages, sleep_time=sleep_between_calls)
