@@ -1,139 +1,101 @@
-﻿# Three-View Cognitive Map
+# Three-View Cognitive Map
 
-Extends Thinking-in-Space 1D CogMap to orthogonal three views (Top/Front/Side) with object size output. Built for the VSI-Bench spatial reasoning benchmark.
+基于 Gemini-3.5-flash 从视频构建三视图认知地图（Top/Front/Side），在 VSI-Bench 上做空间推理。
 
-## Quick Start
+## 输入输出
+
+- 输入: 视频 + VSI-Bench 空间问题
+- 输出: 三视图 JSON 坐标 + 答案
+
+Pipeline:
+
+1. Pass 1: 视频 -> Top View JSON (x, y, size)
+2. Pass 2: Top View -> Front View JSON (x, z, size)
+3. Pass 3: Top + Front -> Side View JSON (y, z, size)
+4. Pass 4: cogmap -> 回答空间问题
+
+## 快速开始
 
 ```bash
-# 1. Set API keys (copy .env.example to .env and edit)
-export WELLAPI_API_KEY="sk-your-wellapi-key"
-export DASHSCOPE_API_KEY="sk-your-dashscope-key"
-export OPENAI_API_KEY="sk-your-openai-key"
+# 1. 配置 API key
+cp .env.example .env   # 填入 BOYUE_API_KEY
 
-# 2. Run (default: deepseek-v3 via wellapi, shared memory, 50 samples)
+# 2. 下载 VSI-Bench 视频（自动下载 50 样本所需）
+python scripts/download_videos.py
+
+# 3. 运行
 cd src
-python run_vsibench.py --model deepseek-v3 --mode vlm_shared --n 50 --sleep 3
+python run_vsibench.py --model gemini-3.5-flash --mode vlm_shared --n 50
 ```
 
-## Usage
+## 参数说明
 
-### Setup
+| 参数 | 作用 |
+|------|------|
+| `--mode vlm_shared` | 同一会话（模型有视频记忆） |
+| `--mode vlm_noshared` | 新会话（只给 cogmap 文本，不给视频） |
+| `--taskaware` | 建图 prompt 注入题目，提升目标物体召回 |
+| `--viz` | Pass 4 添加 matplotlib PNG 可视化图 |
+| `--facts` | Pass 4 注入脚本计算的空间事实（坐标/方向） |
+| `--resume file.json` | 从 partial 结果断点续跑 |
+| `--samples file.json` | 指定样本文件（默认 vsi_subset_50.json） |
+| `--sleep 3` | API 调用间隔秒数 |
+| `--verbose` | 打印详细输出 |
 
-1. **Get an API key** from one of the supported providers.
-2. **Set environment variables** or create `.env` file in the project root (see `.env.example`).
-3. **Install dependencies**: ``pip install openai``
-
-The script auto-loads `.env` from the project root on startup.
-
-### Run VSI-Bench evaluation
+示例：
 
 ```bash
-python run_vsibench.py \
-    --model <model_name> \
-    --mode <vlm_shared|vlm_noshared> \
-    --n 50 \
-    --sleep 3 \
-    --output results.json \
-    --verbose
+# 完整 50 样本（shared + taskaware + facts）
+python run_vsibench.py --model gemini-3.5-flash --mode vlm_shared --taskaware --facts --n 50
+
+# 断点续跑
+python run_vsibench.py --model gemini-3.5-flash --mode vlm_shared --resume results_xxx_partial_30.json --n 50
 ```
 
-### Models
-
-Configured in `MODEL_REGISTRY` in `run_vsibench.py`. To add a new model, append an entry with provider, api_key env var name, base_url, and model name.
-
-Pre-configured models:
-
-| Model | Env Var | Endpoint |
-|-------|---------|----------|
-| `deepseek-v3` | `WELLAPI_API_KEY` | wellapi.ai |
-| `qwen-plus` | `DASHSCOPE_API_KEY` | dashscope.aliyuncs.com |
-| `qwen-turbo` | `DASHSCOPE_API_KEY` | dashscope.aliyuncs.com |
-| `gpt-4o` | `OPENAI_API_KEY` | api.openai.com |
-| `gemini-3.5-flash` | `WELLAPI_API_KEY` | wellapi.ai (OpenAI-compatible) |
-
-To add a new model, edit `MODEL_REGISTRY`:
-
-```python
-MODEL_REGISTRY['my-model'] = {
-    'provider': 'openai',
-    'api_key': os.environ.get('MY_API_KEY', ''),
-    'base_url': 'https://my-api-endpoint.com/v1',
-    'model': 'my-model-name',
-}
-```
-
-### Modes
-
-- **``vlm_shared``**: All 3-pass cogmap generation + question answering in one continuous conversation session. The model "remembers" generating the map.
-- **``vlm_noshared``**: Phase 1 (3-pass cogmap generation) and Phase 2 (answering) are separate sessions. Only the generated cogmap text is passed to Phase 2.
-
-### Pipeline
-
-Each sample runs 4 API calls:
-
-1. **Pass 1 - Top View**: Bird's-eye (x-y plane)
-2. **Pass 2 - Front View**: Elevation (x-z plane), uses Pass 1 x-axis alignment
-3. **Pass 3 - Side View**: Profile (y-z plane), uses Pass 1 y-axis + Pass 2 z-axis
-4. **Answer**: Answer VSI-Bench spatial reasoning question using the built cogmap
-
-### Visualizer
+## 可视化
 
 ```bash
-python ../viz/grid_visualizer.py
+cd viz
+python matplotlib_visualizer.py output.png
 ```
 
-Renders three-view cogmap JSON as emoji grids in the terminal.
+生成三视图（Top/Front/Side）网格图，物体使用 PNG 图标渲染（`viz/icons/`）。
 
-## File Structure
+## 数据
+
+`src/vsi_subset_50.json` 包含 50 个 VSI-Bench 样本，5 种题型：
+
+| 题型 | 数量 | 答案格式 |
+|------|------|----------|
+| object_abs_distance | 10 | 数值（米） |
+| object_rel_distance | 10 | 选择题 (A-D) |
+| object_rel_direction_easy | 7 | 选择题 (A-D) |
+| object_rel_direction_medium | 11 | 选择题 (A-D) |
+| object_rel_direction_hard | 12 | 选择题 (A-D) |
+
+完整 VSI-Bench: https://huggingface.co/datasets/nyu-visionx/VSI-Bench
+
+## 文件结构
 
 ```
 .
 +-- src/
-|   +-- run_vsibench.py        # Main experiment pipeline
-|   +-- prompts_3pass.py       # 3-pass prompt templates
-|   +-- meta_to_cogmap.py      # Oracle baseline (uses GT 3D metadata, unused in VLM pipeline)
-|   +-- vsi_subset_50.json     # 50 VSI-Bench samples
+|   +-- run_vsibench.py        # 主实验 pipeline
+|   +-- prompts_3pass.py       # 3-pass prompt 模板
+|   +-- vsi_subset_50.json     # 50 个 VSI-Bench 样本
+|   +-- reevaluate.py          # VSI-Bench MRA 评估
+|   +-- meta_to_cogmap.py      # Oracle 基线转换器
++-- scripts/
+|   +-- download_videos.py     # 视频下载脚本
 +-- viz/
-|   +-- grid_visualizer.py     # Emoji grid visualizer
-+-- .env.example               # API key template (copy to .env)
+|   +-- matplotlib_visualizer.py  # 三视图可视化
+|   +-- icons/                    # 物体 PNG 图标
++-- .env.example               # API key 模板
 +-- README.md
 ```
 
-## Data
+## 依赖
 
-`vsi_subset_50.json` covers 5 question types from VSI-Bench (subset of the full benchmark, 50 samples):
-
-| Type | Samples | Answer Format |
-|------|---------|---------------|
-| `object_abs_distance` | 10 | Numerical (meters) |
-| `object_rel_distance` | 10 | Multiple choice (A-D) |
-| `object_rel_direction_easy` | 7 | Multiple choice (A-D) |
-| `object_rel_direction_medium` | 11 | Multiple choice (A-D) |
-| `object_rel_direction_hard` | 12 | Multiple choice (A-D) |
-
-Full VSI-Bench dataset with videos: https://huggingface.co/datasets/nyu-visionx/VSI-Bench
-
-## Known Limitations
-
-1. **No actual video input**: The pipeline passes only a scene name string to the model (e.g., "09c1414f1b"). The VLM generates a cognitive map from general knowledge of typical room layouts, not from actual video frames. This fundamentally limits spatial accuracy, especially for absolute distance estimation.
-
-2. **No visual grounding**: Unlike the original Thinking-in-Space approach (which samples 32 frames from the actual video and passes them through the vision encoder), our pipeline has zero visual input. The model is effectively guessing plausible layouts, not "seeing" the space.
-
-3. **Small sample size**: 50 samples is a small subset of VSI-Bench (which has 5000+ QA pairs). Results may have high variance, especially for per-type breakdowns with as few as 7 samples per category.
-
-4. **Synthetic cognitive maps**: The model outputs explicit JSON coordinate arrays, but these are generated from text priors alone. Their consistency across three views (top/front/side) has not been systematically validated.
-
-5. **Single model focus**: Current benchmarks focus on gemini-3.5-flash. Results may differ significantly with stronger models (gpt-4o, deepseek-v3) or models with native video support.
-
-## Results (gemini-3.5-flash, vlm_shared mode)
-
-- **Overall accuracy**: 41.9% (18/43 completed, 7 skipped due to cogmap parse failures)
-- `object_rel_distance`: 40% (improved from 0% after prompt fix)
-- `object_rel_direction_easy`: 57%
-- `object_rel_direction_medium`: 36%
-- `object_rel_direction_hard`: 33%
-- `object_abs_distance`: 20%
-
-## Citation
-
-Based on the Thinking-in-Space framework (CVPR 2025 Oral). Scene data from ScanNet, ScanNet++, and ARKitScenes. VSI-Bench: https://arxiv.org/abs/2412.14171
+```bash
+pip install openai matplotlib
+```
