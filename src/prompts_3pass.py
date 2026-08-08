@@ -98,6 +98,21 @@ RULES:
 - Z axis MUST be consistent with the vertical direction
 - Output ONLY the JSON array, nothing else'''
 
+
+# === SINGLE PASS: one call generates top/front/side views (TIS wording) ===
+SINGLE_PASS_THREE_VIEW_PROMPT = """[Task] This video captures an indoor scene. Your objective is to identify specific objects within the video, understand the spatial arrangement of the scene, and estimate the center point of each object in three orthogonal views, assuming each view is represented by a 10x10 grid.
+[Rule]
+1. We provide the categories to care about in this scene: {categories_of_interest}. Focus ONLY on these categories.
+2. Estimate the center location of each instance in each view:
+   - top view: (x, y) horizontal plane
+   - front view: (x, z) horizontal x and height z
+   - side view: (y, z) depth y and height z
+3. If a category contains multiple instances, include all of them.
+4. Each object's estimated location should accurately reflect its real position in the scene, preserving the relative spatial relationships among all objects.
+5. Keep the same object consistent across views: top.x must match front.x, top.y must match side.y, front.z must match side.z.
+[Output] Present the estimated center locations as a dictionary with three view keys. STRICTLY follow this JSON format:
+{{"top": {{"category name": [(x_1, y_1), ...], ...}}, "front": {{"category name": [(x_1, z_1), ...], ...}}, "side": {{"category name": [(y_1, z_1), ...], ...}}}}"""
+
 SIDE_VIEW_PROMPT_NOSHARED = '''You are a spatial reasoning assistant. Generate the SIDE VIEW cognitive map.
 
 [Video frames are attached as images below]

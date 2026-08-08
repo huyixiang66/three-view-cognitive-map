@@ -21,6 +21,7 @@ if os.path.exists(_env_path):
 from prompts_3pass import (
     TOP_VIEW_PROMPT, FRONT_VIEW_PROMPT_SHARED, FRONT_VIEW_PROMPT_NOSHARED,
     SIDE_VIEW_PROMPT_SHARED, SIDE_VIEW_PROMPT_NOSHARED,
+    SINGLE_PASS_THREE_VIEW_PROMPT,
     ANSWER_PROMPT_ABS_DISTANCE, ANSWER_PROMPT_REL_DISTANCE, ANSWER_PROMPT_REL_DIRECTION,
     ANSWER_PROMPT_ABS_DISTANCE_SELFCHECK, ANSWER_PROMPT_REL_DISTANCE_SELFCHECK, ANSWER_PROMPT_REL_DIRECTION_SELFCHECK,
     TOP_VIEW_PROMPT_TASK_AWARE, FRONT_VIEW_PROMPT_SHARED_TASK_AWARE, SIDE_VIEW_PROMPT_SHARED_TASK_AWARE,
@@ -233,6 +234,108 @@ def parse_cogmap(text):
     if isinstance(data, list):
         return {'gridSize': 10, 'objects': data}
     return None
+
+
+def extract_categories(sample):
+    """Extract question-mentioned categories from a VSI-Bench sample."""
+    def _norm(name):
+        n = str(name).strip().lower().replace('_', ' ')
+        n = re.sub(r"[.,;:!?'\"]+$", '', n)
+        return n.strip()
+    cats = set()
+    q = sample['question']
+    qtype = sample['question_type']
+    if 'abs_distance' in qtype:
+        m = re.search(r'between the (.+?) and the (.+?)\s*\(', q)
+        if m:
+            cats.add(_norm(m.group(1)))
+            cats.add(_norm(m.group(2)))
+    elif 'rel_distance' in qtype:
+        m = re.search(r'closest to the (.+?)[?\.]', q)
+        if m:
+            cats.add(_norm(m.group(1)))
+        for opt in (sample.get('options') or []):
+            o = re.sub(r'^[A-D][\.\-\)]\s*', '', str(opt)).strip()
+            if o:
+                cats.add(_norm(o))
+    else:
+        m = re.search(r'standing by the (.+?) and facing the (.+?), is the (.+?) to', q)
+        if m:
+            cats.add(_norm(m.group(1)))
+            cats.add(_norm(m.group(2)))
+            cats.add(_norm(m.group(3)))
+    return sorted(c for c in cats if c)
+
+
+VIEW_KEY_MAP = {
+    'top': 'top_view', 'front': 'front_view', 'side': 'side_view',
+    'top_view': 'top_view', 'front_view': 'front_view', 'side_view': 'side_view',
+}
+VIEW_COORD_MAP = {
+    'top_view': ('x', 'y'),
+    'front_view': ('x', 'z'),
+    'side_view': ('y', 'z'),
+}
+
+
+def _extract_singlepass_json(text):
+    """Extract the first complete {...} object, ignoring earlier arrays/fences."""
+    t = strip_backticks(text)
+    start = t.find('{')
+    if start < 0:
+        return None
+    depth = 0
+    in_str = False
+    escape = False
+    for i in range(start, len(t)):
+        ch = t[i]
+        if escape:
+            escape = False
+            continue
+        if ch == '\\':
+            escape = True
+            continue
+        if ch == '"':
+            in_str = not in_str
+            continue
+        if in_str:
+            continue
+        if ch == '{':
+            depth += 1
+        elif ch == '}':
+            depth -= 1
+            if depth == 0:
+                try:
+                    return json.loads(t[start:i + 1])
+                except json.JSONDecodeError:
+                    return None
+    return None
+
+
+def parse_singlepass_views(text):
+    """Parse one-shot output {"top": {"cat": [(x, y), ...]}, ...} into cogmap_dict."""
+    data = _extract_singlepass_json(text)
+    if not isinstance(data, dict):
+        return None
+    out = {}
+    for raw_key, view_key in VIEW_KEY_MAP.items():
+        view = data.get(raw_key)
+        if view is None:
+            continue
+        if not isinstance(view, dict):
+            return None
+        objects = []
+        c1, c2 = VIEW_COORD_MAP[view_key]
+        for name, coords in view.items():
+            if not isinstance(coords, list):
+                continue
+            for coord in coords:
+                if isinstance(coord, (list, tuple)) and len(coord) >= 2:
+                    objects.append({'name': str(name).strip(), c1: coord[0], c2: coord[1]})
+        out[view_key] = {'gridSize': 10, 'objects': objects}
+    if len(out) < 3:
+        return None
+    return out
 
 
 def get_answer_prompt_template(question_type):
@@ -575,6 +678,64 @@ def run_sample(sample, mode, model_name, sleep_between_calls=3.0, use_viz=False)
     return raw_answer, None, cogmap_text, total_calls, cogmap_dict
 
 
+def run_sample_singlepass(sample, model_name, sleep_between_calls=3.0, use_viz=False):
+    """One-shot three-view: one call builds top/front/side, then answer in same session."""
+    scene = sample['scene_name']
+    dataset = sample['dataset']
+    qtype = sample['question_type']
+    question = sample['question']
+    template = get_answer_prompt_template(qtype)
+
+    video_path = os.path.join(VIDEO_CACHE_DIR, dataset, scene + '.mp4')
+    video_b64 = load_video_base64(video_path)
+    if video_b64 is None:
+        return None, 'NO_VIDEO', None, 0, None
+
+    categories = extract_categories(sample)
+    categories_text = ', '.join(categories) if categories else 'all objects visible in the scene'
+    prompt = SINGLE_PASS_THREE_VIEW_PROMPT.format(categories_of_interest=categories_text)
+    messages = [{'role': 'system', 'content': SYSTEM_PROMPT}]
+    messages.append({'role': 'user', 'content': build_video_message(prompt, video_b64)})
+    resp = call_api(model_name, messages, sleep_time=sleep_between_calls)
+    total_calls = 1
+    if not resp:
+        return resp, 'NO_MAP', None, total_calls, None
+    messages.append({'role': 'assistant', 'content': resp})
+
+    cogmap_dict = parse_singlepass_views(resp)
+    if not cogmap_dict:
+        return resp, 'SINGLEPASS_PARSE_FAIL', None, total_calls, None
+    cogmap_text = build_cogmap_text(cogmap_dict)
+
+    opts = sample.get('options') or []
+    options_text = chr(10).join(opts) if opts else ''
+    if use_viz:
+        viz_b64 = _cogmap_to_viz(cogmap_dict)
+        if viz_b64:
+            facts_text = compute_spatial_facts(cogmap_dict, question) if USE_FACTS else ''
+            preamble = ('Here is a visual representation of the cognitive map you built. '
+                        'Based on the cognitive map you built above, answer the question.\n')
+            if facts_text:
+                preamble = facts_text + '\n\n' + preamble
+            text_part = preamble + template.format(question=question, options=options_text)
+            img_part = {'type': 'image_url', 'image_url': {'url': f'data:image/png;base64,{viz_b64}'}}
+            messages.append({'role': 'user', 'content': [{'type': 'text', 'text': text_part}, img_part]})
+        else:
+            preamble = ('Based on the cognitive map you built above in our conversation, answer the question.\n')
+            messages.append({'role': 'user', 'content': preamble + template.format(question=question, options=options_text)})
+    else:
+        facts_text = compute_spatial_facts(cogmap_dict, question) if USE_FACTS else ''
+        preamble = ('Earlier you built a three-view cognitive map of this room from the video. '
+                    'Based on the cognitive map you built above in our conversation, answer the question.\n')
+        if facts_text:
+            preamble = facts_text + '\n\n' + preamble
+        messages.append({'role': 'user', 'content': preamble + template.format(question=question, options=options_text)})
+
+    raw_answer = call_api(model_name, messages, sleep_time=sleep_between_calls)
+    total_calls += 1
+    return raw_answer, None, cogmap_text, total_calls, cogmap_dict
+
+
 # ============================================================
 # Extract & evaluate answers
 # ============================================================
@@ -666,10 +827,11 @@ def main():
     parser = argparse.ArgumentParser(description='VSI-Bench Three-View Cognitive Map Experiment')
     parser.add_argument('--model', type=str, default='gemini-3.5-flash',
                         help='Model name from MODEL_REGISTRY')
-    parser.add_argument('--mode', choices=['vlm_shared', 'vlm_noshared', 'vlm_noshared_video', 'direct_video'],
+    parser.add_argument('--mode', choices=['vlm_shared', 'vlm_noshared', 'vlm_noshared_video', 'direct_video', 'vlm_singlepass'],
                         default='vlm_shared',
                         help='vlm_shared: True multi-turn conversation memory session. '
-                             'vlm_noshared: Fresh conversation session for answering.')
+                             'vlm_noshared: Fresh conversation session for answering. '
+                             'vlm_singlepass: one call builds top/front/side, answer in same session.')
     parser.add_argument('--samples', type=str, default='vsi_subset_50.json')
     parser.add_argument('--output', default='results.json')
     parser.add_argument('--n', type=int, default=50,
@@ -748,6 +910,10 @@ def main():
         if args.mode == 'direct_video':
             raw_response, error, cogmap_text, calls = run_sample_direct(
                 sample, args.model, sleep_between_calls=args.sleep
+            )
+        elif args.mode == 'vlm_singlepass':
+            raw_response, error, cogmap_text, calls, cogmap_dict = run_sample_singlepass(
+                sample, args.model, sleep_between_calls=args.sleep, use_viz=args.viz
             )
         else:
             raw_response, error, cogmap_text, calls, cogmap_dict = run_sample(
