@@ -1,6 +1,6 @@
 # Three-View Cognitive Map
 
-基于VLM从视频构建三视图认知地图（Top/Front/Side），在 VSI-Bench 上做空间推理。
+基于 Gemini-3.5-flash 从视频构建三视图认知地图（Top/Front/Side），在 VSI-Bench 上做空间推理。
 
 ## 输入输出
 
@@ -34,9 +34,11 @@ python run_vsibench.py --model gemini-3.5-flash --mode vlm_shared --n 50
 |------|------|
 | `--mode vlm_shared` | 同一会话（模型有视频记忆） |
 | `--mode vlm_noshared` | 新会话（只给 cogmap 文本，不给视频） |
-| `--viz` | Pass 4 添加 matplotlib PNG 可视化图 |
 | `--taskaware` | 建图 prompt 注入题目，提升目标物体召回 |
+| `--viz` | Pass 4 添加 matplotlib PNG 可视化图 |
 | `--facts` | Pass 4 注入脚本计算的空间事实（坐标/方向） |
+| `--resume file.json` | 从 partial 结果断点续跑 |
+| `--samples file.json` | 指定样本文件（默认 vsi_subset_50.json） |
 | `--sleep 3` | API 调用间隔秒数 |
 | `--verbose` | 打印详细输出 |
 
@@ -45,6 +47,9 @@ python run_vsibench.py --model gemini-3.5-flash --mode vlm_shared --n 50
 ```bash
 # 完整 50 样本（shared + taskaware + facts）
 python run_vsibench.py --model gemini-3.5-flash --mode vlm_shared --taskaware --facts --n 50
+
+# 断点续跑
+python run_vsibench.py --model gemini-3.5-flash --mode vlm_shared --resume results_xxx_partial_30.json --n 50
 ```
 
 ## 可视化
@@ -55,6 +60,26 @@ python matplotlib_visualizer.py output.png
 ```
 
 生成三视图（Top/Front/Side）网格图，物体使用 PNG 图标渲染（`viz/icons/`）。
+
+## TIS 对照实验（200 样本）
+
+对比 TIS baseline / three-view / three-view 3-pass 三种建图方式：
+
+```bash
+cd src
+python run_tis_compare.py --arm all --mode shared --samples vsi_subset_200.json --n 200
+```
+
+| 参数 | 作用 |
+|------|------|
+| `--arm baseline` | 只跑 TIS TOP 单视图 |
+| `--arm threeview` | 单次三视图（含 size/room） |
+| `--arm threeview_3pass` | 三次调用分别建 TOP/FRONT/SIDE |
+| `--mode shared` | 回答复用建图会话 |
+| `--mode noshared` | 新会话回答，只给地图文本 |
+| `--n 200` | 样本数 |
+
+GT 地图需要 `TIS_META_DIR` 指向 TIS 复现仓库的 meta_info 目录；meta JSON 不随仓库上传。
 
 ## 数据
 
@@ -68,6 +93,8 @@ python matplotlib_visualizer.py output.png
 | object_rel_direction_medium | 11 | 选择题 (A-D) |
 | object_rel_direction_hard | 12 | 选择题 (A-D) |
 
+`src/vsi_subset_200.json` 包含 200 个 VSI-Bench 样本，8 类题型各 25 条（含 size/room）。
+
 完整 VSI-Bench: https://huggingface.co/datasets/nyu-visionx/VSI-Bench
 
 ## 文件结构
@@ -76,8 +103,12 @@ python matplotlib_visualizer.py output.png
 .
 +-- src/
 |   +-- run_vsibench.py        # 主实验 pipeline
+|   +-- run_tis_compare.py     # TIS baseline vs 三视图对照（200 样本）
 |   +-- prompts_3pass.py       # 3-pass prompt 模板
+|   +-- tis_compare.py         # 核心库（GT 地图/指标/API）
+|   +-- tis_prompts.py         # 单次三视图 size/room prompt
 |   +-- vsi_subset_50.json     # 50 个 VSI-Bench 样本
+|   +-- vsi_subset_200.json    # 200 个 VSI-Bench 样本
 |   +-- reevaluate.py          # VSI-Bench MRA 评估
 |   +-- meta_to_cogmap.py      # Oracle 基线转换器
 +-- scripts/
