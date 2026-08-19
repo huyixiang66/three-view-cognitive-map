@@ -1,0 +1,25 @@
+[
+  {
+    "id": 4305,
+    "dataset": "scannet",
+    "scene_name": "scene0700_02",
+    "question_type": "object_rel_direction_medium",
+    "type_group": "object_rel_direction",
+    "question": "If I am standing by the window and facing the telephone, is the door to my left, right, or back?\nAn object is to my back if I would have to turn at least 135 degrees in order to face it.",
+    "ground_truth": "A",
+    "options": [
+      "A. left",
+      "B. right",
+      "C. back"
+    ],
+    "ext": {
+      "target_categories": [
+        "left",
+        "right",
+        "back"
+      ],
+      "needs_size": false,
+      "room": false
+    }
+  }
+]

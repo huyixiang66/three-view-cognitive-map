@@ -105,6 +105,20 @@ Reference views built by other agents from the same video (use them ONLY for sha
 Now build YOUR OWN view from the video.
 Output ONLY JSON: {format_hint}"""
 
+REF_BUILD_PROMPT_STRICT_V2 = """You are Agent {name}. Your camera: position={position}, look_at={look_at}, look_up={look_up}.
+Watch the video and build the {view_upper} VIEW cognitive map on a 10x10 grid.
+Axis conventions (STRICT):
+- TOP view: [x, y], where y is DEPTH in the room.
+- FRONT view: [x, z], where z is HEIGHT above the floor; z spans the full 0-9 grid (0=floor, 9=ceiling).
+- SIDE view: [y, z], where z is the SAME HEIGHT as in FRONT.
+Objects that stand on the floor or are mounted high (door, window, furniture, wall objects) must have clearly non-zero z; do not compress everything to the bottom rows.
+NEVER copy a depth coordinate into z. z must come from how high the object is in the video.
+Focus on the categories: {cats}. Include ALL instances.
+Reference views built by other agents from the same video (use them ONLY for shared-axis consistency, do NOT copy them exactly):
+{prev_views}
+Now build YOUR OWN view from the video.
+Output ONLY JSON: {format_hint}"""
+
 R1_PROMPT = """You are Agent {name}. Your camera: position={position}, look_at={look_at}, look_up={look_up}.
 Cross-view consistency checks found signed axis offsets (other - you):
 - top.x - front.x median: {off_fx}
@@ -203,7 +217,7 @@ def build_view(sample, view, model_name, sleep, dry_run=False, prev_views=None, 
     if video_b64 is None:
         return None, [], 'NO_VIDEO', cats
     if prev_views:
-        prompt = REF_BUILD_PROMPT_STRICT.format(
+        prompt = REF_BUILD_PROMPT_STRICT_V2.format(
             name=CAMERAS[view]['name'], view_upper=view.upper(),
             format_hint=FORMAT_HINTS[view], cats=cats_text,
             prev_views=json.dumps(prev_views, ensure_ascii=False), **camera_text(view))
