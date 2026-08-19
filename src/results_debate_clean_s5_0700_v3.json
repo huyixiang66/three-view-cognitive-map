@@ -1,0 +1,603 @@
+[
+  {
+    "sample_idx": 0,
+    "arm": "debate_clean_strategy5",
+    "arm_name": "ref_matrix_debate",
+    "strategy": 5,
+    "mode": "clean",
+    "raw_map": "{\"top\": {\"door\": [[0.1, 5.0]], \"telephone\": [[3.5, 4.0]], \"window\": [[5.0, 9.9]]}, \"front\": {\"door\": [[0.1, 3.5]], \"telephone\": [[3.5, 3.0]], \"window\": [[5.0, 5.5]]}, \"side\": {\"door\": [[5.0, 3.5]], \"telephone\": [[4.0, 3.0]], \"window\": [[9.9, 5.5]]}, \"sizes\": {\"top\": {\"door\": [[0.2, 1.5]], \"telephone\": [[0.4, 0.4]], \"window\": [[2.0, 0.2]]}, \"front\": {\"door\": [[0.2, 7.0]], \"telephone\": [[0.8, 0.8]], \"window\": [[3.0, 3.0]]}, \"side\": {\"door\": [[1.2, 3.0]], \"telephone\": [[0.5, 0.5]], \"window\": [[0.2, 2.0]]}}, \"room\": null}",
+    "cameras": {
+      "top": {
+        "name": "TOP",
+        "position": [
+          4.5,
+          4.5,
+          10.0
+        ],
+        "look_at": [
+          4.5,
+          4.5,
+          4.5
+        ],
+        "look_up": [
+          0.0,
+          1.0,
+          0.0
+        ]
+      },
+      "front": {
+        "name": "FRONT",
+        "position": [
+          4.5,
+          10.0,
+          4.5
+        ],
+        "look_at": [
+          4.5,
+          4.5,
+          4.5
+        ],
+        "look_up": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "side": {
+        "name": "SIDE",
+        "position": [
+          10.0,
+          4.5,
+          4.5
+        ],
+        "look_at": [
+          4.5,
+          4.5,
+          4.5
+        ],
+        "look_up": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      }
+    },
+    "scene": "scene0700_02",
+    "dataset": "scannet",
+    "question_type": "object_rel_direction_medium",
+    "question": "If I am standing by the window and facing the telephone, is the door to my left, right, or back?\nAn object is to my back if I would have to turn at least 135 degrees in order to face it.",
+    "ground_truth": "A",
+    "categories": [
+      "door",
+      "telephone",
+      "window"
+    ],
+    "categories_matched": [
+      "door",
+      "telephone",
+      "window"
+    ],
+    "gt_map": {
+      "top": {
+        "door": [
+          [
+            1,
+            2
+          ]
+        ],
+        "telephone": [
+          [
+            5,
+            6
+          ]
+        ],
+        "window": [
+          [
+            7,
+            5
+          ]
+        ]
+      },
+      "front": {
+        "door": [
+          [
+            1,
+            4
+          ]
+        ],
+        "telephone": [
+          [
+            5,
+            4
+          ]
+        ],
+        "window": [
+          [
+            7,
+            5
+          ]
+        ]
+      },
+      "side": {
+        "door": [
+          [
+            2,
+            4
+          ]
+        ],
+        "telephone": [
+          [
+            6,
+            4
+          ]
+        ],
+        "window": [
+          [
+            5,
+            5
+          ]
+        ]
+      },
+      "sizes": {
+        "top": {
+          "door": [
+            [
+              2,
+              4
+            ]
+          ],
+          "telephone": [
+            [
+              1,
+              1
+            ]
+          ],
+          "window": [
+            [
+              3,
+              2
+            ]
+          ]
+        },
+        "front": {
+          "door": [
+            [
+              2,
+              1
+            ]
+          ],
+          "telephone": [
+            [
+              1,
+              1
+            ]
+          ],
+          "window": [
+            [
+              3,
+              1
+            ]
+          ]
+        },
+        "side": {
+          "door": [
+            [
+              4,
+              1
+            ]
+          ],
+          "telephone": [
+            [
+              1,
+              1
+            ]
+          ],
+          "window": [
+            [
+              2,
+              1
+            ]
+          ]
+        }
+      },
+      "room": 12.439986092622377
+    },
+    "raw_views": {
+      "top": "```json\n{\n  \"door\": [[0.1, 5.0, 0.2, 1.5]],\n  \"telephone\": [[3.5, 4.0, 0.4, 0.4]],\n  \"window\": [[5.0, 9.9, 2.0, 0.2]]\n}\n```\n\nANSWER: {\"door\": [[0.1, 5.0, 0.2, 1.5]], \"telephone\": [[3.5, 4.0, 0.4, 0.4]], \"window\": [[5.0, 9.9, 2.0, 0.2]]}",
+      "front": "```json\n{\n  \"door\": [[0.1, 3.5, 0.2, 7.0]],\n  \"telephone\": [[3.5, 3.0, 0.8, 0.8]],\n  \"window\": [[5.0, 5.5, 3.0, 3.0]]\n}\n```\n\nANSWER: {\"door\": [[0.1, 3.5, 0.2, 7.0]], \"telephone\": [[3.5, 3.0, 0.8, 0.8]], \"window\": [[5.0, 5.5, 3.0, 3.0]]}",
+      "side": "```json\n{\n  \"door\": [[5.0, 3.5, 1.2, 3.0]],\n  \"telephone\": [[4.0, 3.0, 0.5, 0.5]],\n  \"window\": [[9.9, 5.5, 0.2, 2.0]]\n}\n```\n\nANSWER: {\"door\": [[5.0, 3.5, 1.2, 3.0]], \"telephone\": [[4.0, 3.0, 0.5, 0.5]], \"window\": [[9.9, 5.5, 0.2, 2.0]]}"
+    },
+    "final_views": {
+      "top": "{\"door\": [[0.1, 5.0, 0.2, 1.5]], \"telephone\": [[3.5, 4.0, 0.4, 0.4]], \"window\": [[5.0, 9.9, 2.0, 0.2]]}",
+      "front": "{\"door\": [[0.1, 3.5, 0.2, 7.0]], \"telephone\": [[3.5, 3.0, 0.8, 0.8]], \"window\": [[5.0, 5.5, 3.0, 3.0]]}",
+      "side": "{\"door\": [[5.0, 3.5, 1.2, 3.0]], \"telephone\": [[4.0, 3.0, 0.5, 0.5]], \"window\": [[9.9, 5.5, 0.2, 2.0]]}"
+    },
+    "pred_map": {
+      "top": {
+        "door": [
+          [
+            0.1,
+            5.0
+          ]
+        ],
+        "telephone": [
+          [
+            3.5,
+            4.0
+          ]
+        ],
+        "window": [
+          [
+            5.0,
+            9.9
+          ]
+        ]
+      },
+      "front": {
+        "door": [
+          [
+            0.1,
+            3.5
+          ]
+        ],
+        "telephone": [
+          [
+            3.5,
+            3.0
+          ]
+        ],
+        "window": [
+          [
+            5.0,
+            5.5
+          ]
+        ]
+      },
+      "side": {
+        "door": [
+          [
+            5.0,
+            3.5
+          ]
+        ],
+        "telephone": [
+          [
+            4.0,
+            3.0
+          ]
+        ],
+        "window": [
+          [
+            9.9,
+            5.5
+          ]
+        ]
+      },
+      "sizes": {
+        "top": {
+          "door": [
+            [
+              0.2,
+              1.5
+            ]
+          ],
+          "telephone": [
+            [
+              0.4,
+              0.4
+            ]
+          ],
+          "window": [
+            [
+              2.0,
+              0.2
+            ]
+          ]
+        },
+        "front": {
+          "door": [
+            [
+              0.2,
+              7.0
+            ]
+          ],
+          "telephone": [
+            [
+              0.8,
+              0.8
+            ]
+          ],
+          "window": [
+            [
+              3.0,
+              3.0
+            ]
+          ]
+        },
+        "side": {
+          "door": [
+            [
+              1.2,
+              3.0
+            ]
+          ],
+          "telephone": [
+            [
+              0.5,
+              0.5
+            ]
+          ],
+          "window": [
+            [
+              0.2,
+              2.0
+            ]
+          ]
+        }
+      },
+      "room": null
+    },
+    "fused_map": {
+      "top": {
+        "door": [
+          [
+            0.1,
+            5.0
+          ]
+        ],
+        "telephone": [
+          [
+            3.5,
+            4.0
+          ]
+        ],
+        "window": [
+          [
+            5.0,
+            9.9
+          ]
+        ]
+      },
+      "front": {
+        "door": [
+          [
+            0.1,
+            3.5
+          ]
+        ],
+        "telephone": [
+          [
+            3.5,
+            3.0
+          ]
+        ],
+        "window": [
+          [
+            5.0,
+            5.5
+          ]
+        ]
+      },
+      "side": {
+        "door": [
+          [
+            5.0,
+            3.5
+          ]
+        ],
+        "telephone": [
+          [
+            4.0,
+            3.0
+          ]
+        ],
+        "window": [
+          [
+            9.9,
+            5.5
+          ]
+        ]
+      },
+      "sizes": {
+        "top": {
+          "door": [
+            [
+              0.2,
+              1.5
+            ]
+          ],
+          "telephone": [
+            [
+              0.4,
+              0.4
+            ]
+          ],
+          "window": [
+            [
+              2.0,
+              0.2
+            ]
+          ]
+        },
+        "front": {
+          "door": [
+            [
+              0.2,
+              7.0
+            ]
+          ],
+          "telephone": [
+            [
+              0.8,
+              0.8
+            ]
+          ],
+          "window": [
+            [
+              3.0,
+              3.0
+            ]
+          ]
+        },
+        "side": {
+          "door": [
+            [
+              1.2,
+              3.0
+            ]
+          ],
+          "telephone": [
+            [
+              0.5,
+              0.5
+            ]
+          ],
+          "window": [
+            [
+              0.2,
+              2.0
+            ]
+          ]
+        }
+      },
+      "room": null
+    },
+    "round_metrics": {
+      "round0": {
+        "gt_instances": 3,
+        "pred_instances": 3,
+        "missed_instances": 0,
+        "extra_instances": 0,
+        "extra_categories": 0,
+        "pairs": 3,
+        "pairs_correct": 1,
+        "bin_pairs": {
+          "5": 1,
+          "6": 1,
+          "2": 1
+        },
+        "bin_correct": {
+          "6": 1
+        },
+        "scale_ratios": [
+          0.6264982043070834,
+          1.0330107023216706,
+          2.722498852157701
+        ],
+        "adjacent_pairs": 0,
+        "adjacent_correct": 0,
+        "cross_view_conflicts": 0,
+        "cross_view_checked": 9,
+        "cross_view_missing": 0,
+        "height_pairs": 2,
+        "height_correct": 2
+      },
+      "round2": {
+        "gt_instances": 3,
+        "pred_instances": 3,
+        "missed_instances": 0,
+        "extra_instances": 0,
+        "extra_categories": 0,
+        "pairs": 3,
+        "pairs_correct": 1,
+        "bin_pairs": {
+          "5": 1,
+          "6": 1,
+          "2": 1
+        },
+        "bin_correct": {
+          "6": 1
+        },
+        "scale_ratios": [
+          0.6264982043070834,
+          1.0330107023216706,
+          2.722498852157701
+        ],
+        "adjacent_pairs": 0,
+        "adjacent_correct": 0,
+        "cross_view_conflicts": 0,
+        "cross_view_checked": 9,
+        "cross_view_missing": 0,
+        "height_pairs": 2,
+        "height_correct": 2
+      },
+      "final": {
+        "gt_instances": 3,
+        "pred_instances": 3,
+        "missed_instances": 0,
+        "extra_instances": 0,
+        "extra_categories": 0,
+        "pairs": 3,
+        "pairs_correct": 1,
+        "bin_pairs": {
+          "5": 1,
+          "6": 1,
+          "2": 1
+        },
+        "bin_correct": {
+          "6": 1
+        },
+        "scale_ratios": [
+          0.6264982043070834,
+          1.0330107023216706,
+          2.722498852157701
+        ],
+        "adjacent_pairs": 0,
+        "adjacent_correct": 0,
+        "cross_view_conflicts": 0,
+        "cross_view_checked": 9,
+        "cross_view_missing": 0,
+        "height_pairs": 2,
+        "height_correct": 2
+      }
+    },
+    "map_metrics": {
+      "gt_instances": 3,
+      "pred_instances": 3,
+      "missed_instances": 0,
+      "extra_instances": 0,
+      "extra_categories": 0,
+      "pairs": 3,
+      "pairs_correct": 1,
+      "bin_pairs": {
+        "5": 1,
+        "6": 1,
+        "2": 1
+      },
+      "bin_correct": {
+        "6": 1
+      },
+      "scale_ratios": [
+        0.6264982043070834,
+        1.0330107023216706,
+        2.722498852157701
+      ],
+      "adjacent_pairs": 0,
+      "adjacent_correct": 0,
+      "cross_view_conflicts": 0,
+      "cross_view_checked": 9,
+      "cross_view_missing": 0,
+      "height_pairs": 2,
+      "height_correct": 2
+    },
+    "r2_debug": {
+      "top": {
+        "raw": "ANSWER: {\"fixes\": []}",
+        "n_fixes": 0
+      },
+      "front": {
+        "raw": "ANSWER: {\"fixes\": []}",
+        "n_fixes": 0
+      },
+      "side": {
+        "raw": "Answering with the required JSON format:\n\nANSWER: {\"fixes\": []}",
+        "n_fixes": 0
+      }
+    },
+    "raw_answer": "To determine the relative direction of the door, we can project the coordinates of the objects onto a 2D horizontal plane (X, Y):\n\n*   **Window (W):** (5.0, 9.9)\n*   **Telephone (T):** (3.5, 4.0)\n*   **Door (D):** (0.1, 5.0)\n\n1.  **Facing Direction (from Window to Telephone):** \n    $$\\vec{WT} = (3.5 - 5.0, 4.0 - 9.9) = (-1.5, -5.9)$$\n    This vector points in a direction of approximately $256^\\circ$ (mostly South, slightly West).\n\n2.  **Direction to the Door (from Window to Door):**\n    $$\\vec{WD} = (0.1 - 5.0, 5.0 - 9.9) = (-4.9, -4.9)$$\n    This vector points in a direction of $225^\\circ$ (South-West).\n\n3.  **Relative Angle:**\n    To face the door, you would need to turn from $256^\\circ$ to $225^\\circ$, which is a clockwise turn of approximately $31^\\circ$. Since a clockwise turn corresponds to turning to your right, the door is to your right.\n\nANSWER: B",
+    "extracted_answer": "B",
+    "correct": false,
+    "clean_answer": true,
+    "error": null
+  }
+]
