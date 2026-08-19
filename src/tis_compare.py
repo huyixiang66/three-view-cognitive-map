@@ -280,7 +280,9 @@ def normalize_sizes(view_data, view):
     if not isinstance(view_data, dict):
         return out
     for cat, items in view_data.items():
-        for it in (items or []):
+        if not isinstance(items, (list, tuple)):
+            continue
+        for it in items:
             if isinstance(it, (list, tuple)) and len(it) >= 4:
                 try:
                     vals = [float(v) for v in it[:4]]
@@ -302,8 +304,10 @@ def normalize_view(view_data, view):
     out = {}
     if isinstance(view_data, dict):
         for cat, items in view_data.items():
+            if not isinstance(items, (list, tuple)):
+                continue
             pairs = []
-            for it in (items or []):
+            for it in items:
                 p = parse_pair(it)
                 if p:
                     pairs.append(p)
