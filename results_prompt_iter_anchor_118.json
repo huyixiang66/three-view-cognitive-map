@@ -1,0 +1,437 @@
+{
+  "sample_idx": 118,
+  "variant": "anchor",
+  "scene": "45260928",
+  "dataset": "arkitscenes",
+  "question_type": "object_rel_distance",
+  "question": "Measuring from the closest point of each object, which of these objects (sofa, stool, table, tv) is the closest to the fireplace?",
+  "ground_truth": "C",
+  "categories": null,
+  "categories_matched": [
+    "fireplace",
+    "sofa",
+    "stool",
+    "table",
+    "tv"
+  ],
+  "gt_map": {
+    "top": {
+      "fireplace": [
+        [
+          7,
+          4
+        ]
+      ],
+      "sofa": [
+        [
+          1,
+          4
+        ]
+      ],
+      "stool": [
+        [
+          2,
+          3
+        ]
+      ],
+      "table": [
+        [
+          7,
+          7
+        ],
+        [
+          4,
+          1
+        ]
+      ],
+      "tv": [
+        [
+          7,
+          7
+        ]
+      ]
+    },
+    "front": {
+      "fireplace": [
+        [
+          7,
+          4
+        ]
+      ],
+      "sofa": [
+        [
+          1,
+          3
+        ]
+      ],
+      "stool": [
+        [
+          2,
+          2
+        ]
+      ],
+      "table": [
+        [
+          7,
+          3
+        ],
+        [
+          4,
+          3
+        ]
+      ],
+      "tv": [
+        [
+          7,
+          6
+        ]
+      ]
+    },
+    "side": {
+      "fireplace": [
+        [
+          4,
+          4
+        ]
+      ],
+      "sofa": [
+        [
+          4,
+          3
+        ]
+      ],
+      "stool": [
+        [
+          3,
+          2
+        ]
+      ],
+      "table": [
+        [
+          7,
+          3
+        ],
+        [
+          1,
+          3
+        ]
+      ],
+      "tv": [
+        [
+          7,
+          6
+        ]
+      ]
+    },
+    "sizes": {
+      "top": {
+        "fireplace": [
+          [
+            1,
+            2
+          ]
+        ],
+        "sofa": [
+          [
+            2,
+            1
+          ]
+        ],
+        "stool": [
+          [
+            1,
+            1
+          ]
+        ],
+        "table": [
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            2
+          ]
+        ],
+        "tv": [
+          [
+            1,
+            1
+          ]
+        ]
+      },
+      "front": {
+        "fireplace": [
+          [
+            1,
+            7
+          ]
+        ],
+        "sofa": [
+          [
+            2,
+            6
+          ]
+        ],
+        "stool": [
+          [
+            1,
+            3
+          ]
+        ],
+        "table": [
+          [
+            1,
+            4
+          ],
+          [
+            2,
+            5
+          ]
+        ],
+        "tv": [
+          [
+            1,
+            2
+          ]
+        ]
+      },
+      "side": {
+        "fireplace": [
+          [
+            2,
+            7
+          ]
+        ],
+        "sofa": [
+          [
+            1,
+            6
+          ]
+        ],
+        "stool": [
+          [
+            1,
+            3
+          ]
+        ],
+        "table": [
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            5
+          ]
+        ],
+        "tv": [
+          [
+            1,
+            2
+          ]
+        ]
+      }
+    },
+    "room": 25.154998699958693
+  },
+  "raw_map": "```json\n{\"top\": {\"sofa\": [[5.0, 6.5, 4.2, 2.2]], \"table\": [[5.0, 4.5, 2.4, 1.6]], \"fireplace\": [[5.0, 1.5, 2.2, 1.0]], \"tv\": [[5.0, 1.5, 1.8, 0.4]]}, \"front\": {\"sofa\": [[5.0, 3.5, 4.2, 1.8]], \"table\": [[5.0, 2.0, 2.4, 1.0]], \"fireplace\": [[5.0, 2.5, 2.2, 2.0]], \"tv\": [[5.0, 5.0, 1.8, 1.2]]}, \"side\": {\"sofa\": [[6.5, 3.5, 2.2, 1.8]], \"table\": [[4.5, 2.0, 1.6, 1.0]], \"fireplace\": [[1.5, 2.5, 1.0, 2.0]], \"tv\": [[1.5, 5.0, 0.4, 1.2]]}, \"room\": {\"width\": 10, \"depth\": 10, \"area_m2\": 25}}\n```\n\nANSWER: {\"top\": {\"sofa\": [[5.0, 6.5, 4.2, 2.2]], \"table\": [[5.0, 4.5, 2.4, 1.6]], \"fireplace\": [[5.0, 1.5, 2.2, 1.0]], \"tv\": [[5.0, 1.5, 1.8, 0.4]]}, \"front\": {\"sofa\": [[5.0, 3.5, 4.2, 1.8]], \"table\": [[5.0, 2.0, 2.4, 1.0]], \"fireplace\": [[5.0, 2.5, 2.2, 2.0]], \"tv\": [[5.0, 5.0, 1.8, 1.2]]}, \"side\": {\"sofa\": [[6.5, 3.5, 2.2, 1.8]], \"table\": [[4.5, 2.0, 1.6, 1.0]], \"fireplace\": [[1.5, 2.5, 1.0, 2.0]], \"tv\": [[1.5, 5.0, 0.4, 1.2]]}, \"room\": {\"width\": 10, \"depth\": 10, \"area_m2\": 25}}",
+  "pred_map": {
+    "top": {
+      "sofa": [
+        [
+          5.0,
+          6.5
+        ]
+      ],
+      "table": [
+        [
+          5.0,
+          4.5
+        ]
+      ],
+      "fireplace": [
+        [
+          5.0,
+          1.5
+        ]
+      ],
+      "tv": [
+        [
+          5.0,
+          1.5
+        ]
+      ]
+    },
+    "front": {
+      "sofa": [
+        [
+          5.0,
+          3.5
+        ]
+      ],
+      "table": [
+        [
+          5.0,
+          2.0
+        ]
+      ],
+      "fireplace": [
+        [
+          5.0,
+          2.5
+        ]
+      ],
+      "tv": [
+        [
+          5.0,
+          5.0
+        ]
+      ]
+    },
+    "side": {
+      "sofa": [
+        [
+          6.5,
+          3.5
+        ]
+      ],
+      "table": [
+        [
+          4.5,
+          2.0
+        ]
+      ],
+      "fireplace": [
+        [
+          1.5,
+          2.5
+        ]
+      ],
+      "tv": [
+        [
+          1.5,
+          5.0
+        ]
+      ]
+    },
+    "sizes": {
+      "top": {
+        "sofa": [
+          [
+            4.2,
+            2.2
+          ]
+        ],
+        "table": [
+          [
+            2.4,
+            1.6
+          ]
+        ],
+        "fireplace": [
+          [
+            2.2,
+            1.0
+          ]
+        ],
+        "tv": [
+          [
+            1.8,
+            0.4
+          ]
+        ]
+      },
+      "front": {
+        "sofa": [
+          [
+            4.2,
+            1.8
+          ]
+        ],
+        "table": [
+          [
+            2.4,
+            1.0
+          ]
+        ],
+        "fireplace": [
+          [
+            2.2,
+            2.0
+          ]
+        ],
+        "tv": [
+          [
+            1.8,
+            1.2
+          ]
+        ]
+      },
+      "side": {
+        "sofa": [
+          [
+            2.2,
+            1.8
+          ]
+        ],
+        "table": [
+          [
+            1.6,
+            1.0
+          ]
+        ],
+        "fireplace": [
+          [
+            1.0,
+            2.0
+          ]
+        ],
+        "tv": [
+          [
+            0.4,
+            1.2
+          ]
+        ]
+      }
+    },
+    "room": 25.0
+  },
+  "map_metrics": {
+    "gt_instances": 6,
+    "pred_instances": 4,
+    "missed_instances": 2,
+    "extra_instances": 0,
+    "extra_categories": 0,
+    "pairs": 6,
+    "pairs_correct": 2,
+    "bin_pairs": {
+      "6": 2,
+      "3": 2,
+      "4": 1,
+      "0": 1
+    },
+    "bin_correct": {
+      "6": 1,
+      "3": 1
+    },
+    "scale_ratios": [
+      0.8333333333333334,
+      1.0,
+      0.0,
+      0.47140452079103173,
+      0.7453559924999299
+    ],
+    "adjacent_pairs": 1,
+    "adjacent_correct": 0,
+    "cross_view_conflicts": 0,
+    "cross_view_checked": 12,
+    "cross_view_missing": 6,
+    "height_pairs": 5,
+    "height_correct": 4
+  },
+  "raw_answer": "To find the object closest to the fireplace, we can calculate the 3D distance from the closest point of each object to the fireplace using their coordinates:\n\n1. **TV**: \n   - The TV is mounted directly above the fireplace. \n   - Fireplace height range (z): [1.5, 3.5]\n   - TV height range (z): [4.4, 5.6]\n   - Vertical distance between them is approximately **0.9 units**.\n\n2. **Table**: \n   - Fireplace depth range (y): [1.0, 2.0]\n   - Table depth range (y): [3.7, 5.3]\n   - Horizontal distance between them is approximately **1.7 units**.\n\n3. **Sofa**: \n   - Fireplace depth range (y): [1.0, 2.0]\n   - Sofa depth range (y): [5.4, 7.6]\n   - Horizontal distance between them is approximately **3.4 units**.\n\nComparing these distances, the TV is the closest object to the fireplace.\n\nANSWER: D",
+  "extracted_answer": "D",
+  "correct": false,
+  "error": null
+}

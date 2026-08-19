@@ -1,0 +1,20 @@
+{
+  "project_shape": "AI Research — VLM spatial QA on VSI-Bench with Unity-based spatial representation and camera-pose replay feedback loop",
+  "main_output": "Experimental results, paper draft, benchmark comparison",
+  "drift_risks": [
+    "Over-engineering the Unity pipeline before a minimal closed loop works",
+    "Building scenes from dataset ground truth without separating Oracle vs model-generated",
+    "Scope creep into general 3D reconstruction instead of VSI-Bench QA",
+    "Repeating the old mistake of adding visualizations without task-level validation"
+  ],
+  "foundation_areas": [
+    "Experiment Design",
+    "Model Pipeline",
+    "Unity Simulation",
+    "Data Analysis"
+  ],
+  "maintenance": {
+    "preference": "lightweight",
+    "close_default": "normal_close"
+  }
+}

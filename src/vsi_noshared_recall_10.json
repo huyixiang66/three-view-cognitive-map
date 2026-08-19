@@ -1,0 +1,133 @@
+[
+  {
+    "id": 3184,
+    "scene_name": "scene0221_01",
+    "dataset": "scannet",
+    "question_type": "object_rel_distance",
+    "question": "Measuring from the closest point of each object, which of these objects (chair, bed, pillow, lamp) is the closest to the microwave?",
+    "options": [
+      "A. chair",
+      "B. bed",
+      "C. pillow",
+      "D. lamp"
+    ],
+    "ground_truth": "B"
+  },
+  {
+    "id": 2952,
+    "scene_name": "scene0307_02",
+    "dataset": "scannet",
+    "question_type": "object_rel_distance",
+    "question": "Measuring from the closest point of each object, which of these objects (window, chair, door, washing machine) is the closest to the radiator?",
+    "options": [
+      "A. window",
+      "B. chair",
+      "C. door",
+      "D. washing machine"
+    ],
+    "ground_truth": "C"
+  },
+  {
+    "id": 1485,
+    "scene_name": "47429977",
+    "dataset": "arkitscenes",
+    "question_type": "object_rel_distance",
+    "question": "Measuring from the closest point of each object, which of these objects (stove, chair, refrigerator, table) is the closest to the tv?",
+    "options": [
+      "A. stove",
+      "B. chair",
+      "C. refrigerator",
+      "D. table"
+    ],
+    "ground_truth": "D"
+  },
+  {
+    "id": 2459,
+    "scene_name": "31a2c91c43",
+    "dataset": "scannetpp",
+    "question_type": "object_rel_direction_easy",
+    "question": "If I am standing by the ceiling light and facing the toilet, is the door to the left or the right of the toilet?",
+    "options": [
+      "A. right",
+      "B. left"
+    ],
+    "ground_truth": "A"
+  },
+  {
+    "id": 3702,
+    "scene_name": "scene0353_00",
+    "dataset": "scannet",
+    "question_type": "object_rel_direction_easy",
+    "question": "If I am standing by the bookshelf and facing the door, is the refrigerator to the left or the right of the door?",
+    "options": [
+      "A. left",
+      "B. right"
+    ],
+    "ground_truth": "A"
+  },
+  {
+    "id": 1243,
+    "scene_name": "41159525",
+    "dataset": "arkitscenes",
+    "question_type": "object_rel_direction_easy",
+    "question": "If I am standing by the stove and facing the table, is the refrigerator to the left or the right of the table?",
+    "options": [
+      "A. left",
+      "B. right"
+    ],
+    "ground_truth": "B"
+  },
+  {
+    "id": 4362,
+    "scene_name": "scene0144_00",
+    "dataset": "scannet",
+    "question_type": "object_rel_direction_medium",
+    "question": "If I am standing by the window and facing the lamp, is the door to my left, right, or back?\nAn object is to my back if I would have to turn at least 135 degrees in order to face it.",
+    "options": [
+      "A. back",
+      "B. left",
+      "C. right"
+    ],
+    "ground_truth": "C"
+  },
+  {
+    "id": 4269,
+    "scene_name": "scene0629_01",
+    "dataset": "scannet",
+    "question_type": "object_rel_direction_medium",
+    "question": "If I am standing by the bed and facing the chair, is the mirror to my left, right, or back?\nAn object is to my back if I would have to turn at least 135 degrees in order to face it.",
+    "options": [
+      "A. back",
+      "B. left",
+      "C. right"
+    ],
+    "ground_truth": "B"
+  },
+  {
+    "id": 1546,
+    "scene_name": "5ee7c22ba0",
+    "dataset": "scannetpp",
+    "question_type": "object_rel_direction_medium",
+    "question": "If I am standing by the refrigerator and facing the microwave, is the ceiling light to my left, right, or back?\nAn object is to my back if I would have to turn at least 135 degrees in order to face it.",
+    "options": [
+      "A. right",
+      "B. left",
+      "C. back"
+    ],
+    "ground_truth": "B"
+  },
+  {
+    "id": 1047,
+    "scene_name": "47331668",
+    "dataset": "arkitscenes",
+    "question_type": "object_rel_direction_hard",
+    "question": "If I am standing by the tv and facing the bed, is the chair to my front-left, front-right, back-left, or back-right?\nThe directions refer to the quadrants of a Cartesian plane (if I am standing at the origin and facing along the positive y-axis).",
+    "options": [
+      "A. front-right",
+      "B. back-right",
+      "C. front-left",
+      "D. back-left"
+    ],
+    "ground_truth": "A"
+  }
+]

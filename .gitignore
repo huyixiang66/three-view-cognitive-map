@@ -18,3 +18,7 @@ src/debug_*.json
 plan.md
 
 .env
+api/
+**/*_partial_*.json
+**/*dry*.json
+tmp_*_partial_*.json

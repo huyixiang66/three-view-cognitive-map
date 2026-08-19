@@ -1,0 +1,3833 @@
+[
+  {
+    "sample_idx": 4,
+    "arm": "debate6",
+    "answer_mode": "both",
+    "scene": "5f99900f09",
+    "dataset": "scannetpp",
+    "question_type": "object_counting",
+    "question": "How many chair(s) are in this room?",
+    "ground_truth": "14",
+    "categories": [
+      "chair"
+    ],
+    "categories_matched": [
+      "chair"
+    ],
+    "gt_map": {
+      "top": {
+        "chair": [
+          [
+            2,
+            3
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            6,
+            7
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            5,
+            5
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            5,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            6,
+            6
+          ],
+          [
+            7,
+            1
+          ],
+          [
+            5,
+            1
+          ],
+          [
+            5,
+            6
+          ]
+        ]
+      },
+      "front": {
+        "chair": [
+          [
+            2,
+            2
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            6,
+            2
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            5,
+            2
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            5,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            6,
+            2
+          ],
+          [
+            7,
+            1
+          ],
+          [
+            5,
+            1
+          ],
+          [
+            5,
+            2
+          ]
+        ]
+      },
+      "side": {
+        "chair": [
+          [
+            3,
+            2
+          ],
+          [
+            5,
+            2
+          ],
+          [
+            7,
+            2
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            5,
+            2
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            3,
+            2
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            6,
+            2
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            6,
+            2
+          ]
+        ]
+      },
+      "sizes": {
+        "top": {
+          "chair": [
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              1
+            ]
+          ]
+        },
+        "front": {
+          "chair": [
+            [
+              1,
+              2
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              1,
+              1
+            ]
+          ]
+        },
+        "side": {
+          "chair": [
+            [
+              1,
+              2
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              1,
+              1
+            ]
+          ]
+        }
+      },
+      "room": 54.35026635484722
+    },
+    "cameras": {
+      "top": {
+        "name": "TOP",
+        "position": [
+          4.5,
+          4.5,
+          10.0
+        ],
+        "look_at": [
+          4.5,
+          4.5,
+          4.5
+        ],
+        "look_up": [
+          0.0,
+          1.0,
+          0.0
+        ]
+      },
+      "front": {
+        "name": "FRONT",
+        "position": [
+          4.97935658511212,
+          9.979070839504601,
+          4.5
+        ],
+        "look_at": [
+          4.5,
+          4.5,
+          4.5
+        ],
+        "look_up": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "side": {
+        "name": "SIDE",
+        "position": [
+          9.992462441150156,
+          4.7878477593361914,
+          4.5
+        ],
+        "look_at": [
+          4.5,
+          4.5,
+          4.5
+        ],
+        "look_up": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      }
+    },
+    "rounds_run": 1,
+    "transforms_analytic": {
+      "front": {
+        "R": [
+          [
+            -0.9961946980917455,
+            0.0,
+            -0.08715574274765814
+          ],
+          [
+            0.08715574274765812,
+            0.0,
+            -0.9961946980917455
+          ],
+          [
+            0.0,
+            -1.0000000000000002,
+            0.0
+          ]
+        ],
+        "t": [
+          0.47935658511211887,
+          5.479070839504599,
+          5.5
+        ],
+        "mirror": false,
+        "rmse": null
+      },
+      "side": {
+        "R": [
+          [
+            -0.05233595624294388,
+            0.0,
+            -0.9986295347545738
+          ],
+          [
+            0.9986295347545737,
+            0.0,
+            -0.05233595624294389
+          ],
+          [
+            0.0,
+            -1.0,
+            0.0
+          ]
+        ],
+        "t": [
+          5.492462441150154,
+          0.28784775933619144,
+          5.5
+        ],
+        "mirror": false,
+        "rmse": null
+      }
+    },
+    "raw_views": {
+      "top": "ANSWER: {\"chair\": [[4.5, 3.5, 1.0, 1.0], [4.5, 5.5, 1.0, 1.0]]}",
+      "front": "```json\n{\n  \"chair\": [\n    [3.5, 5.5, 0.7, 0.7],\n    [5.5, 5.5, 0.7, 0.7],\n    [3.5, 3.5, 0.7, 0.7],\n    [5.5, 3.5, 0.7, 0.7]\n  ]\n}\n```\n\nANSWER: {\"chair\": [[3.5, 5.5, 0.7, 0.7], [5.5, 5.5, 0.7, 0.7],\n [3.5",
+      "side": "```json\n{\n  \"chair\": [\n    [3.7, 4.1, 0.7, 1.0],\n    [5.3, 4.1, 0.7, 1.0],\n    [4.5, 4.1, 0.7, 1.0]\n  ]\n}\n```\n\nANSWER: {\"chair\": [[3.7, 4.1, 0.7, 1.0], [5.3, 4.1, 0.7, 1.0], [4.5, 4.1, 0.7, 1.0]]}"
+    },
+    "final_views": {
+      "top": "ANSWER: {\"chair\": [[4.5, 3.5, 1.0, 1.0], [4.5, 5.5, 1.0, 1.0]]}",
+      "front": "```json\n{\n  \"chair\": [\n    [3.5, 5.5, 0.7, 0.7],\n    [5.5, 5.5, 0.7, 0.7],\n    [3.5, 3.5, 0.7, 0.7],\n    [5.5, 3.5, 0.7, 0.7]\n  ]\n}\n```\n\nANSWER: {\"chair\": [[3.5, 5.5, 0.7, 0.7], [5.5, 5.5, 0.7, 0.7],\n [3.5",
+      "side": "```json\n{\n  \"chair\": [\n    [3.7, 4.1, 0.7, 1.0],\n    [5.3, 4.1, 0.7, 1.0],\n    [4.5, 4.1, 0.7, 1.0]\n  ]\n}\n```\n\nANSWER: {\"chair\": [[3.7, 4.1, 0.7, 1.0], [5.3, 4.1, 0.7, 1.0], [4.5, 4.1, 0.7, 1.0]]}"
+    },
+    "pred_map": {
+      "top": {
+        "chair": [
+          [
+            4.0,
+            3.6
+          ],
+          [
+            4.0,
+            5.0
+          ],
+          [
+            5.5,
+            5.3
+          ]
+        ]
+      },
+      "front": {
+        "chair": [
+          [
+            4.887369741824096,
+            3.8
+          ],
+          [
+            5.0,
+            4.8
+          ],
+          [
+            3.6448103319404477,
+            3.8
+          ]
+        ]
+      },
+      "side": {
+        "chair": [
+          [
+            3.6697171689915122,
+            3.8
+          ],
+          [
+            5.0,
+            4.8
+          ],
+          [
+            5.2103636398680555,
+            3.8
+          ]
+        ]
+      },
+      "sizes": {
+        "top": {
+          "chair": [
+            [
+              1.0,
+              1.0
+            ],
+            [
+              1.0,
+              1.0
+            ]
+          ]
+        },
+        "front": {
+          "chair": [
+            [
+              0.7,
+              0.7
+            ],
+            [
+              0.7,
+              0.7
+            ],
+            [
+              0.7,
+              0.7
+            ],
+            [
+              0.7,
+              0.7
+            ]
+          ]
+        },
+        "side": {
+          "chair": [
+            [
+              0.7,
+              1.0
+            ],
+            [
+              0.7,
+              1.0
+            ],
+            [
+              0.7,
+              1.0
+            ]
+          ]
+        }
+      },
+      "room": null
+    },
+    "fused_map": {
+      "top": {
+        "chair": [
+          [
+            4.0,
+            3.6
+          ],
+          [
+            4.0,
+            5.0
+          ],
+          [
+            5.5,
+            5.3
+          ]
+        ]
+      },
+      "front": {
+        "chair": [
+          [
+            4.887369741824096,
+            3.8
+          ],
+          [
+            5.0,
+            4.8
+          ],
+          [
+            3.6448103319404477,
+            3.8
+          ]
+        ]
+      },
+      "side": {
+        "chair": [
+          [
+            3.6697171689915122,
+            3.8
+          ],
+          [
+            5.0,
+            4.8
+          ],
+          [
+            5.2103636398680555,
+            3.8
+          ]
+        ]
+      },
+      "sizes": {
+        "top": {
+          "chair": [
+            [
+              1.0,
+              1.0
+            ],
+            [
+              1.0,
+              1.0
+            ]
+          ]
+        },
+        "front": {
+          "chair": [
+            [
+              0.7,
+              0.7
+            ],
+            [
+              0.7,
+              0.7
+            ],
+            [
+              0.7,
+              0.7
+            ],
+            [
+              0.7,
+              0.7
+            ]
+          ]
+        },
+        "side": {
+          "chair": [
+            [
+              0.7,
+              1.0
+            ],
+            [
+              0.7,
+              1.0
+            ],
+            [
+              0.7,
+              1.0
+            ]
+          ]
+        }
+      },
+      "room": null
+    },
+    "round_metrics": {
+      "round0": {
+        "gt_instances": 14,
+        "pred_instances": 2,
+        "missed_instances": 12,
+        "extra_instances": 0,
+        "extra_categories": 0,
+        "pairs": 0,
+        "pairs_correct": 0,
+        "bin_pairs": {},
+        "bin_correct": {},
+        "scale_ratios": [],
+        "adjacent_pairs": 0,
+        "adjacent_correct": 0,
+        "cross_view_conflicts": 0,
+        "cross_view_checked": 0,
+        "cross_view_missing": 33,
+        "height_pairs": 0,
+        "height_correct": 0
+      },
+      "round1": {
+        "gt_instances": 14,
+        "pred_instances": 2,
+        "missed_instances": 12,
+        "extra_instances": 0,
+        "extra_categories": 0,
+        "pairs": 0,
+        "pairs_correct": 0,
+        "bin_pairs": {},
+        "bin_correct": {},
+        "scale_ratios": [],
+        "adjacent_pairs": 0,
+        "adjacent_correct": 0,
+        "cross_view_conflicts": 0,
+        "cross_view_checked": 0,
+        "cross_view_missing": 33,
+        "height_pairs": 0,
+        "height_correct": 0
+      },
+      "final": {
+        "gt_instances": 14,
+        "pred_instances": 3,
+        "missed_instances": 11,
+        "extra_instances": 0,
+        "extra_categories": 0,
+        "pairs": 0,
+        "pairs_correct": 0,
+        "bin_pairs": {},
+        "bin_correct": {},
+        "scale_ratios": [],
+        "adjacent_pairs": 0,
+        "adjacent_correct": 0,
+        "cross_view_conflicts": 0,
+        "cross_view_checked": 9,
+        "cross_view_missing": 33,
+        "height_pairs": 0,
+        "height_correct": 0
+      }
+    },
+    "map_metrics": {
+      "gt_instances": 14,
+      "pred_instances": 3,
+      "missed_instances": 11,
+      "extra_instances": 0,
+      "extra_categories": 0,
+      "pairs": 0,
+      "pairs_correct": 0,
+      "bin_pairs": {},
+      "bin_correct": {},
+      "scale_ratios": [],
+      "adjacent_pairs": 0,
+      "adjacent_correct": 0,
+      "cross_view_conflicts": 0,
+      "cross_view_checked": 9,
+      "cross_view_missing": 33,
+      "height_pairs": 0,
+      "height_correct": 0
+    },
+    "raw_answer": "ANSWER: 3",
+    "extracted_answer": "3",
+    "answers_memory": {
+      "shared": {
+        "raw_answer": "ANSWER: 3",
+        "extracted_answer": "3",
+        "correct": false
+      },
+      "noshared": {
+        "raw_answer": "Based on the cognitive map, there are 3 chairs in the room, as represented by the three corresponding coordinate points in each of the top, front, and side views.\n\nANSWER: 3",
+        "extracted_answer": "3",
+        "correct": false
+      }
+    },
+    "correct": false,
+    "error": null
+  },
+  {
+    "sample_idx": 1,
+    "arm": "debate6",
+    "answer_mode": "both",
+    "scene": "47429922",
+    "dataset": "arkitscenes",
+    "question_type": "object_abs_distance",
+    "question": "Measuring from the closest point of each object, what is the distance between the chair and the sofa (in meters)?",
+    "ground_truth": "0.9",
+    "categories": [
+      "chair",
+      "sofa"
+    ],
+    "categories_matched": [
+      "chair",
+      "sofa"
+    ],
+    "gt_map": {
+      "top": {
+        "chair": [
+          [
+            6,
+            3
+          ]
+        ],
+        "sofa": [
+          [
+            1,
+            3
+          ]
+        ]
+      },
+      "front": {
+        "chair": [
+          [
+            6,
+            3
+          ]
+        ],
+        "sofa": [
+          [
+            1,
+            2
+          ]
+        ]
+      },
+      "side": {
+        "chair": [
+          [
+            3,
+            3
+          ]
+        ],
+        "sofa": [
+          [
+            3,
+            2
+          ]
+        ]
+      },
+      "sizes": {
+        "top": {
+          "chair": [
+            [
+              2,
+              1
+            ]
+          ],
+          "sofa": [
+            [
+              2,
+              4
+            ]
+          ]
+        },
+        "front": {
+          "chair": [
+            [
+              2,
+              4
+            ]
+          ],
+          "sofa": [
+            [
+              2,
+              4
+            ]
+          ]
+        },
+        "side": {
+          "chair": [
+            [
+              1,
+              4
+            ]
+          ],
+          "sofa": [
+            [
+              4,
+              4
+            ]
+          ]
+        }
+      },
+      "room": 15.24292473987877
+    },
+    "cameras": {
+      "top": {
+        "name": "TOP",
+        "position": [
+          4.5,
+          4.5,
+          10.0
+        ],
+        "look_at": [
+          4.5,
+          4.5,
+          4.5
+        ],
+        "look_up": [
+          0.0,
+          1.0,
+          0.0
+        ]
+      },
+      "front": {
+        "name": "FRONT",
+        "position": [
+          4.97935658511212,
+          9.979070839504601,
+          4.5
+        ],
+        "look_at": [
+          4.5,
+          4.5,
+          4.5
+        ],
+        "look_up": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "side": {
+        "name": "SIDE",
+        "position": [
+          9.992462441150156,
+          4.7878477593361914,
+          4.5
+        ],
+        "look_at": [
+          4.5,
+          4.5,
+          4.5
+        ],
+        "look_up": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      }
+    },
+    "rounds_run": 2,
+    "transforms_analytic": {
+      "front": {
+        "R": [
+          [
+            -0.9961946980917455,
+            0.0,
+            -0.08715574274765814
+          ],
+          [
+            0.08715574274765812,
+            0.0,
+            -0.9961946980917455
+          ],
+          [
+            0.0,
+            -1.0000000000000002,
+            0.0
+          ]
+        ],
+        "t": [
+          0.47935658511211887,
+          5.479070839504599,
+          5.5
+        ],
+        "mirror": false,
+        "rmse": null
+      },
+      "side": {
+        "R": [
+          [
+            -0.05233595624294388,
+            0.0,
+            -0.9986295347545738
+          ],
+          [
+            0.9986295347545737,
+            0.0,
+            -0.05233595624294389
+          ],
+          [
+            0.0,
+            -1.0,
+            0.0
+          ]
+        ],
+        "t": [
+          5.492462441150154,
+          0.28784775933619144,
+          5.5
+        ],
+        "mirror": false,
+        "rmse": null
+      }
+    },
+    "raw_views": {
+      "top": "```json\n{\n  \"sofa\": [\n    [5.0, 2.0, 3.0, 1.0]\n  ],\n  \"chair\": [\n    [2.5, 4.5, 0.8, 0.8],\n    [6.5, 4.5, 0.8, 0.8]\n  ]\n}\n```\n\nANSWER: {\"sofa\": [[5.0, 2.0, 3.0, 1.0]], \"chair\": [[2.5, 4.5, 0.8, 0.8], [6.5, 4.5, 0.8, 0.8]]}",
+      "front": "{\"sofa\": [[3.5, 5.5, 3.0, 2.5]], \"chair\": [[1.5, 6.0, 1.5, 2.0], [7.0, 6.0, 1.5, 2.0]]}\n\nANSWER: {\"sofa\": [[3.5, 5.5, 3.0, 2.5]], \"chair\": [[1.5, 6.0, 1.5, 2.0], [7.0, 6.0, 1.5, 2.0]]}",
+      "side": "```json\n{\"sofa\": [[4.5, 1.0, 2.2, 1.0]]}\n```\n\nANSWER: {\"sofa\": [[4.5, 1.0, 2.2, 1.0]]}"
+    },
+    "final_views": {
+      "top": "```json\n{\n  \"sofa\": [\n    [5.0, 2.0, 3.0, 1.0]\n  ],\n  \"chair\": [\n    [2.5, 4.5, 0.8, 0.8],\n    [6.5, 4.5, 0.8, 0.8]\n  ]\n}\n```\n\nANSWER: {\"sofa\": [[5.0, 2.0, 3.0, 1.0]], \"chair\": [[2.5, 4.5, 0.8, 0.8], [6.5, 4.5, 0.8, 0.8]]}",
+      "front": "```json\n{\"sofa\": [[3.5, 5.5, 3.0, 2.5]], \"chair\": [[1.5, 1.5, 1.5, 2.0], [7.0, 1.5, 1.5, 2.0]]}\n```\n\nANSWER: {\"sofa\": [[3.5, 5.5, 3.0, 2.5]], \"chair\": [[1.5, 1.5, 1.5, 2.0], [7.0, 1.5, 1.5, 2.0]]}",
+      "side": "ANSWER: {\"sofa\": [[2.0, 1.0, 2.2, 1.0]]}"
+    },
+    "pred_map": {
+      "top": {
+        "chair": [
+          [
+            2.0,
+            4.5
+          ],
+          [
+            6.75,
+            4.5
+          ]
+        ],
+        "sofa": [
+          [
+            4.25,
+            2.0
+          ]
+        ]
+      },
+      "front": {
+        "chair": [
+          [
+            6.7988745389716,
+            1.5000000000000004
+          ],
+          [
+            2.4310129149255597,
+            1.5000000000000004
+          ]
+        ],
+        "sofa": [
+          [
+            4.52876199286876,
+            3.2500000000000004
+          ]
+        ]
+      },
+      "side": {
+        "chair": [
+          [
+            4.624494944627701,
+            1.5
+          ],
+          [
+            4.38795454983507,
+            1.5
+          ]
+        ],
+        "sofa": [
+          [
+            2.1369444390904704,
+            3.25
+          ]
+        ]
+      },
+      "sizes": {
+        "top": {
+          "sofa": [
+            [
+              3.0,
+              1.0
+            ]
+          ],
+          "chair": [
+            [
+              0.8,
+              0.8
+            ],
+            [
+              0.8,
+              0.8
+            ]
+          ]
+        },
+        "front": {
+          "sofa": [
+            [
+              3.0,
+              2.5
+            ]
+          ],
+          "chair": [
+            [
+              1.5,
+              2.0
+            ],
+            [
+              1.5,
+              2.0
+            ]
+          ]
+        },
+        "side": {
+          "sofa": [
+            [
+              2.2,
+              1.0
+            ]
+          ]
+        }
+      },
+      "room": null
+    },
+    "fused_map": {
+      "top": {
+        "chair": [
+          [
+            2.0,
+            4.5
+          ],
+          [
+            6.75,
+            4.5
+          ]
+        ],
+        "sofa": [
+          [
+            4.25,
+            2.0
+          ]
+        ]
+      },
+      "front": {
+        "chair": [
+          [
+            6.7988745389716,
+            1.5000000000000004
+          ],
+          [
+            2.4310129149255597,
+            1.5000000000000004
+          ]
+        ],
+        "sofa": [
+          [
+            4.52876199286876,
+            3.2500000000000004
+          ]
+        ]
+      },
+      "side": {
+        "chair": [
+          [
+            4.624494944627701,
+            1.5
+          ],
+          [
+            4.38795454983507,
+            1.5
+          ]
+        ],
+        "sofa": [
+          [
+            2.1369444390904704,
+            3.25
+          ]
+        ]
+      },
+      "sizes": {
+        "top": {
+          "sofa": [
+            [
+              3.0,
+              1.0
+            ]
+          ],
+          "chair": [
+            [
+              0.8,
+              0.8
+            ],
+            [
+              0.8,
+              0.8
+            ]
+          ]
+        },
+        "front": {
+          "sofa": [
+            [
+              3.0,
+              2.5
+            ]
+          ],
+          "chair": [
+            [
+              1.5,
+              2.0
+            ],
+            [
+              1.5,
+              2.0
+            ]
+          ]
+        },
+        "side": {
+          "sofa": [
+            [
+              2.2,
+              1.0
+            ]
+          ]
+        }
+      },
+      "room": null
+    },
+    "round_metrics": {
+      "round0": {
+        "gt_instances": 2,
+        "pred_instances": 3,
+        "missed_instances": 0,
+        "extra_instances": 1,
+        "extra_categories": 0,
+        "pairs": 1,
+        "pairs_correct": 0,
+        "bin_pairs": {
+          "5": 1
+        },
+        "bin_correct": {},
+        "scale_ratios": [
+          0.5830951894845301
+        ],
+        "adjacent_pairs": 0,
+        "adjacent_correct": 0,
+        "cross_view_conflicts": 3,
+        "cross_view_checked": 5,
+        "cross_view_missing": 1,
+        "height_pairs": 1,
+        "height_correct": 1
+      },
+      "round1": {
+        "gt_instances": 2,
+        "pred_instances": 3,
+        "missed_instances": 0,
+        "extra_instances": 1,
+        "extra_categories": 0,
+        "pairs": 1,
+        "pairs_correct": 0,
+        "bin_pairs": {
+          "5": 1
+        },
+        "bin_correct": {},
+        "scale_ratios": [
+          0.5830951894845301
+        ],
+        "adjacent_pairs": 0,
+        "adjacent_correct": 0,
+        "cross_view_conflicts": 3,
+        "cross_view_checked": 5,
+        "cross_view_missing": 1,
+        "height_pairs": 1,
+        "height_correct": 1
+      },
+      "round2": {
+        "gt_instances": 2,
+        "pred_instances": 3,
+        "missed_instances": 0,
+        "extra_instances": 1,
+        "extra_categories": 0,
+        "pairs": 1,
+        "pairs_correct": 0,
+        "bin_pairs": {
+          "5": 1
+        },
+        "bin_correct": {},
+        "scale_ratios": [
+          0.5830951894845301
+        ],
+        "adjacent_pairs": 0,
+        "adjacent_correct": 0,
+        "cross_view_conflicts": 3,
+        "cross_view_checked": 5,
+        "cross_view_missing": 1,
+        "height_pairs": 1,
+        "height_correct": 1
+      },
+      "final": {
+        "gt_instances": 2,
+        "pred_instances": 3,
+        "missed_instances": 0,
+        "extra_instances": 1,
+        "extra_categories": 0,
+        "pairs": 1,
+        "pairs_correct": 0,
+        "bin_pairs": {
+          "5": 1
+        },
+        "bin_correct": {},
+        "scale_ratios": [
+          0.6726812023536854
+        ],
+        "adjacent_pairs": 0,
+        "adjacent_correct": 0,
+        "cross_view_conflicts": 0,
+        "cross_view_checked": 9,
+        "cross_view_missing": 0,
+        "height_pairs": 1,
+        "height_correct": 0
+      }
+    },
+    "map_metrics": {
+      "gt_instances": 2,
+      "pred_instances": 3,
+      "missed_instances": 0,
+      "extra_instances": 1,
+      "extra_categories": 0,
+      "pairs": 1,
+      "pairs_correct": 0,
+      "bin_pairs": {
+        "5": 1
+      },
+      "bin_correct": {},
+      "scale_ratios": [
+        0.6726812023536854
+      ],
+      "adjacent_pairs": 0,
+      "adjacent_correct": 0,
+      "cross_view_conflicts": 0,
+      "cross_view_checked": 9,
+      "cross_view_missing": 0,
+      "height_pairs": 1,
+      "height_correct": 0
+    },
+    "raw_answer": "To find the distance between the closest points of the chair and the sofa, we can use the coordinates from the top-view map:\n\n1. **Sofa Bounding Box**:\n   - Center: $x = 4.25$, $y = 2.0$\n   - Size: $w = 3.0$, $d = 1.0$\n   - $x$-range: $[2.75, 5.75]$\n   - $y$-range: $[1.5, 2.5]$\n\n2. **Chair 1 Bounding Box**:\n   - Center: $x = 2.0$, $y = 4.5$\n   - Size: $w = 0.8$, $d = 0.8$\n   - $x$-range: $[1.6, 2.4]$\n   - $y$-range: $[4.1, 4.9]$\n\n3. **Distance Calculation (Chair 1 to Sofa)**:\n   - $x$-distance: $2.75 - 2.4 = 0.35\\text{ m}$\n   - $y$-distance: $4.1 - 2.5 = 1.6\\text{ m}$\n   - Euclidean distance: $\\sqrt{0.35^2 + 1.6^2} \\approx 1.64\\text{ m}$\n\nRounding to one decimal place, the distance is approximately 1.6 meters.\n\nANSWER: 1.6",
+    "extracted_answer": "1.6",
+    "answers_memory": {
+      "shared": {
+        "raw_answer": "To find the distance between the closest points of the chair and the sofa, we can use the coordinates from the top-view map:\n\n1. **Sofa Bounding Box**:\n   - Center: $x = 4.25$, $y = 2.0$\n   - Size: $w = 3.0$, $d = 1.0$\n   - $x$-range: $[2.75, 5.75]$\n   - $y$-range: $[1.5, 2.5]$\n\n2. **Chair 1 Bounding Box**:\n   - Center: $x = 2.0$, $y = 4.5$\n   - Size: $w = 0.8$, $d = 0.8$\n   - $x$-range: $[1.6, 2.4]$\n   - $y$-range: $[4.1, 4.9]$\n\n3. **Distance Calculation (Chair 1 to Sofa)**:\n   - $x$-distance: $2.75 - 2.4 = 0.35\\text{ m}$\n   - $y$-distance: $4.1 - 2.5 = 1.6\\text{ m}$\n   - Euclidean distance: $\\sqrt{0.35^2 + 1.6^2} \\approx 1.64\\text{ m}$\n\nRounding to one decimal place, the distance is approximately 1.6 meters.\n\nANSWER: 1.6",
+        "extracted_answer": "1.6",
+        "correct": false
+      },
+      "noshared": {
+        "raw_answer": "To find the distance between the chair and the sofa, we can determine their closest points using the coordinates and sizes from the top-down view:\n\n1. **Sofa:**\n   * Center: $[4.25, 2.0]$\n   * Size: $[3.0, 1.0]$ (Width along X is $3.0$, Depth along Y is $1.0$)\n   * X-range: $[2.75, 5.75]$\n   * Y-range: $[1.5, 2.5]$\n\n2. **Chairs:**\n   * **Chair 1:** Center $[2.0, 4.5]$, Size $\n[0.8, 0.8",
+        "extracted_answer": "1.",
+        "correct": true
+      }
+    },
+    "correct": false,
+    "error": null
+  },
+  {
+    "sample_idx": 3,
+    "arm": "debate6",
+    "answer_mode": "both",
+    "scene": "42898527",
+    "dataset": "arkitscenes",
+    "question_type": "object_rel_direction_hard",
+    "question": "If I am standing by the washer and facing the stove, is the refrigerator to my front-left, front-right, back-left, or back-right?\nThe directions refer to the quadrants of a Cartesian plane (if I am standing at the origin and facing along the positive y-axis).",
+    "ground_truth": "B",
+    "categories": [
+      "refrigerator",
+      "stove",
+      "washer"
+    ],
+    "categories_matched": [
+      "refrigerator",
+      "stove",
+      "washer"
+    ],
+    "gt_map": {
+      "top": {
+        "refrigerator": [
+          [
+            4,
+            7
+          ]
+        ],
+        "stove": [
+          [
+            3,
+            1
+          ]
+        ],
+        "washer": [
+          [
+            1,
+            3
+          ]
+        ]
+      },
+      "front": {
+        "refrigerator": [
+          [
+            4,
+            4
+          ]
+        ],
+        "stove": [
+          [
+            3,
+            4
+          ]
+        ],
+        "washer": [
+          [
+            1,
+            2
+          ]
+        ]
+      },
+      "side": {
+        "refrigerator": [
+          [
+            7,
+            4
+          ]
+        ],
+        "stove": [
+          [
+            1,
+            4
+          ]
+        ],
+        "washer": [
+          [
+            3,
+            2
+          ]
+        ]
+      },
+      "sizes": {
+        "top": {
+          "refrigerator": [
+            [
+              1,
+              2
+            ]
+          ],
+          "stove": [
+            [
+              1,
+              2
+            ]
+          ],
+          "washer": [
+            [
+              1,
+              2
+            ]
+          ]
+        },
+        "front": {
+          "refrigerator": [
+            [
+              1,
+              7
+            ]
+          ],
+          "stove": [
+            [
+              1,
+              1
+            ]
+          ],
+          "washer": [
+            [
+              1,
+              4
+            ]
+          ]
+        },
+        "side": {
+          "refrigerator": [
+            [
+              2,
+              7
+            ]
+          ],
+          "stove": [
+            [
+              2,
+              1
+            ]
+          ],
+          "washer": [
+            [
+              2,
+              4
+            ]
+          ]
+        }
+      },
+      "room": 20.942936812417052
+    },
+    "cameras": {
+      "top": {
+        "name": "TOP",
+        "position": [
+          4.5,
+          4.5,
+          10.0
+        ],
+        "look_at": [
+          4.5,
+          4.5,
+          4.5
+        ],
+        "look_up": [
+          0.0,
+          1.0,
+          0.0
+        ]
+      },
+      "front": {
+        "name": "FRONT",
+        "position": [
+          4.97935658511212,
+          9.979070839504601,
+          4.5
+        ],
+        "look_at": [
+          4.5,
+          4.5,
+          4.5
+        ],
+        "look_up": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "side": {
+        "name": "SIDE",
+        "position": [
+          9.992462441150156,
+          4.7878477593361914,
+          4.5
+        ],
+        "look_at": [
+          4.5,
+          4.5,
+          4.5
+        ],
+        "look_up": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      }
+    },
+    "rounds_run": 2,
+    "transforms_analytic": {
+      "front": {
+        "R": [
+          [
+            -0.9961946980917455,
+            0.0,
+            -0.08715574274765814
+          ],
+          [
+            0.08715574274765812,
+            0.0,
+            -0.9961946980917455
+          ],
+          [
+            0.0,
+            -1.0000000000000002,
+            0.0
+          ]
+        ],
+        "t": [
+          0.47935658511211887,
+          5.479070839504599,
+          5.5
+        ],
+        "mirror": false,
+        "rmse": null
+      },
+      "side": {
+        "R": [
+          [
+            -0.05233595624294388,
+            0.0,
+            -0.9986295347545738
+          ],
+          [
+            0.9986295347545737,
+            0.0,
+            -0.05233595624294389
+          ],
+          [
+            0.0,
+            -1.0,
+            0.0
+          ]
+        ],
+        "t": [
+          5.492462441150154,
+          0.28784775933619144,
+          5.5
+        ],
+        "mirror": false,
+        "rmse": null
+      }
+    },
+    "raw_views": {
+      "top": "```json\n{\n  \"refrigerator\": [[1.5, 7.5, 1.0, 1.0]],\n  \"stove\": [[4.5, 1.5, 1.0, 1.0]],\n  \"washer\": [[7.5, 7.5, 1.0, 1.0]]\n}\n```\n\nANSWER: {\"refrigerator\": [[1.5, 7.5, 1.0, 1.0]], \"stove\": [[4.5, 1.5, 1.0, 1.0]], \"washer\": [[7.5, 7.5, 1.0, 1.0]]}",
+      "front": "{\"refrigerator\": [[3.1, 0.0, 0.9, 1.8]], \"stove\": [[4.6, 0.0, 0.8, 0.9]], \"washer\": [[6.0, 0.0, 0.8, 0.9]]}\n\nANSWER: {\"refrigerator\": [[3.1, 0.0, 0.9, 1.8]], \"stove\": [[4.6, 0.0, 0.8, 0.9]], \"washer\": [[6.0, 0.0, 0.8, 0.9]]}",
+      "side": "```json\n{\"refrigerator\": [[1.15, 1.01, 0.91, 1.98]], \"stove\": [[4.85, 0.58, 0.85, 1.12]]}\n```\n\nANSWER: {\"refrigerator\": [[1.15, 1.01, 0.91, 1.98]], \"stove\": [[4.85, 0.58, 0.85, 1.12]]}"
+    },
+    "final_views": {
+      "top": "```json\n{\n  \"refrigerator\": [[1.5, 7.5, 1.0, 1.0]],\n  \"stove\": [[4.5, 1.5, 1.0, 1.0]],\n  \"washer\": [[7.5, 7.5, 1.0, 1.0]]\n}\n```\n\nANSWER: {\"refrigerator\": [[1.5, 7.5, 1.0, 1.0]], \"stove\": [[4.5, 1.5, 1.0, 1.0]], \"washer\": [[7.5, 7.5, 1.0, 1.0]]}",
+      "front": "{\"refrigerator\": [[3.1, 0.0, 0.9, 1.8]], \"stove\": [[4.6, 0.0, 0.8, 0.9]], \"washer\": [[6.0, 0.0, 0.8, 0.9]]}\n\nANSWER: {\"refrigerator\": [[3.1, 0.0, 0.9, 1.8]], \"stove\": [[4.6, 0.0, 0.8, 0.9]], \"washer\": [[6.0, 0.0, 0.8, 0.9]]}",
+      "side": "```json\n{\"refrigerator\": [[1.15, 1.01, 0.91, 1.98]], \"stove\": [[4.85, 0.58, 0.85, 1.12]]}\n```\n\nANSWER: {\"refrigerator\": [[1.15, 1.01, 0.91, 1.98]], \"stove\": [[4.85, 0.58, 0.85, 1.12]]}"
+    },
+    "pred_map": {
+      "top": {
+        "stove": [
+          [
+            4.55,
+            3.175
+          ]
+        ],
+        "refrigerator": [
+          [
+            2.3,
+            4.325
+          ]
+        ],
+        "washer": [
+          [
+            6.75,
+            7.5
+          ]
+        ]
+      },
+      "front": {
+        "stove": [
+          [
+            4.3474260148755155,
+            0.29000000000000015
+          ]
+        ],
+        "refrigerator": [
+          [
+            6.508930812023021,
+            0.505
+          ]
+        ],
+        "washer": [
+          [
+            2.6723634681596398,
+            0.0
+          ]
+        ]
+      },
+      "side": {
+        "stove": [
+          [
+            3.238492421760127,
+            0.29000000000000004
+          ]
+        ],
+        "refrigerator": [
+          [
+            4.443270197396315,
+            0.5049999999999999
+          ]
+        ],
+        "washer": [
+          [
+            7.238560616281829,
+            0.0
+          ]
+        ]
+      },
+      "sizes": {
+        "top": {
+          "refrigerator": [
+            [
+              1.0,
+              1.0
+            ]
+          ],
+          "stove": [
+            [
+              1.0,
+              1.0
+            ]
+          ],
+          "washer": [
+            [
+              1.0,
+              1.0
+            ]
+          ]
+        },
+        "front": {
+          "refrigerator": [
+            [
+              0.9,
+              1.8
+            ]
+          ],
+          "stove": [
+            [
+              0.8,
+              0.9
+            ]
+          ],
+          "washer": [
+            [
+              0.8,
+              0.9
+            ]
+          ]
+        },
+        "side": {
+          "refrigerator": [
+            [
+              0.91,
+              1.98
+            ]
+          ],
+          "stove": [
+            [
+              0.85,
+              1.12
+            ]
+          ]
+        }
+      },
+      "room": null
+    },
+    "fused_map": {
+      "top": {
+        "stove": [
+          [
+            4.55,
+            3.175
+          ]
+        ],
+        "refrigerator": [
+          [
+            2.3,
+            4.325
+          ]
+        ],
+        "washer": [
+          [
+            6.75,
+            7.5
+          ]
+        ]
+      },
+      "front": {
+        "stove": [
+          [
+            4.3474260148755155,
+            0.29000000000000015
+          ]
+        ],
+        "refrigerator": [
+          [
+            6.508930812023021,
+            0.505
+          ]
+        ],
+        "washer": [
+          [
+            2.6723634681596398,
+            0.0
+          ]
+        ]
+      },
+      "side": {
+        "stove": [
+          [
+            3.238492421760127,
+            0.29000000000000004
+          ]
+        ],
+        "refrigerator": [
+          [
+            4.443270197396315,
+            0.5049999999999999
+          ]
+        ],
+        "washer": [
+          [
+            7.238560616281829,
+            0.0
+          ]
+        ]
+      },
+      "sizes": {
+        "top": {
+          "refrigerator": [
+            [
+              1.0,
+              1.0
+            ]
+          ],
+          "stove": [
+            [
+              1.0,
+              1.0
+            ]
+          ],
+          "washer": [
+            [
+              1.0,
+              1.0
+            ]
+          ]
+        },
+        "front": {
+          "refrigerator": [
+            [
+              0.9,
+              1.8
+            ]
+          ],
+          "stove": [
+            [
+              0.8,
+              0.9
+            ]
+          ],
+          "washer": [
+            [
+              0.8,
+              0.9
+            ]
+          ]
+        },
+        "side": {
+          "refrigerator": [
+            [
+              0.91,
+              1.98
+            ]
+          ],
+          "stove": [
+            [
+              0.85,
+              1.12
+            ]
+          ]
+        }
+      },
+      "room": null
+    },
+    "round_metrics": {
+      "round0": {
+        "gt_instances": 3,
+        "pred_instances": 3,
+        "missed_instances": 0,
+        "extra_instances": 0,
+        "extra_categories": 0,
+        "pairs": 3,
+        "pairs_correct": 2,
+        "bin_pairs": {
+          "6": 1,
+          "5": 1,
+          "2": 1
+        },
+        "bin_correct": {
+          "6": 1,
+          "5": 1
+        },
+        "scale_ratios": [
+          1.1028219331407116,
+          1.2,
+          2.3717082451262845
+        ],
+        "adjacent_pairs": 0,
+        "adjacent_correct": 0,
+        "cross_view_conflicts": 5,
+        "cross_view_checked": 7,
+        "cross_view_missing": 1,
+        "height_pairs": 2,
+        "height_correct": 0
+      },
+      "round1": {
+        "gt_instances": 3,
+        "pred_instances": 3,
+        "missed_instances": 0,
+        "extra_instances": 0,
+        "extra_categories": 0,
+        "pairs": 3,
+        "pairs_correct": 2,
+        "bin_pairs": {
+          "6": 1,
+          "5": 1,
+          "2": 1
+        },
+        "bin_correct": {
+          "6": 1,
+          "5": 1
+        },
+        "scale_ratios": [
+          1.1028219331407116,
+          1.2,
+          2.3717082451262845
+        ],
+        "adjacent_pairs": 0,
+        "adjacent_correct": 0,
+        "cross_view_conflicts": 5,
+        "cross_view_checked": 7,
+        "cross_view_missing": 1,
+        "height_pairs": 2,
+        "height_correct": 0
+      },
+      "round2": {
+        "gt_instances": 3,
+        "pred_instances": 3,
+        "missed_instances": 0,
+        "extra_instances": 0,
+        "extra_categories": 0,
+        "pairs": 3,
+        "pairs_correct": 2,
+        "bin_pairs": {
+          "6": 1,
+          "5": 1,
+          "2": 1
+        },
+        "bin_correct": {
+          "6": 1,
+          "5": 1
+        },
+        "scale_ratios": [
+          1.1028219331407116,
+          1.2,
+          2.3717082451262845
+        ],
+        "adjacent_pairs": 0,
+        "adjacent_correct": 0,
+        "cross_view_conflicts": 5,
+        "cross_view_checked": 7,
+        "cross_view_missing": 1,
+        "height_pairs": 2,
+        "height_correct": 0
+      },
+      "final": {
+        "gt_instances": 3,
+        "pred_instances": 3,
+        "missed_instances": 0,
+        "extra_instances": 0,
+        "extra_categories": 0,
+        "pairs": 3,
+        "pairs_correct": 1,
+        "bin_pairs": {
+          "6": 1,
+          "5": 1,
+          "2": 1
+        },
+        "bin_correct": {
+          "5": 1
+        },
+        "scale_ratios": [
+          0.4154125269747744,
+          1.0933091968880533,
+          1.715576615893327
+        ],
+        "adjacent_pairs": 0,
+        "adjacent_correct": 0,
+        "cross_view_conflicts": 2,
+        "cross_view_checked": 9,
+        "cross_view_missing": 0,
+        "height_pairs": 2,
+        "height_correct": 2
+      }
+    },
+    "map_metrics": {
+      "gt_instances": 3,
+      "pred_instances": 3,
+      "missed_instances": 0,
+      "extra_instances": 0,
+      "extra_categories": 0,
+      "pairs": 3,
+      "pairs_correct": 1,
+      "bin_pairs": {
+        "6": 1,
+        "5": 1,
+        "2": 1
+      },
+      "bin_correct": {
+        "5": 1
+      },
+      "scale_ratios": [
+        0.4154125269747744,
+        1.0933091968880533,
+        1.715576615893327
+      ],
+      "adjacent_pairs": 0,
+      "adjacent_correct": 0,
+      "cross_view_conflicts": 2,
+      "cross_view_checked": 9,
+      "cross_view_missing": 0,
+      "height_pairs": 2,
+      "height_correct": 2
+    },
+    "raw_answer": "To determine the relative direction of the refrigerator from your position at the washer facing the stove, we can analyze their coordinates on the top-view Cartesian plane:\n\n1. **Positions**:\n   * **Washer (Your Position)**: $W = (6.75, 7.5)$\n   * **Stove (Facing Direction)**: $S = (4.55, 3.175)$\n   * **Refrigerator**: $R = (2.3, 4.325)$\n\n2. **Vectors**:\n   * **Forward Vector (Washer to Stove)**: $\\vec{f} = S - W = (-2.2, -4.325)$ (pointing South-South-West)\n   * **Target Vector (Washer to Refrigerator)**: $\\vec{u} = R - W = (-4.45, -3.175)$ (pointing West-South-West)\n\n3. **Relative Angle**:\n   * The forward direction is at approximately $243^\\circ$ (South-South-West).\n   * The direction of the refrigerator is at approximately $215.5^\\circ$ (West-South-West).\n   * The refrigerator lies $27.5^\\circ$ clockwise (to the right) of your forward-facing direction.\n\nSince the angle is within $90^\\circ$ of your forward direction and to the clockwise side, the refrigerator is to your **front-right**.\n\nANSWER: D",
+    "extracted_answer": "D",
+    "answers_memory": {
+      "shared": {
+        "raw_answer": "To determine the relative direction of the refrigerator from your position at the washer facing the stove, we can analyze their coordinates on the top-view Cartesian plane:\n\n1. **Positions**:\n   * **Washer (Your Position)**: $W = (6.75, 7.5)$\n   * **Stove (Facing Direction)**: $S = (4.55, 3.175)$\n   * **Refrigerator**: $R = (2.3, 4.325)$\n\n2. **Vectors**:\n   * **Forward Vector (Washer to Stove)**: $\\vec{f} = S - W = (-2.2, -4.325)$ (pointing South-South-West)\n   * **Target Vector (Washer to Refrigerator)**: $\\vec{u} = R - W = (-4.45, -3.175)$ (pointing West-South-West)\n\n3. **Relative Angle**:\n   * The forward direction is at approximately $243^\\circ$ (South-South-West).\n   * The direction of the refrigerator is at approximately $215.5^\\circ$ (West-South-West).\n   * The refrigerator lies $27.5^\\circ$ clockwise (to the right) of your forward-facing direction.\n\nSince the angle is within $90^\\circ$ of your forward direction and to the clockwise side, the refrigerator is to your **front-right**.\n\nANSWER: D",
+        "extracted_answer": "D",
+        "correct": false
+      },
+      "noshared": {
+        "raw_answer": "To determine the relative direction of the refrigerator from your position at the washer, we can analyze the coordinates from the top-down view:\n\n* **Washer (W):** $[6.75, 7.5]$\n* **Stove (S):** $[4.55, 3.175]$\n* **Refrigerator (R):** $[2.3, 4.325]$\n\n1. **Determine the facing direction (from Washer to Stove):**\n   $$\\vec{v}_{\\text{facing}} = S - W = [4.55 - 6.75, 3.175 - 7.5] = [-2.2, -4.325]$$\n\n2. **Determine the direction to the Refrigerator (from Washer to Refrigerator):**\n   $$\\vec{v}_{\\text{target}} = R - W = [2.3 - 6.75, 4.325 - 7.5] = [-4.45, -3.175]$$\n\n3. **Calculate the dot product to see if it is in front or behind:**\n   $$\\vec{v}_{\\text{facing}} \\cdot \\vec{v}_{\\text{target}} = (-2.2 \\times -4.45) + (-4.325 \\times -3.175) = 9.79 + 13.73 = 23.52$$\n   Since the dot product is positive, the refrigerator is in your **front** hemisphere.\n\n4. **Calculate the 2D cross product to determine if it is to the left or right:**\n   $$\\vec{v}_{\\text{facing}} \\times \\vec{v}_{\\text{target}} = (-2.2 \\times -3.175) - (-4.325 \\times -4.45) = 6.985 - 19.246 = -12.261$$\n   A negative cross product indicates that the target is to your **right**.\n\nCombining these results, the refrigerator is to your **front-right**.\n\nANSWER: D",
+        "extracted_answer": "D",
+        "correct": false
+      }
+    },
+    "correct": false,
+    "error": null
+  },
+  {
+    "sample_idx": 0,
+    "arm": "debate6",
+    "answer_mode": "both",
+    "scene": "scene0700_02",
+    "dataset": "scannet",
+    "question_type": "object_rel_distance",
+    "question": "Measuring from the closest point of each object, which of these objects (window, trash bin, table, radiator) is the closest to the door?",
+    "ground_truth": "B",
+    "categories": [
+      "door",
+      "radiator",
+      "table",
+      "trash bin",
+      "window"
+    ],
+    "categories_matched": [
+      "door",
+      "radiator",
+      "table",
+      "trash bin",
+      "window"
+    ],
+    "gt_map": {
+      "top": {
+        "door": [
+          [
+            1,
+            2
+          ]
+        ],
+        "radiator": [
+          [
+            7,
+            4
+          ]
+        ],
+        "table": [
+          [
+            5,
+            5
+          ]
+        ],
+        "trash bin": [
+          [
+            3,
+            1
+          ],
+          [
+            3,
+            1
+          ]
+        ],
+        "window": [
+          [
+            7,
+            5
+          ]
+        ]
+      },
+      "front": {
+        "door": [
+          [
+            1,
+            4
+          ]
+        ],
+        "radiator": [
+          [
+            7,
+            2
+          ]
+        ],
+        "table": [
+          [
+            5,
+            2
+          ]
+        ],
+        "trash bin": [
+          [
+            3,
+            1
+          ],
+          [
+            3,
+            1
+          ]
+        ],
+        "window": [
+          [
+            7,
+            5
+          ]
+        ]
+      },
+      "side": {
+        "door": [
+          [
+            2,
+            4
+          ]
+        ],
+        "radiator": [
+          [
+            4,
+            2
+          ]
+        ],
+        "table": [
+          [
+            5,
+            2
+          ]
+        ],
+        "trash bin": [
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ]
+        ],
+        "window": [
+          [
+            5,
+            5
+          ]
+        ]
+      },
+      "sizes": {
+        "top": {
+          "door": [
+            [
+              2,
+              4
+            ]
+          ],
+          "radiator": [
+            [
+              2,
+              1
+            ]
+          ],
+          "table": [
+            [
+              1,
+              6
+            ]
+          ],
+          "trash bin": [
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              1
+            ]
+          ],
+          "window": [
+            [
+              3,
+              2
+            ]
+          ]
+        },
+        "front": {
+          "door": [
+            [
+              2,
+              1
+            ]
+          ],
+          "radiator": [
+            [
+              2,
+              1
+            ]
+          ],
+          "table": [
+            [
+              1,
+              3
+            ]
+          ],
+          "trash bin": [
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              1
+            ]
+          ],
+          "window": [
+            [
+              3,
+              1
+            ]
+          ]
+        },
+        "side": {
+          "door": [
+            [
+              4,
+              1
+            ]
+          ],
+          "radiator": [
+            [
+              1,
+              1
+            ]
+          ],
+          "table": [
+            [
+              6,
+              3
+            ]
+          ],
+          "trash bin": [
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              1
+            ]
+          ],
+          "window": [
+            [
+              2,
+              1
+            ]
+          ]
+        }
+      },
+      "room": 12.439986092622377
+    },
+    "cameras": {
+      "top": {
+        "name": "TOP",
+        "position": [
+          4.5,
+          4.5,
+          10.0
+        ],
+        "look_at": [
+          4.5,
+          4.5,
+          4.5
+        ],
+        "look_up": [
+          0.0,
+          1.0,
+          0.0
+        ]
+      },
+      "front": {
+        "name": "FRONT",
+        "position": [
+          4.97935658511212,
+          9.979070839504601,
+          4.5
+        ],
+        "look_at": [
+          4.5,
+          4.5,
+          4.5
+        ],
+        "look_up": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "side": {
+        "name": "SIDE",
+        "position": [
+          9.992462441150156,
+          4.7878477593361914,
+          4.5
+        ],
+        "look_at": [
+          4.5,
+          4.5,
+          4.5
+        ],
+        "look_up": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      }
+    },
+    "rounds_run": 2,
+    "transforms_analytic": {
+      "front": {
+        "R": [
+          [
+            -0.9961946980917455,
+            0.0,
+            -0.08715574274765814
+          ],
+          [
+            0.08715574274765812,
+            0.0,
+            -0.9961946980917455
+          ],
+          [
+            0.0,
+            -1.0000000000000002,
+            0.0
+          ]
+        ],
+        "t": [
+          0.47935658511211887,
+          5.479070839504599,
+          5.5
+        ],
+        "mirror": false,
+        "rmse": null
+      },
+      "side": {
+        "R": [
+          [
+            -0.05233595624294388,
+            0.0,
+            -0.9986295347545738
+          ],
+          [
+            0.9986295347545737,
+            0.0,
+            -0.05233595624294389
+          ],
+          [
+            0.0,
+            -1.0,
+            0.0
+          ]
+        ],
+        "t": [
+          5.492462441150154,
+          0.28784775933619144,
+          5.5
+        ],
+        "mirror": false,
+        "rmse": null
+      }
+    },
+    "raw_views": {
+      "top": "{\"door\": [[1.0, 0.2, 1.2, 0.2]], \"radiator\": [[5.0, 9.3, 1.8, 0.4]], \"table\": [[5.0, 5.0, 2.0, 1.5]], \"trash bin\": [[3.5, 3.5, 0.6, 0.6]], \"window\": [[5.0, 9.8, 2.0, 0.2]]}\n\nANSWER: {\"door\": [[1.0, 0.2, 1.2, 0.2]], \"radiator\": [[5.0, 9.3, 1.8, 0.4]], \"table\": [[5.0, 5.0, 2.0, 1.5]], \"trash bin\": [[3.5, 3.5, 0.6, 0.6]], \"window\": [[5.0, 9.8, 2.0, 0.2]]}",
+      "front": "```json\n{\n  \"table\": [[4.0, 4.0, 2.0, 2.0]],\n  \"window\": [[4.0, 0.0, 2.0, 0.5]],\n  \"radiator\": [[4.0, 0.5, 2.0, 0.5]],\n  \"door\": [[0.0, 3.0, 0.5, 2.0]],\n  \"trash bin\": [[3.0, 4.0, 1.0, 1.0]]\n}\n```\n\nANSWER: {\"table\": [[4.0, 4.0, 2.0, 2.0]], \"window\": [[4.0, 0.0, 2.0, 0.5]], \"radiator\": [[4.0, 0.5, 2.0, 0.5]], \"door\": [[0.0, 3.0, 0.5, 2.0]], \"trash bin\": [[3.0, 4.0, 1.0, 1.0]]}",
+      "side": "```json\n{\n  \"door\": [[0, 3, 1, 6]],\n  \"window\": [[5, 6, 3, 3]],\n  \"radiator\": [[5, 2, 2, 2]],\n  \"table\": [[5, 1, 3, 2]],\n  \"trash bin\": [[3, 1, 1, 1]]\n}\n```\n\nANSWER: {\"door\": [[0, 3, 1, 6]], \"window\": [[5, 6, 3, 3]], \"radiator\": [[5, 2, 2, 2]], \"table\": [[5, 1, 3, 2]], \"trash bin\": [[3, 1, 1, 1]]}"
+    },
+    "final_views": {
+      "top": "{\"door\": [[1.0, 0.2, 1.2, 0.2]], \"radiator\": [[5.0, 9.3, 1.8, 0.4]], \"table\": [[5.0, 5.0, 2.0, 1.5]], \"trash bin\": [[3.5, 3.5, 0.6, 0.6]], \"window\": [[5.0, 9.8, 2.0, 0.2]]}\n\nANSWER: {\"door\": [[1.0, 0.2, 1.2, 0.2]], \"radiator\": [[5.0, 9.3, 1.8, 0.4]], \"table\": [[5.0, 5.0, 2.0, 1.5]], \"trash bin\": [[3.5, 3.5, 0.6, 0.6]], \"window\": [[5.0, 9.8, 2.0, 0.2]]}",
+      "front": "ANSWER: {\"table\": [[4.0, 4.0, 2.0, 2.0]], \"window\": [[4.0, 6.0, 2.0, 0.5]], \"radiator\": [[4.0, 0.5, 2.0, 0.5]], \"door\": [[0.0, 3.0, 0.5, 2.0]], \"trash bin\": [[3.0, 4.0, 1.0, 1.0]]}",
+      "side": "ANSWER: {\"door\": [[0.2, 3, 1, 6]], \"window\": [[9.8, 6, 3, 3]], \"radiator\": [[9.3, 2, 2, 2]], \"table\": [[5.0, 1, 3, 2]], \"trash bin\": [[3.5, 1, 1, 1]]}"
+    },
+    "pred_map": {
+      "top": {
+        "window": [
+          [
+            4.5,
+            9.8
+          ]
+        ],
+        "trash bin": [
+          [
+            3.25,
+            3.5
+          ]
+        ],
+        "door": [
+          [
+            0.5,
+            0.20000000000000018
+          ]
+        ],
+        "radiator": [
+          [
+            4.5,
+            9.3
+          ]
+        ],
+        "table": [
+          [
+            4.5,
+            5.0
+          ]
+        ]
+      },
+      "front": {
+        "window": [
+          [
+            4.926385977380209,
+            6.000000000000001
+          ]
+        ],
+        "trash bin": [
+          [
+            5.56898708507444,
+            2.5
+          ]
+        ],
+        "door": [
+          [
+            7.832263469385713,
+            3.0000000000000004
+          ]
+        ],
+        "radiator": [
+          [
+            4.886160885174529,
+            1.2500000000000002
+          ]
+        ],
+        "table": [
+          [
+            4.54022509220568,
+            2.5
+          ]
+        ]
+      },
+      "side": {
+        "window": [
+          [
+            9.536070717389276,
+            6.0
+          ]
+        ],
+        "trash bin": [
+          [
+            3.6120454501649304,
+            2.5
+          ]
+        ],
+        "door": [
+          [
+            0.6133232161639655,
+            3.0
+          ]
+        ],
+        "radiator": [
+          [
+            9.060969706314815,
+            1.25
+          ]
+        ],
+        "table": [
+          [
+            4.97510101107446,
+            2.5
+          ]
+        ]
+      },
+      "sizes": {
+        "top": {
+          "door": [
+            [
+              1.2,
+              0.2
+            ]
+          ],
+          "radiator": [
+            [
+              1.8,
+              0.4
+            ]
+          ],
+          "table": [
+            [
+              2.0,
+              1.5
+            ]
+          ],
+          "trash bin": [
+            [
+              0.6,
+              0.6
+            ]
+          ],
+          "window": [
+            [
+              2.0,
+              0.2
+            ]
+          ]
+        },
+        "front": {
+          "table": [
+            [
+              2.0,
+              2.0
+            ]
+          ],
+          "window": [
+            [
+              2.0,
+              0.5
+            ]
+          ],
+          "radiator": [
+            [
+              2.0,
+              0.5
+            ]
+          ],
+          "door": [
+            [
+              0.5,
+              2.0
+            ]
+          ],
+          "trash bin": [
+            [
+              1.0,
+              1.0
+            ]
+          ]
+        },
+        "side": {
+          "door": [
+            [
+              1.0,
+              6.0
+            ]
+          ],
+          "window": [
+            [
+              3.0,
+              3.0
+            ]
+          ],
+          "radiator": [
+            [
+              2.0,
+              2.0
+            ]
+          ],
+          "table": [
+            [
+              3.0,
+              2.0
+            ]
+          ],
+          "trash bin": [
+            [
+              1.0,
+              1.0
+            ]
+          ]
+        }
+      },
+      "room": null
+    },
+    "fused_map": {
+      "top": {
+        "window": [
+          [
+            4.5,
+            9.8
+          ]
+        ],
+        "trash bin": [
+          [
+            3.25,
+            3.5
+          ]
+        ],
+        "door": [
+          [
+            0.5,
+            0.20000000000000018
+          ]
+        ],
+        "radiator": [
+          [
+            4.5,
+            9.3
+          ]
+        ],
+        "table": [
+          [
+            4.5,
+            5.0
+          ]
+        ]
+      },
+      "front": {
+        "window": [
+          [
+            4.926385977380209,
+            6.000000000000001
+          ]
+        ],
+        "trash bin": [
+          [
+            5.56898708507444,
+            2.5
+          ]
+        ],
+        "door": [
+          [
+            7.832263469385713,
+            3.0000000000000004
+          ]
+        ],
+        "radiator": [
+          [
+            4.886160885174529,
+            1.2500000000000002
+          ]
+        ],
+        "table": [
+          [
+            4.54022509220568,
+            2.5
+          ]
+        ]
+      },
+      "side": {
+        "window": [
+          [
+            9.536070717389276,
+            6.0
+          ]
+        ],
+        "trash bin": [
+          [
+            3.6120454501649304,
+            2.5
+          ]
+        ],
+        "door": [
+          [
+            0.6133232161639655,
+            3.0
+          ]
+        ],
+        "radiator": [
+          [
+            9.060969706314815,
+            1.25
+          ]
+        ],
+        "table": [
+          [
+            4.97510101107446,
+            2.5
+          ]
+        ]
+      },
+      "sizes": {
+        "top": {
+          "door": [
+            [
+              1.2,
+              0.2
+            ]
+          ],
+          "radiator": [
+            [
+              1.8,
+              0.4
+            ]
+          ],
+          "table": [
+            [
+              2.0,
+              1.5
+            ]
+          ],
+          "trash bin": [
+            [
+              0.6,
+              0.6
+            ]
+          ],
+          "window": [
+            [
+              2.0,
+              0.2
+            ]
+          ]
+        },
+        "front": {
+          "table": [
+            [
+              2.0,
+              2.0
+            ]
+          ],
+          "window": [
+            [
+              2.0,
+              0.5
+            ]
+          ],
+          "radiator": [
+            [
+              2.0,
+              0.5
+            ]
+          ],
+          "door": [
+            [
+              0.5,
+              2.0
+            ]
+          ],
+          "trash bin": [
+            [
+              1.0,
+              1.0
+            ]
+          ]
+        },
+        "side": {
+          "door": [
+            [
+              1.0,
+              6.0
+            ]
+          ],
+          "window": [
+            [
+              3.0,
+              3.0
+            ]
+          ],
+          "radiator": [
+            [
+              2.0,
+              2.0
+            ]
+          ],
+          "table": [
+            [
+              3.0,
+              2.0
+            ]
+          ],
+          "trash bin": [
+            [
+              1.0,
+              1.0
+            ]
+          ]
+        }
+      },
+      "room": null
+    },
+    "round_metrics": {
+      "round0": {
+        "gt_instances": 6,
+        "pred_instances": 5,
+        "missed_instances": 1,
+        "extra_instances": 0,
+        "extra_categories": 0,
+        "pairs": 10,
+        "pairs_correct": 3,
+        "bin_pairs": {
+          "6": 2,
+          "5": 3,
+          "2": 3,
+          "1": 1,
+          "4": 1
+        },
+        "bin_correct": {
+          "5": 2,
+          "1": 1
+        },
+        "scale_ratios": [
+          1.5717028981331047,
+          1.2496399481450646,
+          1.8514858897652984,
+          1.5503404643998544,
+          1.9230184606498193,
+          1.198165264060013,
+          0.5,
+          0.47434164902525683,
+          2.4000000000000004,
+          1.1448253141855311
+        ],
+        "adjacent_pairs": 1,
+        "adjacent_correct": 1,
+        "cross_view_conflicts": 6,
+        "cross_view_checked": 15,
+        "cross_view_missing": 3,
+        "height_pairs": 9,
+        "height_correct": 1
+      },
+      "round1": {
+        "gt_instances": 6,
+        "pred_instances": 5,
+        "missed_instances": 1,
+        "extra_instances": 0,
+        "extra_categories": 0,
+        "pairs": 10,
+        "pairs_correct": 3,
+        "bin_pairs": {
+          "6": 2,
+          "5": 3,
+          "2": 3,
+          "1": 1,
+          "4": 1
+        },
+        "bin_correct": {
+          "5": 2,
+          "1": 1
+        },
+        "scale_ratios": [
+          1.5717028981331047,
+          1.2496399481450646,
+          1.8514858897652984,
+          1.5503404643998544,
+          1.9230184606498193,
+          1.198165264060013,
+          0.5,
+          0.47434164902525683,
+          2.4000000000000004,
+          1.1448253141855311
+        ],
+        "adjacent_pairs": 1,
+        "adjacent_correct": 1,
+        "cross_view_conflicts": 6,
+        "cross_view_checked": 15,
+        "cross_view_missing": 3,
+        "height_pairs": 9,
+        "height_correct": 1
+      },
+      "round2": {
+        "gt_instances": 6,
+        "pred_instances": 5,
+        "missed_instances": 1,
+        "extra_instances": 0,
+        "extra_categories": 0,
+        "pairs": 10,
+        "pairs_correct": 3,
+        "bin_pairs": {
+          "6": 2,
+          "5": 3,
+          "2": 3,
+          "1": 1,
+          "4": 1
+        },
+        "bin_correct": {
+          "5": 2,
+          "1": 1
+        },
+        "scale_ratios": [
+          1.5717028981331047,
+          1.2496399481450646,
+          1.8514858897652984,
+          1.5503404643998544,
+          1.9230184606498193,
+          1.198165264060013,
+          0.5,
+          0.47434164902525683,
+          2.4000000000000004,
+          1.1448253141855311
+        ],
+        "adjacent_pairs": 1,
+        "adjacent_correct": 1,
+        "cross_view_conflicts": 5,
+        "cross_view_checked": 15,
+        "cross_view_missing": 3,
+        "height_pairs": 9,
+        "height_correct": 5
+      },
+      "final": {
+        "gt_instances": 6,
+        "pred_instances": 5,
+        "missed_instances": 1,
+        "extra_instances": 0,
+        "extra_categories": 0,
+        "pairs": 10,
+        "pairs_correct": 3,
+        "bin_pairs": {
+          "6": 2,
+          "5": 3,
+          "2": 3,
+          "1": 1,
+          "4": 1
+        },
+        "bin_correct": {
+          "5": 2,
+          "1": 1
+        },
+        "scale_ratios": [
+          1.5717028981331047,
+          1.2496399481450646,
+          1.9210674116230277,
+          1.5503404643998544,
+          1.9230184606498193,
+          1.1866338946785568,
+          0.5,
+          0.43660622991432446,
+          2.4000000000000004,
+          1.1354032873829458
+        ],
+        "adjacent_pairs": 1,
+        "adjacent_correct": 1,
+        "cross_view_conflicts": 2,
+        "cross_view_checked": 15,
+        "cross_view_missing": 3,
+        "height_pairs": 9,
+        "height_correct": 7
+      }
+    },
+    "map_metrics": {
+      "gt_instances": 6,
+      "pred_instances": 5,
+      "missed_instances": 1,
+      "extra_instances": 0,
+      "extra_categories": 0,
+      "pairs": 10,
+      "pairs_correct": 3,
+      "bin_pairs": {
+        "6": 2,
+        "5": 3,
+        "2": 3,
+        "1": 1,
+        "4": 1
+      },
+      "bin_correct": {
+        "5": 2,
+        "1": 1
+      },
+      "scale_ratios": [
+        1.5717028981331047,
+        1.2496399481450646,
+        1.9210674116230277,
+        1.5503404643998544,
+        1.9230184606498193,
+        1.1866338946785568,
+        0.5,
+        0.43660622991432446,
+        2.4000000000000004,
+        1.1354032873829458
+      ],
+      "adjacent_pairs": 1,
+      "adjacent_correct": 1,
+      "cross_view_conflicts": 2,
+      "cross_view_checked": 15,
+      "cross_view_missing": 3,
+      "height_pairs": 9,
+      "height_correct": 7
+    },
+    "raw_answer": "ANSWER: B",
+    "extracted_answer": "B",
+    "answers_memory": {
+      "shared": {
+        "raw_answer": "ANSWER: B",
+        "extracted_answer": "B",
+        "correct": true
+      },
+      "noshared": {
+        "raw_answer": "To find which object is the closest to the door, we can analyze their positions using the coordinates from the top-down view (horizontal plane):\n\n1. **Door**: Center at $[0.5, 0.2]$\n2. **Trash bin**: Center at $[3.25, 3.5]$\n3. **Table**: Center at $[4.5, 5.0]$\n4. **Radiator**: Center at $[4.5, 9.3]$\n5. **Window**: Center at $[4.5, 9.8]$\n\nCalculating the approximate 2D distance from the door to each object (taking their sizes into account):\n* **Trash bin**: The horizontal distance between their closest boundaries is approximately $3.44$ units.\n* **Table**: The horizontal distance between their closest boundaries is approximately $4.62$ units.\n* **Radiator** and **Window** are located much further away (at $Y \\approx 9.3$ and $Y \\approx 9.8$ respectively).\n\nSince their vertical ($Z$) spans overlap, the 3D distance is dominated by the horizontal distance. Therefore, the trash bin is the closest object to the door.\n\nANSWER: B",
+        "extracted_answer": "B",
+        "correct": true
+      }
+    },
+    "correct": true,
+    "error": null
+  },
+  {
+    "sample_idx": 2,
+    "arm": "debate6",
+    "answer_mode": "both",
+    "scene": "scene0353_00",
+    "dataset": "scannet",
+    "question_type": "obj_appearance_order",
+    "question": "What will be the first-time appearance order of the following categories in the video: refrigerator, closet, backpack, bed?",
+    "ground_truth": "B",
+    "categories": [
+      "backpack",
+      "bed",
+      "closet",
+      "refrigerator"
+    ],
+    "categories_matched": [
+      "backpack",
+      "bed",
+      "closet",
+      "refrigerator"
+    ],
+    "gt_map": {
+      "top": {
+        "backpack": [
+          [
+            4,
+            5
+          ],
+          [
+            2,
+            4
+          ]
+        ],
+        "bed": [
+          [
+            2,
+            4
+          ]
+        ],
+        "closet": [
+          [
+            7,
+            4
+          ]
+        ],
+        "refrigerator": [
+          [
+            5,
+            5
+          ]
+        ]
+      },
+      "front": {
+        "backpack": [
+          [
+            4,
+            1
+          ],
+          [
+            2,
+            1
+          ]
+        ],
+        "bed": [
+          [
+            2,
+            4
+          ]
+        ],
+        "closet": [
+          [
+            7,
+            3
+          ]
+        ],
+        "refrigerator": [
+          [
+            5,
+            2
+          ]
+        ]
+      },
+      "side": {
+        "backpack": [
+          [
+            5,
+            1
+          ],
+          [
+            4,
+            1
+          ]
+        ],
+        "bed": [
+          [
+            4,
+            4
+          ]
+        ],
+        "closet": [
+          [
+            4,
+            3
+          ]
+        ],
+        "refrigerator": [
+          [
+            5,
+            2
+          ]
+        ]
+      },
+      "sizes": {
+        "top": {
+          "backpack": [
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              1
+            ]
+          ],
+          "bed": [
+            [
+              3,
+              2
+            ]
+          ],
+          "closet": [
+            [
+              1,
+              1
+            ]
+          ],
+          "refrigerator": [
+            [
+              1,
+              1
+            ]
+          ]
+        },
+        "front": {
+          "backpack": [
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              1
+            ]
+          ],
+          "bed": [
+            [
+              3,
+              6
+            ]
+          ],
+          "closet": [
+            [
+              1,
+              1
+            ]
+          ],
+          "refrigerator": [
+            [
+              1,
+              2
+            ]
+          ]
+        },
+        "side": {
+          "backpack": [
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              1
+            ]
+          ],
+          "bed": [
+            [
+              2,
+              6
+            ]
+          ],
+          "closet": [
+            [
+              1,
+              1
+            ]
+          ],
+          "refrigerator": [
+            [
+              1,
+              2
+            ]
+          ]
+        }
+      },
+      "room": 16.71271861099845
+    },
+    "cameras": {
+      "top": {
+        "name": "TOP",
+        "position": [
+          4.5,
+          4.5,
+          10.0
+        ],
+        "look_at": [
+          4.5,
+          4.5,
+          4.5
+        ],
+        "look_up": [
+          0.0,
+          1.0,
+          0.0
+        ]
+      },
+      "front": {
+        "name": "FRONT",
+        "position": [
+          4.97935658511212,
+          9.979070839504601,
+          4.5
+        ],
+        "look_at": [
+          4.5,
+          4.5,
+          4.5
+        ],
+        "look_up": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "side": {
+        "name": "SIDE",
+        "position": [
+          9.992462441150156,
+          4.7878477593361914,
+          4.5
+        ],
+        "look_at": [
+          4.5,
+          4.5,
+          4.5
+        ],
+        "look_up": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      }
+    },
+    "rounds_run": 2,
+    "transforms_analytic": {
+      "front": {
+        "R": [
+          [
+            -0.9961946980917455,
+            0.0,
+            -0.08715574274765814
+          ],
+          [
+            0.08715574274765812,
+            0.0,
+            -0.9961946980917455
+          ],
+          [
+            0.0,
+            -1.0000000000000002,
+            0.0
+          ]
+        ],
+        "t": [
+          0.47935658511211887,
+          5.479070839504599,
+          5.5
+        ],
+        "mirror": false,
+        "rmse": null
+      },
+      "side": {
+        "R": [
+          [
+            -0.05233595624294388,
+            0.0,
+            -0.9986295347545738
+          ],
+          [
+            0.9986295347545737,
+            0.0,
+            -0.05233595624294389
+          ],
+          [
+            0.0,
+            -1.0,
+            0.0
+          ]
+        ],
+        "t": [
+          5.492462441150154,
+          0.28784775933619144,
+          5.5
+        ],
+        "mirror": false,
+        "rmse": null
+      }
+    },
+    "raw_views": {
+      "top": "```json\n{\n  \"bed\": [[2.5, 4.5, 3.0, 3.0]],\n  \"closet\": [[8.0, 7.5, 2.0, 2.0]],\n  \"refrigerator\": [[8.0, 2.0, 1.5, 1.5]],\n  \"backpack\": [[1.5, 1.5, 0.6, 0.6]]\n}\n```\n\nANSWER: {\"bed\": [[2.5, 4.5, 3.0, 3.0]], \"closet\": [[8.0, 7.5, 2.0, 2.0]], \"refrigerator\": [[8.0, 2.0, 1.5, 1.5]], \"backpack\": [[1.5, 1.5, 0.6, 0.6]]}",
+      "front": "```json\n{\n  \"bed\": [\n    [5.0, 2.5, 4.0, 3.0]\n  ],\n  \"closet\": [\n    [1.5, 4.5, 2.0, 7.0]\n  ],\n  \"refrigerator\": [\n    [8.5, 4.0, 2.0, 6.0]\n  ],\n  \"backpack\": [\n    [4.5, 2.0, 1.0, 1.2]\n  ]\n}\n```\n\nANSWER: {\"bed\":\n [[5.0, 2.5, 4.0,",
+      "side": "```json\n{\n  \"bed\": [[2.25, 0.55, 2.1, 1.1]],\n  \"closet\": [[8.1, 1.1, 1.4, 2.2]],\n  \"refrigerator\": [[4.8, 0.9, 0.9, 1.8]],\n  \"backpack\": [[2.5, 1.1, 0.5, 0.5]]\n}\n```\n\nANSWER: {\"bed\": [[2.25, 0.55, 2.1, 1.1]], \"closet\": [[8.1, 1.1, 1.4, 2.2]], \"refrigerator\": [[4.8, 0.9, 0.9, 1.8]], \"backpack\": [[2.5, 1.1, 0.5, 0.5]]}"
+    },
+    "final_views": {
+      "top": "```json\n{\n  \"bed\": [[2.5, 4.5, 3.0, 3.0]],\n  \"closet\": [[8.0, 7.5, 2.0, 2.0]],\n  \"refrigerator\": [[8.0, 2.0, 1.5, 1.5]],\n  \"backpack\": [[1.5, 1.5, 0.6, 0.6]]\n}\n```\n\nANSWER: {\"bed\": [[2.5, 4.5, 3.0, 3.0]], \"closet\": [[8.0, 7.5, 2.0, 2.0]], \"refrigerator\": [[8.0, 2.0, 1.5, 1.5]], \"backpack\": [[1.5, 1.5, 0.6, 0.6]]}",
+      "front": "ANSWER: {\"bed\": [[5.0, 2.5, 4.0, 3.0]], \"closet\": [[1.5, 4.5, 2.0, 2.2]], \"refrigerator\": [[8.5, 4.0, 2.0, 6.0]], \"backpack\": [[4.5, 2.0, 1.0, 1.2]]}",
+      "side": "An analysis of the coordinates and the cross-view conflict indicates that the closet's z-coordinate should be updated to 1.1 to resolve the conflict with Agent FRONT, as a z-coordinate of 4.5 would place the closet floating in the air, whereas z=1.1 (with height 2.2) correctly places it on the floor.\n\nANSWER: {\"bed\": [[4.5, 0.55, 2.1, 1.1]], \"closet\": [[8.1, 1.1, 1.4, 2.2]], \"refrigerator\": [[2.0, 0.9, 0.9, 1.8]], \"backpack\": [[2.5, 1.1, 0.5, 0.5]]}"
+    },
+    "pred_map": {
+      "top": {
+        "closet": [
+          [
+            4.75,
+            7.800000000000001
+          ]
+        ],
+        "bed": [
+          [
+            3.75,
+            4.5
+          ]
+        ],
+        "refrigerator": [
+          [
+            8.25,
+            2.0
+          ]
+        ],
+        "backpack": [
+          [
+            3.0,
+            2.0
+          ]
+        ]
+      },
+      "front": {
+        "closet": [
+          [
+            4.5355981546603275,
+            2.8
+          ]
+        ],
+        "bed": [
+          [
+            5.1896623616914805,
+            1.525
+          ]
+        ],
+        "refrigerator": [
+          [
+            0.8505627305141991,
+            2.45
+          ]
+        ],
+        "backpack": [
+          [
+            5.6781992623545605,
+            1.5500000000000003
+          ]
+        ]
+      },
+      "side": {
+        "closet": [
+          [
+            7.623217178628666,
+            2.8
+          ]
+        ],
+        "bed": [
+          [
+            4.53734848338831,
+            1.525
+          ]
+        ],
+        "refrigerator": [
+          [
+            1.93775252768615,
+            2.45
+          ]
+        ],
+        "backpack": [
+          [
+            2.1991919114043204,
+            1.5499999999999998
+          ]
+        ]
+      },
+      "sizes": {
+        "top": {
+          "bed": [
+            [
+              3.0,
+              3.0
+            ]
+          ],
+          "closet": [
+            [
+              2.0,
+              2.0
+            ]
+          ],
+          "refrigerator": [
+            [
+              1.5,
+              1.5
+            ]
+          ],
+          "backpack": [
+            [
+              0.6,
+              0.6
+            ]
+          ]
+        },
+        "front": {
+          "bed": [
+            [
+              4.0,
+              3.0
+            ]
+          ],
+          "closet": [
+            [
+              2.0,
+              2.2
+            ]
+          ],
+          "refrigerator": [
+            [
+              2.0,
+              6.0
+            ]
+          ],
+          "backpack": [
+            [
+              1.0,
+              1.2
+            ]
+          ]
+        },
+        "side": {
+          "bed": [
+            [
+              2.1,
+              1.1
+            ]
+          ],
+          "closet": [
+            [
+              1.4,
+              2.2
+            ]
+          ],
+          "refrigerator": [
+            [
+              0.9,
+              1.8
+            ]
+          ],
+          "backpack": [
+            [
+              0.5,
+              0.5
+            ]
+          ]
+        }
+      },
+      "room": null
+    },
+    "fused_map": {
+      "top": {
+        "closet": [
+          [
+            4.75,
+            7.800000000000001
+          ]
+        ],
+        "bed": [
+          [
+            3.75,
+            4.5
+          ]
+        ],
+        "refrigerator": [
+          [
+            8.25,
+            2.0
+          ]
+        ],
+        "backpack": [
+          [
+            3.0,
+            2.0
+          ]
+        ]
+      },
+      "front": {
+        "closet": [
+          [
+            4.5355981546603275,
+            2.8
+          ]
+        ],
+        "bed": [
+          [
+            5.1896623616914805,
+            1.525
+          ]
+        ],
+        "refrigerator": [
+          [
+            0.8505627305141991,
+            2.45
+          ]
+        ],
+        "backpack": [
+          [
+            5.6781992623545605,
+            1.5500000000000003
+          ]
+        ]
+      },
+      "side": {
+        "closet": [
+          [
+            7.623217178628666,
+            2.8
+          ]
+        ],
+        "bed": [
+          [
+            4.53734848338831,
+            1.525
+          ]
+        ],
+        "refrigerator": [
+          [
+            1.93775252768615,
+            2.45
+          ]
+        ],
+        "backpack": [
+          [
+            2.1991919114043204,
+            1.5499999999999998
+          ]
+        ]
+      },
+      "sizes": {
+        "top": {
+          "bed": [
+            [
+              3.0,
+              3.0
+            ]
+          ],
+          "closet": [
+            [
+              2.0,
+              2.0
+            ]
+          ],
+          "refrigerator": [
+            [
+              1.5,
+              1.5
+            ]
+          ],
+          "backpack": [
+            [
+              0.6,
+              0.6
+            ]
+          ]
+        },
+        "front": {
+          "bed": [
+            [
+              4.0,
+              3.0
+            ]
+          ],
+          "closet": [
+            [
+              2.0,
+              2.2
+            ]
+          ],
+          "refrigerator": [
+            [
+              2.0,
+              6.0
+            ]
+          ],
+          "backpack": [
+            [
+              1.0,
+              1.2
+            ]
+          ]
+        },
+        "side": {
+          "bed": [
+            [
+              2.1,
+              1.1
+            ]
+          ],
+          "closet": [
+            [
+              1.4,
+              2.2
+            ]
+          ],
+          "refrigerator": [
+            [
+              0.9,
+              1.8
+            ]
+          ],
+          "backpack": [
+            [
+              0.5,
+              0.5
+            ]
+          ]
+        }
+      },
+      "room": null
+    },
+    "round_metrics": {
+      "round0": {
+        "gt_instances": 5,
+        "pred_instances": 4,
+        "missed_instances": 1,
+        "extra_instances": 0,
+        "extra_categories": 0,
+        "pairs": 6,
+        "pairs_correct": 0,
+        "bin_pairs": {
+          "0": 1,
+          "3": 2,
+          "1": 1,
+          "5": 1,
+          "2": 1
+        },
+        "bin_correct": {},
+        "scale_ratios": [
+          2.7973201461398727,
+          6.519202405202649,
+          1.2529964086141667,
+          1.9104973174542799,
+          2.4596747752497685
+        ],
+        "adjacent_pairs": 2,
+        "adjacent_correct": 0,
+        "cross_view_conflicts": 8,
+        "cross_view_checked": 12,
+        "cross_view_missing": 3,
+        "height_pairs": 6,
+        "height_correct": 4
+      },
+      "round1": {
+        "gt_instances": 5,
+        "pred_instances": 4,
+        "missed_instances": 1,
+        "extra_instances": 0,
+        "extra_categories": 0,
+        "pairs": 6,
+        "pairs_correct": 0,
+        "bin_pairs": {
+          "0": 1,
+          "3": 2,
+          "1": 1,
+          "5": 1,
+          "2": 1
+        },
+        "bin_correct": {},
+        "scale_ratios": [
+          2.7973201461398727,
+          6.519202405202649,
+          1.2529964086141667,
+          1.9104973174542799,
+          2.4596747752497685
+        ],
+        "adjacent_pairs": 2,
+        "adjacent_correct": 0,
+        "cross_view_conflicts": 8,
+        "cross_view_checked": 12,
+        "cross_view_missing": 3,
+        "height_pairs": 6,
+        "height_correct": 4
+      },
+      "round2": {
+        "gt_instances": 5,
+        "pred_instances": 4,
+        "missed_instances": 1,
+        "extra_instances": 0,
+        "extra_categories": 0,
+        "pairs": 6,
+        "pairs_correct": 0,
+        "bin_pairs": {
+          "0": 1,
+          "3": 2,
+          "1": 1,
+          "5": 1,
+          "2": 1
+        },
+        "bin_correct": {},
+        "scale_ratios": [
+          2.7973201461398727,
+          6.519202405202649,
+          1.2529964086141667,
+          1.9104973174542799,
+          2.4596747752497685
+        ],
+        "adjacent_pairs": 2,
+        "adjacent_correct": 0,
+        "cross_view_conflicts": 7,
+        "cross_view_checked": 12,
+        "cross_view_missing": 3,
+        "height_pairs": 6,
+        "height_correct": 3
+      },
+      "final": {
+        "gt_instances": 5,
+        "pred_instances": 4,
+        "missed_instances": 1,
+        "extra_instances": 0,
+        "extra_categories": 0,
+        "pairs": 6,
+        "pairs_correct": 0,
+        "bin_pairs": {
+          "0": 1,
+          "3": 2,
+          "1": 1,
+          "5": 1,
+          "2": 1
+        },
+        "bin_correct": {},
+        "scale_ratios": [
+          1.9157896544245145,
+          5.25,
+          0.6896375859826669,
+          1.6278820596099706,
+          3.029521414349138
+        ],
+        "adjacent_pairs": 2,
+        "adjacent_correct": 0,
+        "cross_view_conflicts": 3,
+        "cross_view_checked": 12,
+        "cross_view_missing": 3,
+        "height_pairs": 6,
+        "height_correct": 3
+      }
+    },
+    "map_metrics": {
+      "gt_instances": 5,
+      "pred_instances": 4,
+      "missed_instances": 1,
+      "extra_instances": 0,
+      "extra_categories": 0,
+      "pairs": 6,
+      "pairs_correct": 0,
+      "bin_pairs": {
+        "0": 1,
+        "3": 2,
+        "1": 1,
+        "5": 1,
+        "2": 1
+      },
+      "bin_correct": {},
+      "scale_ratios": [
+        1.9157896544245145,
+        5.25,
+        0.6896375859826669,
+        1.6278820596099706,
+        3.029521414349138
+      ],
+      "adjacent_pairs": 2,
+      "adjacent_correct": 0,
+      "cross_view_conflicts": 3,
+      "cross_view_checked": 12,
+      "cross_view_missing": 3,
+      "height_pairs": 6,
+      "height_correct": 3
+    },
+    "raw_answer": "Based on the spatial layout of the room and the counter-clockwise rotation of the camera starting from the bed (West):\n\n1. **Bed** (located at the West side, angle ~180°)\n2. **Backpack** (located at the South-West side, angle ~239°)\n3. **Refrigerator** (located at the South-East side, angle ~326°)\n4. **Closet** (located at the North side, angle ~85°)\n\nThis corresponds to Option B.\n\nANSWER: B",
+    "extracted_answer": "B",
+    "answers_memory": {
+      "shared": {
+        "raw_answer": "Based on the spatial layout of the room and the counter-clockwise rotation of the camera starting from the bed (West):\n\n1. **Bed** (located at the West side, angle ~180°)\n2. **Backpack** (located at the South-West side, angle ~239°)\n3. **Refrigerator** (located at the South-East side, angle ~326°)\n4. **Closet** (located at the North side, angle ~85°)\n\nThis corresponds to Option B.\n\nANSWER: B",
+        "extracted_answer": "B",
+        "correct": true
+      },
+      "noshared": {
+        "raw_answer": "An analysis of the typical spatial layout and flow of room/apartment tour videos (which commonly feature these items) suggests that the presenter usually starts at the entrance (showing the closet and dropping off a backpack), moves through the kitchen area (showing the refrigerator), and ends in the main living/sleeping area (showing the bed). Therefore, the most likely first-time appearance order is closet, backpack, refrigerator, bed.\n\nANSWER: D",
+        "extracted_answer": "D",
+        "correct": false
+      }
+    },
+    "correct": true,
+    "error": null
+  }
+]

@@ -1,0 +1,79 @@
+[
+  {
+    "id": 4955,
+    "dataset": "scannet",
+    "scene_name": "scene0246_00",
+    "question_type": "object_abs_distance",
+    "type_group": "object_abs_distance",
+    "question": "Measuring from the closest point of each object, what is the distance between the table and the bed (in meters)?",
+    "ground_truth": "1.0",
+    "options": null,
+    "ext": {
+      "target_categories": [],
+      "needs_size": false,
+      "room": false
+    }
+  },
+  {
+    "id": 2645,
+    "dataset": "scannetpp",
+    "scene_name": "5f99900f09",
+    "question_type": "object_counting",
+    "type_group": "object_counting",
+    "question": "How many chair(s) are in this room?",
+    "ground_truth": "14",
+    "options": null,
+    "ext": {
+      "target_categories": [
+        "chair"
+      ],
+      "needs_size": false,
+      "room": false
+    }
+  },
+  {
+    "id": 885,
+    "dataset": "arkitscenes",
+    "scene_name": "47333441",
+    "question_type": "object_abs_distance",
+    "type_group": "object_abs_distance",
+    "question": "Measuring from the closest point of each object, what is the distance between the stool and the toilet (in meters)?",
+    "ground_truth": "0.8",
+    "options": null,
+    "ext": {
+      "target_categories": [],
+      "needs_size": false,
+      "room": false
+    }
+  },
+  {
+    "id": 3206,
+    "dataset": "scannet",
+    "scene_name": "scene0277_02",
+    "question_type": "object_size_estimation",
+    "type_group": "object_size_estimation",
+    "question": "What is the length of the longest dimension (length, width, or height) of the bed, measured in centimeters?",
+    "ground_truth": "221",
+    "options": null,
+    "ext": {
+      "target_categories": [],
+      "needs_size": true,
+      "room": false
+    }
+  },
+  {
+    "id": 2263,
+    "dataset": "scannetpp",
+    "scene_name": "3864514494",
+    "question_type": "object_size_estimation",
+    "type_group": "object_size_estimation",
+    "question": "What is the length of the longest dimension (length, width, or height) of the heater, measured in centimeters?",
+    "ground_truth": "139",
+    "options": null,
+    "ext": {
+      "target_categories": [],
+      "needs_size": true,
+      "room": false
+    }
+  }
+]

@@ -1,0 +1,482 @@
+{
+  "sample_idx": 117,
+  "variant": "anchor",
+  "scene": "scene0699_00",
+  "dataset": "scannet",
+  "question_type": "object_rel_distance",
+  "question": "Measuring from the closest point of each object, which of these objects (window, chair, table, closet) is the closest to the nightstand?",
+  "ground_truth": "A",
+  "categories": null,
+  "categories_matched": [
+    "chair",
+    "closet",
+    "nightstand",
+    "table",
+    "window"
+  ],
+  "gt_map": {
+    "top": {
+      "chair": [
+        [
+          5,
+          3
+        ]
+      ],
+      "closet": [
+        [
+          7,
+          7
+        ]
+      ],
+      "nightstand": [
+        [
+          1,
+          3
+        ]
+      ],
+      "table": [
+        [
+          5,
+          2
+        ]
+      ],
+      "window": [
+        [
+          1,
+          5
+        ],
+        [
+          5,
+          1
+        ]
+      ]
+    },
+    "front": {
+      "chair": [
+        [
+          5,
+          2
+        ]
+      ],
+      "closet": [
+        [
+          7,
+          5
+        ]
+      ],
+      "nightstand": [
+        [
+          1,
+          2
+        ]
+      ],
+      "table": [
+        [
+          5,
+          2
+        ]
+      ],
+      "window": [
+        [
+          1,
+          5
+        ],
+        [
+          5,
+          4
+        ]
+      ]
+    },
+    "side": {
+      "chair": [
+        [
+          3,
+          2
+        ]
+      ],
+      "closet": [
+        [
+          7,
+          5
+        ]
+      ],
+      "nightstand": [
+        [
+          3,
+          2
+        ]
+      ],
+      "table": [
+        [
+          2,
+          2
+        ]
+      ],
+      "window": [
+        [
+          5,
+          5
+        ],
+        [
+          1,
+          4
+        ]
+      ]
+    },
+    "sizes": {
+      "top": {
+        "chair": [
+          [
+            1,
+            1
+          ]
+        ],
+        "closet": [
+          [
+            2,
+            3
+          ]
+        ],
+        "nightstand": [
+          [
+            1,
+            1
+          ]
+        ],
+        "table": [
+          [
+            1,
+            1
+          ]
+        ],
+        "window": [
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            2
+          ]
+        ]
+      },
+      "front": {
+        "chair": [
+          [
+            1,
+            2
+          ]
+        ],
+        "closet": [
+          [
+            2,
+            1
+          ]
+        ],
+        "nightstand": [
+          [
+            1,
+            2
+          ]
+        ],
+        "table": [
+          [
+            1,
+            4
+          ]
+        ],
+        "window": [
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ]
+        ]
+      },
+      "side": {
+        "chair": [
+          [
+            1,
+            2
+          ]
+        ],
+        "closet": [
+          [
+            3,
+            1
+          ]
+        ],
+        "nightstand": [
+          [
+            1,
+            2
+          ]
+        ],
+        "table": [
+          [
+            1,
+            4
+          ]
+        ],
+        "window": [
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ]
+        ]
+      }
+    },
+    "room": 20.440430851347344
+  },
+  "raw_map": "```json\n{\"top\": {\"closet\": [[1.5, 4.5, 1.5, 3.0]], \"nightstand\": [[3.5, 2.0, 1.2, 1.2]], \"table\": [[6.0, 5.0, 2.5, 2.0]], \"chair\": [[6.0, 7.0, 1.5, 1.5]], \"window\": [[8.5, 5.0, 0.5, 3.0]]}, \"front\": {\"closet\": [[1.5, 5.0, 1.5, 6.0]], \"nightstand\": [[3.5, 2.5, 1.2, 1.5]], \"table\": [[6.0, 3.0, 2.5, 2.0]], \"chair\": [[6.0, 3.0, 1.5, 2.5]], \"window\": [[8.5, 6.0, 0.5, 4.0]]}, \"side\": {\"closet\": [[4.5, 5.0, 3.0, 6.0]], \"nightstand\": [[2.0, 2.5, 1.2, 1.5]], \"table\": [[5.0, 3.0, 2.0, 2.0]], \"chair\": [[7.0, 3.0, 1.5, 2.5]], \"window\": [[5.0, 6.0, 3.0, 4.0]]}, \"room\": {\"width\": 10, \"depth\": 10, \"area_m2\": 18.5}}\n```\n\nANSWER: {\"top\": {\"closet\": [[1.5, 4.5, 1.5, 3.0]], \"nightstand\": [[3.5, 2.0, 1.2, 1.2]], \"table\": [[6.0, 5.0, 2.5, 2.0]], \"chair\": [[6.0, 7.0, 1.5, 1.5]], \"window\": [[8.5, 5.0, 0.5, 3.0]]}, \"front\": {\"closet\": [[1.5, 5.0, 1.5, 6.0]], \"nightstand\": [[3.5, 2.5, 1.2, 1.5]], \"table\": [[6.0, 3.0, 2.5, 2.0]], \"chair\": [[6.0, 3.0, 1.5, 2.5]], \"window\": [[8.5, 6.0, 0.5, 4.0]]}, \"side\": {\"closet\": [[4.5, 5.0, 3.0, 6.0]], \"nightstand\": [[2.0, 2.5, 1.2, 1.5]], \"table\": [[5.0, 3.0, 2.0, 2.0]], \"chair\": [[7.0, 3.0, 1.5, 2.5]], \"window\": [[5.0, 6.0, 3.0, 4.0]]}, \"room\": {\"width\": 10, \"depth\": 10, \"area_m2\": 18.5}}",
+  "pred_map": {
+    "top": {
+      "closet": [
+        [
+          1.5,
+          4.5
+        ]
+      ],
+      "nightstand": [
+        [
+          3.5,
+          2.0
+        ]
+      ],
+      "table": [
+        [
+          6.0,
+          5.0
+        ]
+      ],
+      "chair": [
+        [
+          6.0,
+          7.0
+        ]
+      ],
+      "window": [
+        [
+          8.5,
+          5.0
+        ]
+      ]
+    },
+    "front": {
+      "closet": [
+        [
+          1.5,
+          5.0
+        ]
+      ],
+      "nightstand": [
+        [
+          3.5,
+          2.5
+        ]
+      ],
+      "table": [
+        [
+          6.0,
+          3.0
+        ]
+      ],
+      "chair": [
+        [
+          6.0,
+          3.0
+        ]
+      ],
+      "window": [
+        [
+          8.5,
+          6.0
+        ]
+      ]
+    },
+    "side": {
+      "closet": [
+        [
+          4.5,
+          5.0
+        ]
+      ],
+      "nightstand": [
+        [
+          2.0,
+          2.5
+        ]
+      ],
+      "table": [
+        [
+          5.0,
+          3.0
+        ]
+      ],
+      "chair": [
+        [
+          7.0,
+          3.0
+        ]
+      ],
+      "window": [
+        [
+          5.0,
+          6.0
+        ]
+      ]
+    },
+    "sizes": {
+      "top": {
+        "closet": [
+          [
+            1.5,
+            3.0
+          ]
+        ],
+        "nightstand": [
+          [
+            1.2,
+            1.2
+          ]
+        ],
+        "table": [
+          [
+            2.5,
+            2.0
+          ]
+        ],
+        "chair": [
+          [
+            1.5,
+            1.5
+          ]
+        ],
+        "window": [
+          [
+            0.5,
+            3.0
+          ]
+        ]
+      },
+      "front": {
+        "closet": [
+          [
+            1.5,
+            6.0
+          ]
+        ],
+        "nightstand": [
+          [
+            1.2,
+            1.5
+          ]
+        ],
+        "table": [
+          [
+            2.5,
+            2.0
+          ]
+        ],
+        "chair": [
+          [
+            1.5,
+            2.5
+          ]
+        ],
+        "window": [
+          [
+            0.5,
+            4.0
+          ]
+        ]
+      },
+      "side": {
+        "closet": [
+          [
+            3.0,
+            6.0
+          ]
+        ],
+        "nightstand": [
+          [
+            1.2,
+            1.5
+          ]
+        ],
+        "table": [
+          [
+            2.0,
+            2.0
+          ]
+        ],
+        "chair": [
+          [
+            1.5,
+            2.5
+          ]
+        ],
+        "window": [
+          [
+            3.0,
+            4.0
+          ]
+        ]
+      }
+    },
+    "room": 18.5
+  },
+  "map_metrics": {
+    "gt_instances": 6,
+    "pred_instances": 5,
+    "missed_instances": 1,
+    "extra_instances": 0,
+    "extra_categories": 0,
+    "pairs": 10,
+    "pairs_correct": 5,
+    "bin_pairs": {
+      "4": 3,
+      "1": 2,
+      "2": 2,
+      "7": 1,
+      "5": 1,
+      "6": 1
+    },
+    "bin_correct": {
+      "4": 2,
+      "1": 1,
+      "5": 1,
+      "6": 1
+    },
+    "scale_ratios": [
+      1.1510864433221337,
+      1.3975424859373686,
+      2.0,
+      1.6007810593582121,
+      0.4439767838698152,
+      0.8407714027749387,
+      1.1096170510586072,
+      0.9471318934179187,
+      2.9154759474226504,
+      2.5
+    ],
+    "adjacent_pairs": 2,
+    "adjacent_correct": 1,
+    "cross_view_conflicts": 0,
+    "cross_view_checked": 15,
+    "cross_view_missing": 3,
+    "height_pairs": 6,
+    "height_correct": 6
+  },
+  "raw_answer": "To find the closest object to the nightstand, we can calculate the minimum distance between the bounding box of the nightstand and each of the other objects using the top-view coordinates from the cognitive map:\n\n* **Nightstand** boundaries: X from 2.9 to 4.1, Y from 1.4 to 2.6\n\n1. **Closet** boundaries: X from 0.75 to 2.25, Y from 3.0 to 6.0\n   * Minimum X-distance: $2.9 - 2.25 = 0.65$\n   * Minimum Y-distance: $3.0 - 2.6 = 0.40$\n   * Minimum Euclidean distance: $\\sqrt{0.65^2 + 0.40^2} \\approx 0.76$ units\n\n2. **Table** boundaries: X from 4.75 to 7.25, Y from 4.0 to 6.0\n   * Minimum X-distance: $4.75 - 4.1 = 0.65$\n   * Minimum Y-distance: $4.0 - 2.6 = 1.40$\n   * Minimum Euclidean distance: $\\sqrt{0.65^2 + 1.40^2} \\approx 1.54$ units\n\n3. **Chair** boundaries: X from 5.25 to 6.75, Y from 6.25 to 7.75\n   * Minimum Euclidean distance is much larger (approx. 3.83 units)\n\n4. **Window** boundaries: X from 8.25 to 8.75, Y from 3.5 to 6.5\n   * Minimum Euclidean distance is much larger (approx. 4.25 units)\n\nComparing these distances, the closet is the closest object to the nightstand.\n\nANSWER: D",
+  "extracted_answer": "D",
+  "correct": false,
+  "error": null
+}

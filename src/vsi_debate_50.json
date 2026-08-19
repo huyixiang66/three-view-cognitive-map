@@ -1,0 +1,997 @@
+[
+  {
+    "id": 19,
+    "dataset": "arkitscenes",
+    "scene_name": "42445984",
+    "question_type": "object_counting",
+    "type_group": "object_counting",
+    "question": "How many chair(s) are in this room?",
+    "ground_truth": "12",
+    "options": null,
+    "ext": {
+      "target_categories": [
+        "chair"
+      ],
+      "needs_size": false,
+      "room": false
+    }
+  },
+  {
+    "id": 2631,
+    "dataset": "scannetpp",
+    "scene_name": "d755b3d9d8",
+    "question_type": "object_counting",
+    "type_group": "object_counting",
+    "question": "How many computer mouse(s) are in this room?",
+    "ground_truth": "3",
+    "options": null,
+    "ext": {
+      "target_categories": [
+        "computer mouse"
+      ],
+      "needs_size": false,
+      "room": false
+    }
+  },
+  {
+    "id": 4522,
+    "dataset": "scannet",
+    "scene_name": "scene0574_01",
+    "question_type": "object_counting",
+    "type_group": "object_counting",
+    "question": "How many towel(s) are in this room?",
+    "ground_truth": "4",
+    "options": null,
+    "ext": {
+      "target_categories": [
+        "towel"
+      ],
+      "needs_size": false,
+      "room": false
+    }
+  },
+  {
+    "id": 79,
+    "dataset": "arkitscenes",
+    "scene_name": "45260905",
+    "question_type": "object_counting",
+    "type_group": "object_counting",
+    "question": "How many table(s) are in this room?",
+    "ground_truth": "2",
+    "options": null,
+    "ext": {
+      "target_categories": [
+        "table"
+      ],
+      "needs_size": false,
+      "room": false
+    }
+  },
+  {
+    "id": 2645,
+    "dataset": "scannetpp",
+    "scene_name": "5f99900f09",
+    "question_type": "object_counting",
+    "type_group": "object_counting",
+    "question": "How many chair(s) are in this room?",
+    "ground_truth": "14",
+    "options": null,
+    "ext": {
+      "target_categories": [
+        "chair"
+      ],
+      "needs_size": false,
+      "room": false
+    }
+  },
+  {
+    "id": 4442,
+    "dataset": "scannet",
+    "scene_name": "scene0648_00",
+    "question_type": "object_counting",
+    "type_group": "object_counting",
+    "question": "How many backpack(s) are in this room?",
+    "ground_truth": "2",
+    "options": null,
+    "ext": {
+      "target_categories": [
+        "backpack"
+      ],
+      "needs_size": false,
+      "room": false
+    }
+  },
+  {
+    "id": 937,
+    "dataset": "arkitscenes",
+    "scene_name": "47429922",
+    "question_type": "object_abs_distance",
+    "type_group": "object_abs_distance",
+    "question": "Measuring from the closest point of each object, what is the distance between the chair and the sofa (in meters)?",
+    "ground_truth": "0.9",
+    "options": null,
+    "ext": {
+      "target_categories": [],
+      "needs_size": false,
+      "room": false
+    }
+  },
+  {
+    "id": 1688,
+    "dataset": "scannetpp",
+    "scene_name": "e398684d27",
+    "question_type": "object_abs_distance",
+    "type_group": "object_abs_distance",
+    "question": "Measuring from the closest point of each object, what is the distance between the monitor and the ceiling light (in meters)?",
+    "ground_truth": "1.4",
+    "options": null,
+    "ext": {
+      "target_categories": [],
+      "needs_size": false,
+      "room": false
+    }
+  },
+  {
+    "id": 4955,
+    "dataset": "scannet",
+    "scene_name": "scene0246_00",
+    "question_type": "object_abs_distance",
+    "type_group": "object_abs_distance",
+    "question": "Measuring from the closest point of each object, what is the distance between the table and the bed (in meters)?",
+    "ground_truth": "1.0",
+    "options": null,
+    "ext": {
+      "target_categories": [],
+      "needs_size": false,
+      "room": false
+    }
+  },
+  {
+    "id": 885,
+    "dataset": "arkitscenes",
+    "scene_name": "47333441",
+    "question_type": "object_abs_distance",
+    "type_group": "object_abs_distance",
+    "question": "Measuring from the closest point of each object, what is the distance between the stool and the toilet (in meters)?",
+    "ground_truth": "0.8",
+    "options": null,
+    "ext": {
+      "target_categories": [],
+      "needs_size": false,
+      "room": false
+    }
+  },
+  {
+    "id": 1682,
+    "dataset": "scannetpp",
+    "scene_name": "40aec5fffa",
+    "question_type": "object_abs_distance",
+    "type_group": "object_abs_distance",
+    "question": "Measuring from the closest point of each object, what is the distance between the door and the refrigerator (in meters)?",
+    "ground_truth": "3.3",
+    "options": null,
+    "ext": {
+      "target_categories": [],
+      "needs_size": false,
+      "room": false
+    }
+  },
+  {
+    "id": 4826,
+    "dataset": "scannet",
+    "scene_name": "scene0580_01",
+    "question_type": "object_abs_distance",
+    "type_group": "object_abs_distance",
+    "question": "Measuring from the closest point of each object, what is the distance between the lamp and the window (in meters)?",
+    "ground_truth": "2.1",
+    "options": null,
+    "ext": {
+      "target_categories": [],
+      "needs_size": false,
+      "room": false
+    }
+  },
+  {
+    "id": 267,
+    "dataset": "arkitscenes",
+    "scene_name": "42897692",
+    "question_type": "object_size_estimation",
+    "type_group": "object_size_estimation",
+    "question": "What is the length of the longest dimension (length, width, or height) of the bed, measured in centimeters?",
+    "ground_truth": "215",
+    "options": null,
+    "ext": {
+      "target_categories": [],
+      "needs_size": true,
+      "room": false
+    }
+  },
+  {
+    "id": 2263,
+    "dataset": "scannetpp",
+    "scene_name": "3864514494",
+    "question_type": "object_size_estimation",
+    "type_group": "object_size_estimation",
+    "question": "What is the length of the longest dimension (length, width, or height) of the heater, measured in centimeters?",
+    "ground_truth": "139",
+    "options": null,
+    "ext": {
+      "target_categories": [],
+      "needs_size": true,
+      "room": false
+    }
+  },
+  {
+    "id": 3206,
+    "dataset": "scannet",
+    "scene_name": "scene0277_02",
+    "question_type": "object_size_estimation",
+    "type_group": "object_size_estimation",
+    "question": "What is the length of the longest dimension (length, width, or height) of the bed, measured in centimeters?",
+    "ground_truth": "221",
+    "options": null,
+    "ext": {
+      "target_categories": [],
+      "needs_size": true,
+      "room": false
+    }
+  },
+  {
+    "id": 240,
+    "dataset": "arkitscenes",
+    "scene_name": "42446529",
+    "question_type": "object_size_estimation",
+    "type_group": "object_size_estimation",
+    "question": "What is the length of the longest dimension (length, width, or height) of the table, measured in centimeters?",
+    "ground_truth": "92",
+    "options": null,
+    "ext": {
+      "target_categories": [],
+      "needs_size": true,
+      "room": false
+    }
+  },
+  {
+    "id": 2372,
+    "dataset": "scannetpp",
+    "scene_name": "d755b3d9d8",
+    "question_type": "object_size_estimation",
+    "type_group": "object_size_estimation",
+    "question": "What is the length of the longest dimension (length, width, or height) of the door, measured in centimeters?",
+    "ground_truth": "199",
+    "options": null,
+    "ext": {
+      "target_categories": [],
+      "needs_size": true,
+      "room": false
+    }
+  },
+  {
+    "id": 3564,
+    "dataset": "scannet",
+    "scene_name": "scene0246_00",
+    "question_type": "object_size_estimation",
+    "type_group": "object_size_estimation",
+    "question": "What is the length of the longest dimension (length, width, or height) of the table, measured in centimeters?",
+    "ground_truth": "130",
+    "options": null,
+    "ext": {
+      "target_categories": [],
+      "needs_size": true,
+      "room": false
+    }
+  },
+  {
+    "id": 587,
+    "dataset": "arkitscenes",
+    "scene_name": "42899696",
+    "question_type": "room_size_estimation",
+    "type_group": "room_size_estimation",
+    "question": "What is the size of this room (in square meters)? \nIf multiple rooms are shown, estimate the size of the combined space.",
+    "ground_truth": "30.6",
+    "options": null,
+    "ext": {
+      "target_categories": [],
+      "needs_size": false,
+      "room": true
+    }
+  },
+  {
+    "id": 2667,
+    "dataset": "scannetpp",
+    "scene_name": "fb5a96b1a2",
+    "question_type": "room_size_estimation",
+    "type_group": "room_size_estimation",
+    "question": "What is the size of this room (in square meters)? \nIf multiple rooms are shown, estimate the size of the combined space.",
+    "ground_truth": "34.6",
+    "options": null,
+    "ext": {
+      "target_categories": [],
+      "needs_size": false,
+      "room": true
+    }
+  },
+  {
+    "id": 3778,
+    "dataset": "scannet",
+    "scene_name": "scene0633_00",
+    "question_type": "room_size_estimation",
+    "type_group": "room_size_estimation",
+    "question": "What is the size of this room (in square meters)? \nIf multiple rooms are shown, estimate the size of the combined space.",
+    "ground_truth": "8.2",
+    "options": null,
+    "ext": {
+      "target_categories": [],
+      "needs_size": false,
+      "room": true
+    }
+  },
+  {
+    "id": 532,
+    "dataset": "arkitscenes",
+    "scene_name": "41069048",
+    "question_type": "room_size_estimation",
+    "type_group": "room_size_estimation",
+    "question": "What is the size of this room (in square meters)? \nIf multiple rooms are shown, estimate the size of the combined space.",
+    "ground_truth": "7.1",
+    "options": null,
+    "ext": {
+      "target_categories": [],
+      "needs_size": false,
+      "room": true
+    }
+  },
+  {
+    "id": 2712,
+    "dataset": "scannetpp",
+    "scene_name": "c49a8c6cff",
+    "question_type": "room_size_estimation",
+    "type_group": "room_size_estimation",
+    "question": "What is the size of this room (in square meters)? \nIf multiple rooms are shown, estimate the size of the combined space.",
+    "ground_truth": "10.5",
+    "options": null,
+    "ext": {
+      "target_categories": [],
+      "needs_size": false,
+      "room": true
+    }
+  },
+  {
+    "id": 3772,
+    "dataset": "scannet",
+    "scene_name": "scene0378_01",
+    "question_type": "room_size_estimation",
+    "type_group": "room_size_estimation",
+    "question": "What is the size of this room (in square meters)? \nIf multiple rooms are shown, estimate the size of the combined space.",
+    "ground_truth": "12.3",
+    "options": null,
+    "ext": {
+      "target_categories": [],
+      "needs_size": false,
+      "room": true
+    }
+  },
+  {
+    "id": 1408,
+    "dataset": "arkitscenes",
+    "scene_name": "45261121",
+    "question_type": "object_rel_distance",
+    "type_group": "object_rel_distance",
+    "question": "Measuring from the closest point of each object, which of these objects (stool, tv, table, refrigerator) is the closest to the stove?",
+    "ground_truth": "C",
+    "options": [
+      "A. stool",
+      "B. tv",
+      "C. table",
+      "D. refrigerator"
+    ],
+    "ext": {
+      "target_categories": [
+        "stool",
+        "tv",
+        "table",
+        "refrigerator"
+      ],
+      "needs_size": false,
+      "room": false
+    }
+  },
+  {
+    "id": 1938,
+    "dataset": "scannetpp",
+    "scene_name": "acd95847c5",
+    "question_type": "object_rel_distance",
+    "type_group": "object_rel_distance",
+    "question": "Measuring from the closest point of each object, which of these objects (laptop, power strip, computer tower, heater) is the closest to the door?",
+    "ground_truth": "B",
+    "options": [
+      "A. laptop",
+      "B. power strip",
+      "C. computer tower",
+      "D. heater"
+    ],
+    "ext": {
+      "target_categories": [
+        "laptop",
+        "power strip",
+        "computer tower",
+        "heater"
+      ],
+      "needs_size": false,
+      "room": false
+    }
+  },
+  {
+    "id": 3085,
+    "dataset": "scannet",
+    "scene_name": "scene0700_02",
+    "question_type": "object_rel_distance",
+    "type_group": "object_rel_distance",
+    "question": "Measuring from the closest point of each object, which of these objects (window, trash bin, table, radiator) is the closest to the door?",
+    "ground_truth": "B",
+    "options": [
+      "A. window",
+      "B. trash bin",
+      "C. table",
+      "D. radiator"
+    ],
+    "ext": {
+      "target_categories": [
+        "window",
+        "trash bin",
+        "table",
+        "radiator"
+      ],
+      "needs_size": false,
+      "room": false
+    }
+  },
+  {
+    "id": 1479,
+    "dataset": "arkitscenes",
+    "scene_name": "47429977",
+    "question_type": "object_rel_distance",
+    "type_group": "object_rel_distance",
+    "question": "Measuring from the closest point of each object, which of these objects (stove, tv, sofa, chair) is the closest to the refrigerator?",
+    "ground_truth": "A",
+    "options": [
+      "A. stove",
+      "B. tv",
+      "C. sofa",
+      "D. chair"
+    ],
+    "ext": {
+      "target_categories": [
+        "stove",
+        "tv",
+        "sofa",
+        "chair"
+      ],
+      "needs_size": false,
+      "room": false
+    }
+  },
+  {
+    "id": 1944,
+    "dataset": "scannetpp",
+    "scene_name": "fb5a96b1a2",
+    "question_type": "object_rel_distance",
+    "type_group": "object_rel_distance",
+    "question": "Measuring from the closest point of each object, which of these objects (ceiling light, bookshelf, telephone, sofa) is the closest to the power strip?",
+    "ground_truth": "D",
+    "options": [
+      "A. ceiling light",
+      "B. bookshelf",
+      "C. telephone",
+      "D. sofa"
+    ],
+    "ext": {
+      "target_categories": [
+        "ceiling light",
+        "bookshelf",
+        "telephone",
+        "sofa"
+      ],
+      "needs_size": false,
+      "room": false
+    }
+  },
+  {
+    "id": 3134,
+    "dataset": "scannet",
+    "scene_name": "scene0608_00",
+    "question_type": "object_rel_distance",
+    "type_group": "object_rel_distance",
+    "question": "Measuring from the closest point of each object, which of these objects (tv, plant, chair, pillow) is the closest to the door?",
+    "ground_truth": "D",
+    "options": [
+      "A. tv",
+      "B. plant",
+      "C. chair",
+      "D. pillow"
+    ],
+    "ext": {
+      "target_categories": [
+        "tv",
+        "plant",
+        "chair",
+        "pillow"
+      ],
+      "needs_size": false,
+      "room": false
+    }
+  },
+  {
+    "id": 5117,
+    "dataset": "arkitscenes",
+    "scene_name": "41125700",
+    "question_type": "route_planning",
+    "type_group": "route_planning",
+    "question": "You are a robot beginning at the tv and facing the sofa. You want to navigate to the microwave. You will perform the following actions (Note: for each [please fill in], choose either 'turn back,' 'turn left,' or 'turn right.'): 1. [please fill in] 2. Go forward until the sink 3. [please fill in] 4. Go forward until the microwave. You have reached the final destination.",
+    "ground_truth": "D",
+    "options": [
+      "A. Turn Right, Turn Right",
+      "B. Turn Right, Turn Left",
+      "C. Turn Back, Turn Right",
+      "D. Turn Left, Turn Right"
+    ],
+    "ext": {
+      "target_categories": [
+        "turn right",
+        "turn left",
+        "turn back"
+      ],
+      "needs_size": false,
+      "room": false
+    }
+  },
+  {
+    "id": 4965,
+    "dataset": "scannetpp",
+    "scene_name": "c49a8c6cff",
+    "question_type": "route_planning",
+    "type_group": "route_planning",
+    "question": "You are a robot beginning at the door and facing the window. You want to navigate to the monitor. You will perform the following actions (Note: for each [please fill in], choose either 'turn back,' 'turn left,' or 'turn right.'): 1. Go forward until the heater 2. [please fill in] 3. Go forward until the monitor. You have reached the final destination.",
+    "ground_truth": "C",
+    "options": [
+      "A. Turn Left",
+      "B. Turn Back",
+      "C. Turn Right"
+    ],
+    "ext": {
+      "target_categories": [
+        "turn left",
+        "turn back",
+        "turn right"
+      ],
+      "needs_size": false,
+      "room": false
+    }
+  },
+  {
+    "id": 5143,
+    "dataset": "scannet",
+    "scene_name": "scene0461_00",
+    "question_type": "route_planning",
+    "type_group": "route_planning",
+    "question": "You are a robot beginning at the side table and facing the window. You want to navigate to the coffee table. You will perform the following actions (Note: for each [please fill in], choose either 'turn back,' 'turn left,' or 'turn right.'): 1. [please fill in] 2. Go forward until the table. You have reached the final destination.",
+    "ground_truth": "A",
+    "options": [
+      "A. Turn Back",
+      "B. Turn Left",
+      "C. Turn Right"
+    ],
+    "ext": {
+      "target_categories": [
+        "turn back",
+        "turn left",
+        "turn right"
+      ],
+      "needs_size": false,
+      "room": false
+    }
+  },
+  {
+    "id": 5133,
+    "dataset": "arkitscenes",
+    "scene_name": "47333899",
+    "question_type": "route_planning",
+    "type_group": "route_planning",
+    "question": "You are a robot beginning at the red chair facing the other chair. You want to navigate to the dishwasher. You will perform the following actions (Note: for each [please fill in], choose either 'turn back,' 'turn left,' or 'turn right.'): 1. [please fill in] 2. Go forward until the dishwasher. You have reached the final destination.",
+    "ground_truth": "B",
+    "options": [
+      "A. Turn Left",
+      "B. Turn Right",
+      "C. Turn Back"
+    ],
+    "ext": {
+      "target_categories": [
+        "turn left",
+        "turn right",
+        "turn back"
+      ],
+      "needs_size": false,
+      "room": false
+    }
+  },
+  {
+    "id": 5104,
+    "dataset": "scannetpp",
+    "scene_name": "acd95847c5",
+    "question_type": "route_planning",
+    "type_group": "route_planning",
+    "question": "You are a robot beginning at the laptop and facing the telephone next to it. You want to navigate to the headphone on the table opposite. You will perform the following actions (Note: for each [please fill in], choose either 'turn back,' 'turn left,' or 'turn right.'): 1. [please fill in] 2. Go forward until the coat rack on the wall 3. [please fill in] 4. Go forward until the whiteboard 5. [please fill in] 6. Go forward until the headphone on your left. You have reached the final destination.",
+    "ground_truth": "C",
+    "options": [
+      "A. Turn Left, Turn Left, Turn Right",
+      "B. Turn Left, Turn Right, Turn Left",
+      "C. Turn Right, Turn Left, Turn Left",
+      "D. Turn Back, Turn Left, Turn Left"
+    ],
+    "ext": {
+      "target_categories": [
+        "turn left",
+        "turn right",
+        "turn back"
+      ],
+      "needs_size": false,
+      "room": false
+    }
+  },
+  {
+    "id": 5054,
+    "dataset": "scannet",
+    "scene_name": "scene0697_01",
+    "question_type": "route_planning",
+    "type_group": "route_planning",
+    "question": "You are a robot beginning at the dollhouse nearby the window and facing the window. You want to navigate to the hanging picture. You will perform the following actions (Note: for each [please fill in], choose either 'turn back,' 'turn left,' or 'turn right.'): 1. [please fill in] 2. Go forward until the cabinet with a mirror on top of that. 3. [please fill in] 4. Go forward until the hanging picture. You have reached the final destination.",
+    "ground_truth": "B",
+    "options": [
+      "A. Turn Left, Turn Left",
+      "B. Turn Back, Turn Right",
+      "C. Turn Back, Turn Left",
+      "D. Turn Left, Turn Right"
+    ],
+    "ext": {
+      "target_categories": [
+        "turn left",
+        "turn back",
+        "turn right"
+      ],
+      "needs_size": false,
+      "room": false
+    }
+  },
+  {
+    "id": 2931,
+    "dataset": "scannetpp",
+    "scene_name": "27dd4da69e",
+    "question_type": "obj_appearance_order",
+    "type_group": "obj_appearance_order",
+    "question": "What will be the first-time appearance order of the following categories in the video: sofa, trash can, power strip, tv?",
+    "ground_truth": "C",
+    "options": [
+      "A. power strip, tv, sofa, trash can",
+      "B. trash can, power strip, sofa, tv",
+      "C. power strip, trash can, sofa, tv",
+      "D. sofa, trash can, power strip, tv"
+    ],
+    "ext": {
+      "target_categories": [
+        "power strip",
+        "tv",
+        "sofa",
+        "trash can"
+      ],
+      "needs_size": false,
+      "room": false
+    }
+  },
+  {
+    "id": 3853,
+    "dataset": "scannet",
+    "scene_name": "scene0353_00",
+    "question_type": "obj_appearance_order",
+    "type_group": "obj_appearance_order",
+    "question": "What will be the first-time appearance order of the following categories in the video: refrigerator, closet, backpack, bed?",
+    "ground_truth": "B",
+    "options": [
+      "A. closet, refrigerator, bed, backpack",
+      "B. bed, backpack, refrigerator, closet",
+      "C. refrigerator, closet, backpack, bed",
+      "D. closet, backpack, refrigerator, bed"
+    ],
+    "ext": {
+      "target_categories": [
+        "closet",
+        "refrigerator",
+        "bed",
+        "backpack"
+      ],
+      "needs_size": false,
+      "room": false
+    }
+  },
+  {
+    "id": 2871,
+    "dataset": "scannetpp",
+    "scene_name": "09c1414f1b",
+    "question_type": "obj_appearance_order",
+    "type_group": "obj_appearance_order",
+    "question": "What will be the first-time appearance order of the following categories in the video: blanket, trash can, microwave, plant?",
+    "ground_truth": "C",
+    "options": [
+      "A. microwave, blanket, plant, trash can",
+      "B. plant, blanket, microwave, trash can",
+      "C. plant, blanket, trash can, microwave",
+      "D. blanket, trash can, microwave, plant"
+    ],
+    "ext": {
+      "target_categories": [
+        "microwave",
+        "blanket",
+        "plant",
+        "trash can"
+      ],
+      "needs_size": false,
+      "room": false
+    }
+  },
+  {
+    "id": 4128,
+    "dataset": "scannet",
+    "scene_name": "scene0608_00",
+    "question_type": "obj_appearance_order",
+    "type_group": "obj_appearance_order",
+    "question": "What will be the first-time appearance order of the following categories in the video: lamp, clock, pillow, table?",
+    "ground_truth": "A",
+    "options": [
+      "A. table, pillow, lamp, clock",
+      "B. pillow, table, lamp, clock",
+      "C. clock, table, lamp, pillow",
+      "D. lamp, clock, pillow, table"
+    ],
+    "ext": {
+      "target_categories": [
+        "table",
+        "pillow",
+        "lamp",
+        "clock"
+      ],
+      "needs_size": false,
+      "room": false
+    }
+  },
+  {
+    "id": 2752,
+    "dataset": "scannetpp",
+    "scene_name": "25f3b7a318",
+    "question_type": "obj_appearance_order",
+    "type_group": "obj_appearance_order",
+    "question": "What will be the first-time appearance order of the following categories in the video: toilet, shoes, laptop, blanket?",
+    "ground_truth": "C",
+    "options": [
+      "A. laptop, shoes, toilet, blanket",
+      "B. toilet, shoes, laptop, blanket",
+      "C. blanket, shoes, laptop, toilet",
+      "D. blanket, shoes, toilet, laptop"
+    ],
+    "ext": {
+      "target_categories": [
+        "laptop",
+        "shoes",
+        "toilet",
+        "blanket"
+      ],
+      "needs_size": false,
+      "room": false
+    }
+  },
+  {
+    "id": 3899,
+    "dataset": "scannet",
+    "scene_name": "scene0426_00",
+    "question_type": "obj_appearance_order",
+    "type_group": "obj_appearance_order",
+    "question": "What will be the first-time appearance order of the following categories in the video: bed, chair, window, tv?",
+    "ground_truth": "B",
+    "options": [
+      "A. chair, window, bed, tv",
+      "B. bed, chair, tv, window",
+      "C. chair, tv, window, bed",
+      "D. bed, chair, window, tv"
+    ],
+    "ext": {
+      "target_categories": [
+        "chair",
+        "window",
+        "bed",
+        "tv"
+      ],
+      "needs_size": false,
+      "room": false
+    }
+  },
+  {
+    "id": 1291,
+    "dataset": "arkitscenes",
+    "scene_name": "47331970",
+    "question_type": "object_rel_direction_easy",
+    "type_group": "object_rel_direction",
+    "question": "If I am standing by the refrigerator and facing the table, is the dishwasher to the left or the right of the table?",
+    "ground_truth": "A",
+    "options": [
+      "A. left",
+      "B. right"
+    ],
+    "ext": {
+      "target_categories": [
+        "left",
+        "right"
+      ],
+      "needs_size": false,
+      "room": false
+    }
+  },
+  {
+    "id": 2469,
+    "dataset": "scannetpp",
+    "scene_name": "bcd2436daf",
+    "question_type": "object_rel_direction_easy",
+    "type_group": "object_rel_direction",
+    "question": "If I am standing by the heater and facing the pillow, is the ceiling light to the left or the right of the pillow?",
+    "ground_truth": "A",
+    "options": [
+      "A. right",
+      "B. left"
+    ],
+    "ext": {
+      "target_categories": [
+        "right",
+        "left"
+      ],
+      "needs_size": false,
+      "room": false
+    }
+  },
+  {
+    "id": 3718,
+    "dataset": "scannet",
+    "scene_name": "scene0629_01",
+    "question_type": "object_rel_direction_easy",
+    "type_group": "object_rel_direction",
+    "question": "If I am standing by the chair and facing the bed, is the mirror to the left or the right of the bed?",
+    "ground_truth": "A",
+    "options": [
+      "A. right",
+      "B. left"
+    ],
+    "ext": {
+      "target_categories": [
+        "right",
+        "left"
+      ],
+      "needs_size": false,
+      "room": false
+    }
+  },
+  {
+    "id": 1155,
+    "dataset": "arkitscenes",
+    "scene_name": "42899696",
+    "question_type": "object_rel_direction_medium",
+    "type_group": "object_rel_direction",
+    "question": "If I am standing by the bed and facing the stool, is the tv to my left, right, or back?\nAn object is to my back if I would have to turn at least 135 degrees in order to face it.",
+    "ground_truth": "A",
+    "options": [
+      "A. right",
+      "B. back",
+      "C. left"
+    ],
+    "ext": {
+      "target_categories": [
+        "right",
+        "back",
+        "left"
+      ],
+      "needs_size": false,
+      "room": false
+    }
+  },
+  {
+    "id": 1559,
+    "dataset": "scannetpp",
+    "scene_name": "e398684d27",
+    "question_type": "object_rel_direction_medium",
+    "type_group": "object_rel_direction",
+    "question": "If I am standing by the ceiling light and facing the monitor, is the door to my left, right, or back?\nAn object is to my back if I would have to turn at least 135 degrees in order to face it.",
+    "ground_truth": "A",
+    "options": [
+      "A. left",
+      "B. back",
+      "C. right"
+    ],
+    "ext": {
+      "target_categories": [
+        "left",
+        "back",
+        "right"
+      ],
+      "needs_size": false,
+      "room": false
+    }
+  },
+  {
+    "id": 4305,
+    "dataset": "scannet",
+    "scene_name": "scene0700_02",
+    "question_type": "object_rel_direction_medium",
+    "type_group": "object_rel_direction",
+    "question": "If I am standing by the window and facing the telephone, is the door to my left, right, or back?\nAn object is to my back if I would have to turn at least 135 degrees in order to face it.",
+    "ground_truth": "A",
+    "options": [
+      "A. left",
+      "B. right",
+      "C. back"
+    ],
+    "ext": {
+      "target_categories": [
+        "left",
+        "right",
+        "back"
+      ],
+      "needs_size": false,
+      "room": false
+    }
+  },
+  {
+    "id": 1874,
+    "dataset": "scannetpp",
+    "scene_name": "5942004064",
+    "question_type": "object_rel_direction_hard",
+    "type_group": "object_rel_direction",
+    "question": "If I am standing by the chair and facing the sofa, is the tv to my front-left, front-right, back-left, or back-right?\nThe directions refer to the quadrants of a Cartesian plane (if I am standing at the origin and facing along the positive y-axis).",
+    "ground_truth": "D",
+    "options": [
+      "A. back-right",
+      "B. back-left",
+      "C. front-right",
+      "D. front-left"
+    ],
+    "ext": {
+      "target_categories": [
+        "back",
+        "right",
+        "left",
+        "front"
+      ],
+      "needs_size": false,
+      "room": false
+    }
+  },
+  {
+    "id": 1001,
+    "dataset": "arkitscenes",
+    "scene_name": "42898527",
+    "question_type": "object_rel_direction_hard",
+    "type_group": "object_rel_direction",
+    "question": "If I am standing by the washer and facing the stove, is the refrigerator to my front-left, front-right, back-left, or back-right?\nThe directions refer to the quadrants of a Cartesian plane (if I am standing at the origin and facing along the positive y-axis).",
+    "ground_truth": "B",
+    "options": [
+      "A. back-right",
+      "B. front-left",
+      "C. back-left",
+      "D. front-right"
+    ],
+    "ext": {
+      "target_categories": [
+        "back",
+        "right",
+        "front",
+        "left"
+      ],
+      "needs_size": false,
+      "room": false
+    }
+  }
+]
