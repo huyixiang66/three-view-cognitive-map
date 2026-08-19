@@ -251,7 +251,7 @@ def build_view(sample, view, model_name, sleep, dry_run=False, prev_views=None, 
     if video_b64 is None:
         return None, [], 'NO_VIDEO', cats
     if prev_views:
-        prompt = REF_BUILD_PROMPT_STRICT_V4.format(
+        prompt = REF_BUILD_PROMPT_STRICT.format(
             name=CAMERAS[view]['name'], view_upper=view.upper(),
             format_hint=FORMAT_HINTS[view], cats=cats_text,
             prev_views=json.dumps(prev_views, ensure_ascii=False), **camera_text(view))
