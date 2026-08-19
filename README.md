@@ -81,6 +81,29 @@ python run_tis_compare.py --arm all --mode shared --samples vsi_subset_200.json 
 
 GT 地图需要 `TIS_META_DIR` 指向 TIS 复现仓库的 meta_info 目录；meta JSON 不随仓库上传。
 
+## 多 agent debate（干净协议）
+
+三视图多 agent 变体：独立 agent + 顺序参考建图，回答统一走 clean 协议（新会话只给地图文本）。矩阵 debate 使用融合投影 + 变换矩阵互评，简单 debate 使用共享轴偏移互评。
+
+```bash
+cd src
+# 简单 debate
+python run_debate_clean.py --strategy 7 --samples vsi_debate_50.json --n 50 --output results_debate_clean_s7_50.json
+# 矩阵 debate
+python run_debate_clean.py --strategy 5 --samples vsi_debate_50.json --n 50 --output results_debate_clean_s5_50.json
+```
+
+| 参数 | 作用 |
+|------|------|
+| `--strategy 5` | 矩阵 debate：融合参考重投影 + 变换矩阵互评 |
+| `--strategy 6` | 独立建图无 debate（对照） |
+| `--strategy 7` | 简单 debate：共享轴偏移互评 |
+| `--samples vsi_debate_50.json` | 50 个 VSI-Bench 样本 |
+| `--n 50` | 样本数 |
+| `--output xxx.json` | 结果文件 |
+
+GT 指标需要 `TIS_META_DIR`；未配置 meta 时仍可跑建图与回答，只跳过 GT 地图指标。
+
 ## 数据
 
 `src/vsi_subset_50.json` 包含 50 个 VSI-Bench 样本，5 种题型：
@@ -95,6 +118,8 @@ GT 地图需要 `TIS_META_DIR` 指向 TIS 复现仓库的 meta_info 目录；met
 
 `src/vsi_subset_200.json` 包含 200 个 VSI-Bench 样本，8 类题型各 25 条（含 size/room）。
 
+`src/vsi_debate_50.json` 为多 agent debate 使用的 50 个 VSI-Bench 样本（8 类题型）。
+
 完整 VSI-Bench: https://huggingface.co/datasets/nyu-visionx/VSI-Bench
 
 ## 文件结构
@@ -104,11 +129,15 @@ GT 地图需要 `TIS_META_DIR` 指向 TIS 复现仓库的 meta_info 目录；met
 +-- src/
 |   +-- run_vsibench.py        # 主实验 pipeline
 |   +-- run_tis_compare.py     # TIS baseline vs 三视图对照（200 样本）
+|   +-- run_debate_clean.py    # 多 agent debate（简单/矩阵）runner
+|   +-- run_clean_answer.py    # 统一 clean 回答阶段
+|   +-- camera_utils.py        # 相机矩阵工具
 |   +-- prompts_3pass.py       # 3-pass prompt 模板
 |   +-- tis_compare.py         # 核心库（GT 地图/指标/API）
 |   +-- tis_prompts.py         # 单次三视图 size/room prompt
 |   +-- vsi_subset_50.json     # 50 个 VSI-Bench 样本
 |   +-- vsi_subset_200.json    # 200 个 VSI-Bench 样本
+|   +-- vsi_debate_50.json     # 50 个 debate 样本
 |   +-- reevaluate.py          # VSI-Bench MRA 评估
 |   +-- meta_to_cogmap.py      # Oracle 基线转换器
 +-- scripts/
@@ -123,5 +152,5 @@ GT 地图需要 `TIS_META_DIR` 指向 TIS 复现仓库的 meta_info 目录；met
 ## 依赖
 
 ```bash
-pip install openai matplotlib
+pip install openai numpy matplotlib
 ```

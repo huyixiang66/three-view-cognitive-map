@@ -509,8 +509,15 @@ def process_sample(i, sample, args):
             raw_views[view] = raw
             parsed[view] = parse_view(raw, view)
 
-    meta_scene = load_meta(sample['dataset']).get(sample['scene_name'], {})
-    gt_map, matched = build_gt_map(sample, meta_scene)
+    try:
+        meta_scene = load_meta(sample['dataset']).get(sample['scene_name'], {})
+    except Exception:
+        meta_scene = {}
+    if meta_scene:
+        gt_map, matched = build_gt_map(sample, meta_scene)
+    else:
+        gt_map = {'top': {}, 'front': {}, 'side': {}, 'sizes': {}, 'room': None}
+        matched = {}
     metrics_round0 = compute_metrics(gt_map, combined_map(parsed), 'threeview')
 
     finals = dict(raw_views)
@@ -597,6 +604,8 @@ def process_sample(i, sample, args):
         'arm': 'debate_clean_strategy%d' % args.strategy,
         'arm_name': ARM_NAMES[args.strategy],
         'strategy': args.strategy,
+        'mode': 'clean',
+        'raw_map': json.dumps(answer_map, ensure_ascii=False),
         'cameras': CAMERAS,
         'scene': sample['scene_name'],
         'dataset': sample['dataset'],
