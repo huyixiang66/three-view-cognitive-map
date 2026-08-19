@@ -153,6 +153,7 @@ ANSWER_PROMPT_REL_DIRECTION = '''QUESTION: {question}
 {options}
 
 Determine the relative direction and provide your answer.
+Use the TOP view coordinates: let S be the standing object and F the facing object, with F_vec = F - S. For each candidate T, the object is to your LEFT if cross(F_vec, T_vec) = Fx*Ty - Fy*Tx is positive, RIGHT if negative, and BACK if the dot product F_vec . T_vec is negative.
 Answer with the option letter (A, B, C, or D).
 Always end your response with ANSWER: followed by the letter.'''
 
