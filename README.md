@@ -93,16 +93,17 @@ GT 地图需要 `TIS_META_DIR` 指向 TIS 复现仓库的 meta_info 目录；met
 ```bash
 cd src
 # 简单 debate
-python run_debate_clean.py --strategy 7 --samples vsi_debate_50.json --n 50 --output results_debate_clean_s7_50.json
+python run_debate_clean.py --strategy ref_simple_debate --samples vsi_debate_50.json --n 50 --output results_debate_clean_s7_50.json
 # 矩阵 debate
-python run_debate_clean.py --strategy 5 --samples vsi_debate_50.json --n 50 --output results_debate_clean_s5_50.json
+python run_debate_clean.py --strategy ref_matrix_debate --samples vsi_debate_50.json --n 50 --output results_debate_clean_s5_50.json
 ```
 
 | 参数 | 作用 |
 |------|------|
-| `--strategy 5` | 矩阵 debate：融合参考重投影 + 变换矩阵互评 |
-| `--strategy 6` | 独立建图无 debate（对照） |
-| `--strategy 7` | 简单 debate：共享轴偏移互评 |
+| `--strategy ref_matrix_debate` | 矩阵 debate：融合参考重投影 + 变换矩阵互评 |
+| `--strategy ref_no_debate` | 独立建图无 debate（对照） |
+| `--strategy ref_simple_debate` | 简单 debate：共享轴偏移互评 |
+| `--strategy` 也兼容旧数字 5/6/7 | 便于旧脚本迁移 |
 | `--samples vsi_debate_50.json` | 50 个 VSI-Bench 样本 |
 | `--n 50` | 样本数 |
 | `--output xxx.json` | 结果文件 |

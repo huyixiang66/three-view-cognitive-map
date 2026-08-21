@@ -6,17 +6,15 @@ prompt, then one structured shared-axis-offset critique round.
 Strategy 2 (v5-style): same build prompt, then a fused-reference critique
 round that uses the real 4x4 camera matrix (canonical cameras, so matrix
 projection equals the standard axis convention).
-Strategy 5: three independent agents, each building its view with the previous
-views passed as reference text, then the fused-reference matrix critique
-round (arm 6 of the six-arm plan).
-Strategy 6: same independent reference build as strategy 5, but no debate
-(arm 4).
-Strategy 7: same independent reference build as strategy 5, then the simple
-shared-axis-offset critique round (arm 5).
+The three arms used in the six-arm plan are named:
+  ref_no_debate      (legacy strategy 6): independent reference build, no debate
+  ref_simple_debate  (legacy strategy 7): + shared-axis-offset critique round
+  ref_matrix_debate  (legacy strategy 5): + fused-reference matrix critique round
+Legacy numeric strategies 1-7 are still accepted for compatibility.
 
-Both strategies answer with the SAME noshared protocol: a fresh conversation
-with map text only, using run_clean_answer.MAP_PREAMBLE. This removes the
-answer-stage memory/video/format confounds.
+All arms answer with the SAME protocol: a fresh conversation that receives
+the video AND the three-view map text (video memory), using
+run_clean_answer.MAP_PREAMBLE.
 """
 import argparse
 import json
@@ -64,6 +62,25 @@ ARM_NAMES = {
     6: 'ref_no_debate',
     7: 'ref_simple_debate',
 }
+
+STRATEGY_ALIASES = {
+    'parallel_simple_debate': 1, 'parallel_matrix_debate': 2, 'sequential_matrix_debate': 3,
+    'parallel_no_debate': 4, 'ref_matrix_debate': 5, 'ref_no_debate': 6, 'ref_simple_debate': 7,
+    'matrix_debate': 5, 'simple_debate': 7, 'no_debate': 6,
+}
+
+
+def parse_strategy(value):
+    if isinstance(value, int) or str(value).isdigit():
+        v = int(value)
+        if v in ARM_NAMES:
+            return v
+    name = str(value).strip().lower()
+    if name in STRATEGY_ALIASES:
+        return STRATEGY_ALIASES[name]
+    raise argparse.ArgumentTypeError(
+        'strategy must be one of %s or %s' % (
+            sorted(ARM_NAMES), sorted(STRATEGY_ALIASES)))
 
 
 def derive_cameras():
@@ -517,8 +534,8 @@ def answer_unified(sample, answer_map, model_name, sleep, dry_run=False, video_b
 
 
 def process_sample(i, sample, args):
-    print('[%d] strategy%d %s %s' % (i + 1, args.strategy, sample['dataset'],
-                                     sample['scene_name']), flush=True)
+    print('[%d] %s %s %s' % (i + 1, ARM_NAMES[args.strategy], sample['dataset'],
+                             sample['scene_name']), flush=True)
     raw_views = {}
     parsed = {}
     cats = []
@@ -713,7 +730,8 @@ def process_sample(i, sample, args):
 
 def main():
     parser = argparse.ArgumentParser(description='Clean debate harness')
-    parser.add_argument('--strategy', type=int, choices=[1, 2, 3, 4, 5, 6, 7], required=True)
+    parser.add_argument('--strategy', type=parse_strategy, required=True,
+                        help='strategy name or legacy number (e.g. ref_no_debate / 6)')
     parser.add_argument('--model', type=str, default='gemini-3.5-flash')
     parser.add_argument('--samples', type=str, default='vsi_subset_200.json')
     parser.add_argument('--output', required=True)
