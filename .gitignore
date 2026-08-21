@@ -7,6 +7,12 @@
 tmp/
 results.json
 src/results_*.json
+results_*.json
+tmp_clean_*.json
+src/vsi_debate_*_*.json
+src/vsi_dir_easy_only.json
+src/vsi_direction_subset_17.json
+src/vsi_noshared_recall_10.json
 src/*_backup.py
 src/debug_pipeline*.py
 src/prompts.py
