@@ -647,13 +647,16 @@ def run_sample(sample, mode, model_name, sleep_between_calls=3.0, use_viz=False)
         else:
             context = cogmap_text
             preamble = (
-                'You are given a three-view cognitive map of a room:\n\n'
+                'You are given the video of a room and a three-view cognitive map of the same room:\n\n'
                 '%s\n\n'
-                'Based on the cognitive map above, answer the question.\n'
+                'Based on the video and the cognitive map, answer the question.\n'
             ) % context
             user_msg = preamble + template.format(question=question, options=options_text)
         new_messages = [{'role': 'system', 'content': SYSTEM_PROMPT}]
-        new_messages.append({'role': 'user', 'content': user_msg})
+        if use_viz:
+            new_messages.append({'role': 'user', 'content': user_msg})
+        else:
+            new_messages.append({'role': 'user', 'content': build_video_message(user_msg, video_b64)})
         raw_answer = call_api(model_name, new_messages, sleep_time=sleep_between_calls)
         total_calls += 1
 

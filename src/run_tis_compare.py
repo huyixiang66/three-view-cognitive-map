@@ -13,7 +13,9 @@ import argparse
 import json
 import os
 import sys
+import glob
 import threading
+from collections import deque
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 from prompts_3pass import (
@@ -41,6 +43,7 @@ from tis_compare import (
     normalize_sizes,
     parse_counts,
     reconcile_views,
+    legacy_cogmap_objects,
 )
 from tis_prompts import (
     TIS_FRONT_VIEW_PASS2_PROMPT,
@@ -49,6 +52,7 @@ from tis_prompts import (
     TIS_SIDE_VIEW_PASS3_PROMPT,
     TIS_THREE_VIEW_PROMPT,
     TIS_TOP_VIEW_PROMPT,
+    TIS_ROOM_SUFFIX,
     ANSWER_PROMPT_COUNTING,
     ANSWER_PROMPT_SIZE,
     ANSWER_PROMPT_ROOM,
@@ -97,7 +101,7 @@ def options_text(sample):
 def map_prompt(arm, categories):
     cats = ', '.join(categories)
     if arm == 'baseline':
-        return TIS_TOP_VIEW_PROMPT.format(categories_of_interest=cats)
+        return TIS_TOP_VIEW_PROMPT.format(categories_of_interest=cats) + TIS_ROOM_SUFFIX
     return TIS_THREE_VIEW_PROMPT.format(categories_of_interest=cats)
 
 
@@ -132,7 +136,7 @@ def run_arm(sample, arm, mode, model_name, sleep, dry_run):
 
     if arm == 'threeview_3pass':
         messages.append({'role': 'user', 'content': build_video_message(
-            TIS_TOP_VIEW_PROMPT.format(categories_of_interest=cats), video_b64)})
+            TIS_TOP_VIEW_PROMPT.format(categories_of_interest=cats) + TIS_ROOM_SUFFIX, video_b64)})
         raw_top = call_api(model_name, messages, sleep_time=sleep)
         if not raw_top:
             return raw_top, None, 'MAP_API_FAIL', categories, None
@@ -153,6 +157,14 @@ def run_arm(sample, arm, mode, model_name, sleep, dry_run):
             return raw_side, None, 'MAP_API_FAIL', categories, None
         messages.append({'role': 'assistant', 'content': raw_side})
 
+        _top_data = extract_json(raw_top)
+        _room = None
+        if isinstance(_top_data, dict) and isinstance(_top_data.get('room'), dict):
+            try:
+                _room = float(_top_data['room'].get('area_m2'))
+            except (TypeError, ValueError):
+                _room = None
+
         parsed = {
             'top': normalize_view(extract_json(raw_top), 'top'),
             'front': normalize_view(extract_json(raw_front), 'front'),
@@ -162,7 +174,7 @@ def run_arm(sample, arm, mode, model_name, sleep, dry_run):
                 'front': normalize_sizes(extract_json(raw_front), 'front'),
                 'side': normalize_sizes(extract_json(raw_side), 'side'),
             },
-            'room': None,
+            'room': _room,
         }
         raw_map = json.dumps(parsed, ensure_ascii=False)
     elif arm == 'threeview_2stage':
@@ -212,12 +224,12 @@ def run_arm(sample, arm, mode, model_name, sleep, dry_run):
         raw_answer = call_api(model_name, messages, sleep_time=sleep)
     else:
         preamble = (
-            'You are given a cognitive map of a room:\n\n%s\n\n'
-            'Based on the cognitive map above, answer the question.\n'
+            'You are given the video of a room and a cognitive map of the same room:\n\n%s\n\n'
+            'Based on the video and the cognitive map, answer the question.\n'
         ) % (json.dumps(reconcile_views(parsed), ensure_ascii=False) if arm == 'threeview_3pass' else raw_map)
         new_messages = [{'role': 'system', 'content': SYSTEM_PROMPT}]
-        new_messages.append({'role': 'user', 'content': preamble + template.format(
-            question=question, options=opts)})
+        answer_text = preamble + template.format(question=question, options=opts)
+        new_messages.append({'role': 'user', 'content': build_video_message(answer_text, video_b64)})
         raw_answer = call_api(model_name, new_messages, sleep_time=sleep)
     if not raw_answer:
         return raw_map, raw_answer, 'ANSWER_API_FAIL', categories, parsed
@@ -238,6 +250,8 @@ def main():
     parser.add_argument('--resume', type=str, default=None)
     parser.add_argument('--dry-run', action='store_true')
     parser.add_argument('--verbose', action='store_true')
+    parser.add_argument('--max-consecutive-fails', type=int, default=15)
+    parser.add_argument('--max-fail-rate', type=float, default=0.6)
     args = parser.parse_args()
 
     if hasattr(sys.stdout, 'reconfigure'):
@@ -255,12 +269,19 @@ def main():
     test_samples = samples[:args.n]
 
     results = []
-    if args.resume and os.path.exists(args.resume):
-        with open(args.resume, 'r', encoding='utf-8') as f:
+    resume_path = args.resume
+    if resume_path and not os.path.exists(resume_path):
+        base = args.output.replace('.json', '')
+        cands = sorted(glob.glob(base + '_partial_*.json'),
+                       key=lambda p: int(p.rsplit('_', 1)[-1].split('.')[0]))
+        if cands:
+            resume_path = cands[-1]
+    if resume_path and os.path.exists(resume_path):
+        with open(resume_path, 'r', encoding='utf-8') as f:
             existing = json.load(f)
         results = [e for e in existing if '__summary__' not in e]
         done = {(e['sample_idx'], e['arm']) for e in results if not e.get('error')}
-        print('Resuming: %d records loaded' % len(results))
+        print('Resuming %d records from %s' % (len(results), resume_path))
     else:
         done = set()
 
@@ -269,6 +290,9 @@ def main():
 
     lock = threading.Lock()
     completed = [len({r.get('sample_idx') for r in results})]
+    fail_streak = 0
+    recent = deque(maxlen=20)
+    stop_reason = None
 
     def process(i, sample):
         print('[%d/%d] start %s %s %s' % (
@@ -299,6 +323,8 @@ def main():
                 'raw_map': raw_map,
                 'raw_answer': raw_answer,
                 'error': error,
+                'cogmap_objects': legacy_cogmap_objects(parsed) if parsed else [],
+                'api_calls': 4 if arm == 'threeview_3pass' else 3 if arm == 'threeview_2stage' else 2,
             }
             metric_arm = 'threeview' if arm != 'baseline' else 'baseline'
             if error:
@@ -352,8 +378,22 @@ def main():
                     with open(partial, 'w', encoding='utf-8') as f:
                         json.dump(results, f, indent=2, ensure_ascii=False)
                     print('[Auto-save] %d/%d samples -> %s' % (completed[0], len(test_samples), partial), flush=True)
+                if recs and all(r[1].get('error') for r in recs):
+                    fail_streak += 1
+                    recent.append(1)
+                elif recs:
+                    fail_streak = 0
+                    recent.append(0)
+                if fail_streak >= args.max_consecutive_fails or (
+                        len(recent) == recent.maxlen and sum(recent) / len(recent) >= args.max_fail_rate):
+                    stop_reason = 'streak=%d window_rate=%.2f' % (fail_streak, sum(recent) / len(recent) if recent else 0)
+                    for f in futures:
+                        f.cancel()
+                    break
 
     summary = summarize(results, arms)
+    if stop_reason:
+        print('[STOP] failure guard: %s' % stop_reason, flush=True)
     results.append({'__summary__': summary})
     with open(args.output, 'w', encoding='utf-8') as f:
         json.dump(results, f, indent=2, ensure_ascii=False)

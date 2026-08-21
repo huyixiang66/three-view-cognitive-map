@@ -338,8 +338,11 @@ def parse_map(text, arm):
     if data is None:
         return None
     if arm == 'baseline':
+        room = data.get('room') if isinstance(data, dict) else None
+        room_val = (float(room['area_m2'])
+                    if isinstance(room, dict) and room.get('area_m2') is not None else None)
         return {'top': normalize_view(data, 'top'), 'front': {}, 'side': {},
-                'sizes': {}, 'room': None}
+                'sizes': {}, 'room': room_val}
     if not isinstance(data, dict):
         return None
     room = data.get('room')
@@ -536,7 +539,7 @@ def build_video_message(text, video_b64, mime_type='video/mp4'):
     ]
 
 
-def call_api(model_name, messages, timeout=120.0, sleep_time=2.0):
+def call_api(model_name, messages, timeout=600.0, sleep_time=2.0):
     if model_name not in MODEL_REGISTRY:
         return None
     cfg = MODEL_REGISTRY[model_name]
@@ -709,4 +712,24 @@ def apply_top_alignment(view, yaw_deg, mirror):
                 x = -x
             mapped.append([round(c * x - s * y, 2), round(s * x + c * y, 2)])
         out[normalize_name(cat)] = mapped
+    return out
+
+
+def legacy_cogmap_objects(pred):
+    """Flat per-view object list matching the original GitHub schema."""
+    out = []
+    axes = {'top_view': ('x', 'y'), 'front_view': ('x', 'z'), 'side_view': ('y', 'z')}
+    view_keys = {'top_view': 'top', 'front_view': 'front', 'side_view': 'side'}
+    for view_name in ('top_view', 'front_view', 'side_view'):
+        v = (pred or {}).get(view_keys[view_name], {}) or {}
+        for cat, items in v.items():
+            for it in items or []:
+                try:
+                    a, b = float(it[0]), float(it[1])
+                except (TypeError, ValueError, IndexError):
+                    continue
+                rec = {'view': view_name, 'name': cat, 'x': None, 'y': None, 'z': None}
+                k1, k2 = axes[view_name]
+                rec[k1], rec[k2] = a, b
+                out.append(rec)
     return out

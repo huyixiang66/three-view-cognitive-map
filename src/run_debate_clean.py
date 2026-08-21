@@ -22,7 +22,9 @@ import argparse
 import json
 import os
 import sys
+import glob
 import threading
+from collections import deque
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 import numpy as np
@@ -32,6 +34,7 @@ from run_clean_answer import MAP_PREAMBLE, is_correct_ans, unified_map_text
 from run_debate import FORMAT_HINTS, VIEWS, parse_view
 from run_debate_v2 import axis_offsets
 from run_tis_compare import answer_template, options_text
+from tis_prompts import TIS_ROOM_SUFFIX
 from tis_compare import (
     SYSTEM_PROMPT,
     VIDEO_CACHE_DIR,
@@ -44,6 +47,7 @@ from tis_compare import (
     extract_json,
     load_meta,
     load_video_base64,
+    legacy_cogmap_objects,
     reconcile_views,
 )
 
@@ -81,7 +85,7 @@ VIEW_AXES = {'top': (0, 1), 'front': (0, 2), 'side': (1, 2)}
 
 CLEAN_BUILD_PROMPT = """You are Agent {name}. Your camera: position={position}, look_at={look_at}, look_up={look_up}.
 Watch the video and build the {view_upper} VIEW cognitive map on a 10x10 grid.
-Focus on the categories: {cats}. Include ALL instances.
+We provide the categories to care about in this scene: {cats}. Focus ONLY on these categories. If a category contains multiple instances, include all of them.
 Output ONLY JSON: {format_hint}"""
 
 REF_BUILD_PROMPT = """You are Agent {name}. Your camera: position={position}, look_at={look_at}, look_up={look_up}.
@@ -99,7 +103,7 @@ Axis conventions (STRICT):
 - FRONT view: [x, z], where z is HEIGHT above the floor (small values, typically 0-3).
 - SIDE view: [y, z], where z is the SAME HEIGHT as in FRONT.
 NEVER copy a depth coordinate into z. z must come from how high the object is in the video.
-Focus on the categories: {cats}. Include ALL instances.
+We provide the categories to care about in this scene: {cats}. Focus ONLY on these categories. If a category contains multiple instances, include all of them.
 Reference views built by other agents from the same video (use them ONLY for shared-axis consistency, do NOT copy them exactly):
 {prev_views}
 Now build YOUR OWN view from the video.
@@ -259,6 +263,8 @@ def build_view(sample, view, model_name, sleep, dry_run=False, prev_views=None, 
         prompt = CLEAN_BUILD_PROMPT.format(
             name=CAMERAS[view]['name'], view_upper=view.upper(),
             format_hint=FORMAT_HINTS[view], cats=cats_text, **camera_text(view))
+    if view == 'top':
+        prompt += TIS_ROOM_SUFFIX
     if retry_hint:
         prompt += retry_hint
     messages = [{'role': 'system', 'content': SYSTEM_PROMPT},
@@ -282,6 +288,18 @@ def build_view_with_retry(sample, view, model_name, sleep, dry_run=False, prev_v
             if any(parsed['coords'].values()) or attempt == 1:
                 return raw, messages, None, cats
     return raw, messages, 'BUILD_PARSE_FAIL', cats
+
+
+def extract_room(raw):
+    if not raw:
+        return None
+    data = extract_json(raw)
+    if isinstance(data, dict) and isinstance(data.get('room'), dict):
+        try:
+            return float(data['room'].get('area_m2'))
+        except (TypeError, ValueError):
+            return None
+    return None
 
 
 def estimate_room(sample, model_name, sleep, video_b64, dry_run=False):
@@ -466,7 +484,7 @@ def apply_fixes(raw_view, fixes, view):
                      cat_sizes[i][0], cat_sizes[i][1]] for i in range(n)]
     return json.dumps(out, ensure_ascii=False)
 
-def answer_unified(sample, answer_map, model_name, sleep, dry_run=False):
+def answer_unified(sample, answer_map, model_name, sleep, dry_run=False, video_b64=None):
     opts = options_text(sample)
     template = answer_template(sample['question_type'])
     text = MAP_PREAMBLE % unified_map_text(answer_map) + template.format(
@@ -480,16 +498,18 @@ def answer_unified(sample, answer_map, model_name, sleep, dry_run=False):
         text += ('\nIf the map includes a first_action, select the option that matches it.')
     if dry_run:
         return 'ANSWER: %s' % sample['ground_truth'], None
+    content = build_video_message(text, video_b64) if video_b64 else text
     raw = call_api(model_name, [{'role': 'system', 'content': SYSTEM_PROMPT},
-                                {'role': 'user', 'content': text}], sleep_time=sleep)
+                                {'role': 'user', 'content': content}], sleep_time=sleep)
     if not raw:
         return raw, 'ANSWER_API_FAIL'
     ans = extract_answer(raw, sample['question_type'])
     if ans is None:
         retry_text = ('Reply with ONLY the final answer as a single letter or number.\nQuestion: %s\n%s' %
                       (sample['question'], opts))
+        retry_content = build_video_message(retry_text, video_b64) if video_b64 else retry_text
         raw2 = call_api(model_name, [{'role': 'system', 'content': SYSTEM_PROMPT},
-                                     {'role': 'user', 'content': retry_text}], sleep_time=sleep)
+                                     {'role': 'user', 'content': retry_content}], sleep_time=sleep)
         ans2 = extract_answer(raw2, sample['question_type']) if raw2 else None
         if ans2 is not None:
             raw, ans = raw2, ans2
@@ -630,19 +650,27 @@ def process_sample(i, sample, args):
         round_metrics['final'] = compute_metrics(gt_map, answer_map, 'threeview')
 
     metrics_final = compute_metrics(gt_map, answer_map, 'threeview')
+    top_room = extract_room(finals.get('top') or raw_views.get('top'))
+    extra_calls = 0
     if args.strategy in (5, 6, 7) and ('room' in sample['question_type'] or 'size' in sample['question_type']):
-        answer_map['room'] = estimate_room(
-            sample, args.model, args.sleep, video_b64, dry_run=args.dry_run)
+        if top_room is not None:
+            answer_map['room'] = top_room
+        else:
+            answer_map['room'] = estimate_room(
+                sample, args.model, args.sleep, video_b64, dry_run=args.dry_run)
+            extra_calls += 1
     if args.strategy in (5, 6, 7) and 'appearance' in sample['question_type']:
         answer_map['appearance_order'] = estimate_appearance(
             sample, args.model, args.sleep, video_b64, dry_run=args.dry_run)
+        extra_calls += 1
     if args.strategy in (5, 6, 7) and 'route' in sample['question_type']:
         answer_map['route_action'] = estimate_route(
             sample, args.model, args.sleep, video_b64, dry_run=args.dry_run)
+        extra_calls += 1
     round_metrics['final'] = metrics_final
 
     raw_answer, answer = answer_unified(
-        sample, answer_map, args.model, args.sleep, dry_run=args.dry_run)
+        sample, answer_map, args.model, args.sleep, dry_run=args.dry_run, video_b64=video_b64)
     if not raw_answer:
         return i, {'sample_idx': i, 'error': 'ANSWER_API_FAIL', 'categories': cats}
     correct = is_correct_ans(answer, sample)
@@ -674,6 +702,8 @@ def process_sample(i, sample, args):
         'extracted_answer': answer,
         'correct': correct,
         'clean_answer': True,
+        'cogmap_objects': legacy_cogmap_objects(answer_map),
+        'api_calls': 3 + (3 if args.strategy in (1, 2, 3, 5, 7) else 0) + extra_calls + 1,
         'error': None,
     }
     if args.verbose:
@@ -693,6 +723,8 @@ def main():
     parser.add_argument('--resume', type=str, default=None)
     parser.add_argument('--dry-run', action='store_true')
     parser.add_argument('--verbose', action='store_true')
+    parser.add_argument('--max-consecutive-fails', type=int, default=15)
+    parser.add_argument('--max-fail-rate', type=float, default=0.6)
     args = parser.parse_args()
 
     if hasattr(sys.stdout, 'reconfigure'):
@@ -704,17 +736,27 @@ def main():
     test_samples = samples[:args.n]
 
     results = []
-    if args.resume and os.path.exists(args.resume):
-        with open(args.resume, encoding='utf-8') as f:
+    resume_path = args.resume
+    if resume_path and not os.path.exists(resume_path):
+        base = args.output.replace('.json', '')
+        cands = sorted(glob.glob(base + '_partial_*.json'),
+                       key=lambda p: int(p.rsplit('_', 1)[-1].split('.')[0]))
+        if cands:
+            resume_path = cands[-1]
+    if resume_path and os.path.exists(resume_path):
+        with open(resume_path, encoding='utf-8') as f:
             existing = json.load(f)
         results = [r for r in existing if '__summary__' not in r]
         done = {r['sample_idx'] for r in results if not r.get('error')}
-        print('Resuming: %d records loaded' % len(results))
+        print('Resuming %d records from %s' % (len(results), resume_path))
     else:
         done = set()
 
     lock = threading.Lock()
     completed = [len(done)]
+    fail_streak = 0
+    recent = deque(maxlen=20)
+    stop_reason = None
 
     def process(i, sample):
         if i in done:
@@ -736,8 +778,22 @@ def main():
                     with open(partial, 'w', encoding='utf-8') as f:
                         json.dump(results, f, indent=2, ensure_ascii=False)
                     print('[Auto-save] %d -> %s' % (completed[0], partial), flush=True)
+                if rec.get('error'):
+                    fail_streak += 1
+                    recent.append(1)
+                else:
+                    fail_streak = 0
+                    recent.append(0)
+                if fail_streak >= args.max_consecutive_fails or (
+                        len(recent) == recent.maxlen and sum(recent) / len(recent) >= args.max_fail_rate):
+                    stop_reason = 'streak=%d window_rate=%.2f' % (fail_streak, sum(recent) / len(recent) if recent else 0)
+                    for f in futures:
+                        f.cancel()
+                    break
 
     ok = [r for r in results if not r.get('error')]
+    if stop_reason:
+        print('[STOP] failure guard: %s' % stop_reason, flush=True)
     correct = sum(1 for r in ok if r.get('correct'))
     print('Done. records=%d ok=%d correct=%d (%.0f%%)' % (
         len(results), len(ok), correct, 100 * correct / len(ok) if ok else 0))

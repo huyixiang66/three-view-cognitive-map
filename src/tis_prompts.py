@@ -10,6 +10,12 @@ TIS_TOP_VIEW_PROMPT = """[Task] This video captures an indoor scene. Your object
 4. Each object's estimated location should accurately reflect its real position in the scene, preserving the relative spatial relationships among all objects.
 [Output] Present the estimated center locations for each object as a list within a dictionary. STRICTLY follow this JSON format: {{"category name": [(x_1, y_1), ...], ...}}"""
 
+# Appended to top-only prompts so room size is produced in the SAME build call.
+TIS_ROOM_SUFFIX = (
+    '\nAdditionally, estimate the room width/depth in grid cells and the approximate room area in square meters. '
+    'Add an extra "room" key to the JSON output: {"room": {"width": w, "depth": d, "area_m2": a}}.'
+)
+
 # Three-view extension: same wording, single pass, three orthogonal views, with size + room.
 TIS_THREE_VIEW_PROMPT = """[Task] This video captures an indoor scene. Your objective is to identify specific objects within the video, understand the spatial arrangement of the scene, estimate the center point AND SIZE of each object in three orthogonal views, and estimate the room size, assuming each view is represented by a 10x10 grid.
 [Rule]

@@ -6,13 +6,14 @@
 
 - 输入: 视频 + VSI-Bench 空间问题
 - 输出: 三视图 JSON 坐标 + 答案
+- QA 阶段: 同时输入视频 + 三视图 map（视频记忆）
 
 Pipeline:
 
 1. Pass 1: 视频 -> Top View JSON (x, y, size)
 2. Pass 2: Top View -> Front View JSON (x, z, size)
 3. Pass 3: Top + Front -> Side View JSON (y, z, size)
-4. Pass 4: cogmap -> 回答空间问题
+4. Pass 4: 视频 + cogmap -> 回答空间问题（视频记忆）
 
 ## 快速开始
 
@@ -33,7 +34,8 @@ python run_vsibench.py --model gemini-3.5-flash --mode vlm_shared --n 50
 | 参数 | 作用 |
 |------|------|
 | `--mode vlm_shared` | 同一会话（模型有视频记忆） |
-| `--mode vlm_noshared` | 新会话（只给 cogmap 文本，不给视频） |
+| `--mode vlm_noshared` | 新会话（给 cogmap 文本 + 视频） |
+| `--mode vlm_noshared_video` | 等价别名：cogmap + 视频 |
 | `--taskaware` | 建图 prompt 注入题目，提升目标物体召回 |
 | `--viz` | Pass 4 添加 matplotlib PNG 可视化图 |
 | `--facts` | Pass 4 注入脚本计算的空间事实（坐标/方向） |
@@ -76,14 +78,17 @@ python run_tis_compare.py --arm all --mode shared --samples vsi_subset_200.json 
 | `--arm threeview` | 单次三视图（含 size/room） |
 | `--arm threeview_3pass` | 三次调用分别建 TOP/FRONT/SIDE |
 | `--mode shared` | 回答复用建图会话 |
-| `--mode noshared` | 新会话回答，只给地图文本 |
+| `--mode noshared` | 新会话回答，给视频 + 地图文本 |
 | `--n 200` | 样本数 |
 
 GT 地图需要 `TIS_META_DIR` 指向 TIS 复现仓库的 meta_info 目录；meta JSON 不随仓库上传。
 
+统一 clean 回答阶段（`run_clean_answer.py`）和 debate 的回答阶段都会同时提供视频与三视图 map；
+输出保留 Unity 兼容字段 `cogmap_objects`（`view/name/x/y/z` 扁平列表）和 `api_calls`。
+
 ## 多 agent debate（干净协议）
 
-三视图多 agent 变体：独立 agent + 顺序参考建图，回答统一走 clean 协议（新会话只给地图文本）。矩阵 debate 使用融合投影 + 变换矩阵互评，简单 debate 使用共享轴偏移互评。
+三视图多 agent 变体：独立 agent + 顺序参考建图，回答统一走 clean 协议（新会话给视频 + 地图文本）。矩阵 debate 使用融合投影 + 变换矩阵互评，简单 debate 使用共享轴偏移互评。
 
 ```bash
 cd src

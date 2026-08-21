@@ -9,6 +9,7 @@ are copied and only raw_answer / extracted_answer / correct are replaced.
 import argparse
 import json
 import os
+import glob
 import threading
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
@@ -18,16 +19,24 @@ from tis_compare import (
     evaluate_answer,
     extract_answer,
     mra,
+    VIDEO_CACHE_DIR,
+    build_video_message,
+    load_video_base64,
+    legacy_cogmap_objects,
 )
 from run_tis_compare import answer_template, numeric_ok, options_text
 
 MAP_PREAMBLE = (
-    'You are given a three-view cognitive map of a room:\n\n%s\n\n'
-    'Based on the cognitive map above, answer the question.\n'
+    'You are given the video of a room and a three-view cognitive map of the same room:\n\n%s\n\n'
+    'Based on the video and the cognitive map, answer the question.\n'
 )
+
+API_CALLS_BY_ARM = {'baseline': 2, 'threeview': 2, 'threeview_2stage': 3, 'threeview_3pass': 4}
 
 
 def unified_map_text(pred):
+
+
     return json.dumps({
         'top': pred.get('top', {}),
         'front': pred.get('front', {}),
@@ -48,11 +57,12 @@ def is_correct_ans(answer, sample):
     return evaluate_answer(answer, sample['ground_truth'])
 
 
-def answer_one(text, model_name, sleep, dry_run=False):
+def answer_one(text, model_name, sleep, dry_run=False, video_b64=None):
     if dry_run:
         return 'ANSWER: %s' % text, None
+    content = build_video_message(text, video_b64) if video_b64 else text
     raw = call_api(model_name, [{'role': 'system', 'content': SYSTEM_PROMPT},
-                                {'role': 'user', 'content': text}], sleep_time=sleep)
+                                {'role': 'user', 'content': content}], sleep_time=sleep)
     return raw, None
 
 
@@ -64,7 +74,9 @@ def process_record(i, sample, model_name, sleep, dry_run):
     template = answer_template(sample['question_type'])
     text = MAP_PREAMBLE % unified_map_text(pred) + template.format(
         question=sample['question'], options=opts)
-    raw, _ = answer_one(text, model_name, sleep, dry_run=dry_run)
+    video_b64 = load_video_base64(os.path.join(
+        VIDEO_CACHE_DIR, sample['dataset'], sample['scene'] + '.mp4'))
+    raw, _ = answer_one(text, model_name, sleep, dry_run=dry_run, video_b64=video_b64)
     if not raw:
         rec = dict(sample)
         rec['error'] = 'ANSWER_API_FAIL'
@@ -73,7 +85,7 @@ def process_record(i, sample, model_name, sleep, dry_run):
     if ans is None and not dry_run:
         retry_text = ('Reply with ONLY the final answer as a single letter or number.\nQuestion: %s\n%s' %
                       (sample['question'], opts))
-        raw2, _ = answer_one(retry_text, model_name, sleep)
+        raw2, _ = answer_one(retry_text, model_name, sleep, video_b64=video_b64)
         ans2 = extract_answer(raw2, sample['question_type']) if raw2 else None
         if ans2 is not None:
             raw, ans = raw2, ans2
@@ -83,6 +95,8 @@ def process_record(i, sample, model_name, sleep, dry_run):
     rec['correct'] = is_correct_ans(ans, sample)
     rec['clean_answer'] = True
     rec['error'] = None
+    rec['cogmap_objects'] = legacy_cogmap_objects(pred)
+    rec['api_calls'] = API_CALLS_BY_ARM.get(sample.get('arm'), 2)
     return i, rec
 
 
@@ -102,12 +116,19 @@ def main():
     recs = [r for r in data if '__summary__' not in r and not r.get('error')]
 
     results = []
-    if args.resume and os.path.exists(args.resume):
-        with open(args.resume, encoding='utf-8') as f:
+    resume_path = args.resume
+    if resume_path and not os.path.exists(resume_path):
+        base = args.output.replace('.json', '')
+        cands = sorted(glob.glob(base + '_partial_*.json'),
+                       key=lambda p: int(p.rsplit('_', 1)[-1].split('.')[0]))
+        if cands:
+            resume_path = cands[-1]
+    if resume_path and os.path.exists(resume_path):
+        with open(resume_path, encoding='utf-8') as f:
             existing = json.load(f)
         results = [r for r in existing if '__summary__' not in r]
         done = {r['sample_idx'] for r in results if not r.get('error')}
-        print('Resuming: %d records loaded' % len(results))
+        print('Resuming %d records from %s' % (len(results), resume_path))
     else:
         done = set()
 
@@ -115,12 +136,13 @@ def main():
     completed = [len(done)]
 
     def process(i, rec):
-        if i in done:
-            return i, None
-        return process_record(i, rec, args.model, args.sleep, args.dry_run)
+        rid = rec.get('sample_idx')
+        if rid in done:
+            return rid, None
+        return process_record(rid, rec, args.model, args.sleep, args.dry_run)
 
     with ThreadPoolExecutor(max_workers=max(1, args.workers)) as ex:
-        futures = {ex.submit(process, i, rec): i for i, rec in enumerate(recs)}
+        futures = {ex.submit(process, rec.get('sample_idx'), rec): rec.get('sample_idx') for rec in recs}
         for fut in as_completed(futures):
             i, rec = fut.result()
             if rec is None:
