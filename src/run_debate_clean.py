@@ -586,7 +586,9 @@ def process_sample(i, sample, args):
         round_metrics['final'] = compute_metrics(gt_map, answer_map, 'threeview')
 
     metrics_final = compute_metrics(gt_map, answer_map, 'threeview')
-    top_room = extract_room(finals.get('top') or raw_views.get('top'))
+    top_room = extract_room(finals.get('top'))
+    if top_room is None:
+        top_room = extract_room(raw_views.get('top'))
     extra_calls = 0
     if top_room is not None:
         answer_map['room'] = top_room
