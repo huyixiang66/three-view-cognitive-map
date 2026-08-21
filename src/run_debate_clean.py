@@ -336,10 +336,23 @@ def fused_3d(ref):
 
 
 def project_fused_to_view(f3d, view):
-    i, j = VIEW_AXES[view]
+    """Reproject fused 3D points into this view using its camera matrix."""
+    c = CAMERAS[view]
+    M = build_view_matrix(c['position'], c['look_at'], c['look_up'], unity=True)
+    f = (SCENE_MAX - SCENE_MIN) / 2.0 + CAM_MARGIN
+    cx = cy = (SCENE_MIN + SCENE_MAX) / 2.0
     out = {}
     for cat, pts in f3d.items():
-        out[cat] = [[float(p[i]), float(p[j])] for p in pts]
+        mapped = []
+        for p in pts:
+            cam = M @ np.array([p[0], p[1], p[2], 1.0])
+            X, Y, Z = cam[0], cam[1], cam[2]
+            if abs(Z) < 1e-6:
+                continue
+            u = min(max(f * X / Z + cx, 0.0), 9.0)
+            v = min(max(f * Y / Z + cy, 0.0), 9.0)
+            mapped.append([float(u), float(v)])
+        out[cat] = mapped
     return out
 
 
