@@ -421,6 +421,10 @@ def apply_fixes(raw_view, fixes, view):
         if cat not in coords:
             coords[cat] = []
             sizes[cat] = []
+        if cat not in sizes:
+            sizes[cat] = []
+        while len(sizes[cat]) < len(coords[cat]):
+            sizes[cat].append([1.0, 1.0])
         if idx < 0 or idx >= len(coords[cat]):
             coords[cat].append([inst[0], inst[1]])
             sizes[cat].append([inst[2] if len(inst) > 2 else 0.0, inst[3] if len(inst) > 3 else 0.0])
