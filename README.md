@@ -90,7 +90,7 @@ GT 地图需要 `TIS_META_DIR` 指向 TIS 复现仓库的 meta_info 目录；met
 
 ## 多 agent debate（干净协议）
 
-三视图多 agent 变体：独立 agent + 顺序参考建图，回答统一走 clean 协议（新会话给视频 + 地图文本）。矩阵 debate 使用融合投影 + 变换矩阵互评，简单 debate 使用共享轴偏移互评。
+三视图多 agent 变体：独立 agent + 顺序参考建图，回答统一走 clean 协议（新会话给视频 + 地图文本）。矩阵 debate 把融合 3D 点经真实相机矩阵重投影回各视图再互评，简单 debate 使用共享轴偏移互评。
 
 ```bash
 cd src
