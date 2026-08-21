@@ -23,6 +23,9 @@ from tis_compare import (
     build_video_message,
     load_video_base64,
     legacy_cogmap_objects,
+    estimate_appearance,
+    estimate_room,
+    estimate_route,
 )
 from run_tis_compare import answer_template, numeric_ok, options_text
 
@@ -57,6 +60,22 @@ def is_correct_ans(answer, sample):
     return evaluate_answer(answer, sample['ground_truth'])
 
 
+def build_answer_text(sample, pred):
+    opts = options_text(sample)
+    template = answer_template(sample['question_type'])
+    text = MAP_PREAMBLE % unified_map_text(pred) + template.format(
+        question=sample['question'], options=opts)
+    qt = sample['question_type']
+    if 'size' in qt:
+        text += ('\nIf the map includes a room area (square meters), convert grid cells to meters using '
+                 '1 cell = sqrt(room_area)/10. Use that scale instead of assuming 1 cell = 1 meter.')
+    elif 'room' in qt:
+        text += ('\nIf the map includes a room area (square meters), report that value directly as the room size.')
+    elif 'route' in qt:
+        text += ('\nIf the map includes a first_action, select the option that matches it.')
+    return text
+
+
 def answer_one(text, model_name, sleep, dry_run=False, video_b64=None):
     if dry_run:
         return 'ANSWER: %s' % text, None
@@ -70,12 +89,22 @@ def process_record(i, sample, model_name, sleep, dry_run):
     pred = sample.get('pred_map') or sample.get('fused_map')
     if not pred:
         return i, None
-    opts = options_text(sample)
-    template = answer_template(sample['question_type'])
-    text = MAP_PREAMBLE % unified_map_text(pred) + template.format(
-        question=sample['question'], options=opts)
     video_b64 = load_video_base64(os.path.join(
         VIDEO_CACHE_DIR, sample['dataset'], sample['scene'] + '.mp4'))
+    extra_calls = 0
+    qt = sample['question_type']
+    if pred.get('room') is None and ('room' in qt or 'size' in qt):
+        pred['room'] = estimate_room(sample, model_name, sleep, video_b64, dry_run=dry_run)
+        extra_calls += 1
+    if 'appearance' in qt:
+        pred['appearance_order'] = estimate_appearance(
+            sample, model_name, sleep, video_b64, dry_run=dry_run)
+        extra_calls += 1
+    if 'route' in qt:
+        pred['route_action'] = estimate_route(
+            sample, model_name, sleep, video_b64, dry_run=dry_run)
+        extra_calls += 1
+    text = build_answer_text(sample, pred)
     raw, _ = answer_one(text, model_name, sleep, dry_run=dry_run, video_b64=video_b64)
     if not raw:
         rec = dict(sample)
@@ -96,7 +125,7 @@ def process_record(i, sample, model_name, sleep, dry_run):
     rec['clean_answer'] = True
     rec['error'] = None
     rec['cogmap_objects'] = legacy_cogmap_objects(pred)
-    rec['api_calls'] = API_CALLS_BY_ARM.get(sample.get('arm'), 2)
+    rec['api_calls'] = API_CALLS_BY_ARM.get(sample.get('arm'), 2) + extra_calls
     return i, rec
 
 

@@ -28,7 +28,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 import numpy as np
 
 from camera_utils import build_view_matrix
-from run_clean_answer import MAP_PREAMBLE, is_correct_ans, unified_map_text
+from run_clean_answer import MAP_PREAMBLE, build_answer_text, is_correct_ans, unified_map_text
 from run_debate import FORMAT_HINTS, VIEWS, parse_view
 from run_debate_v2 import axis_offsets
 from run_tis_compare import answer_template, options_text
@@ -47,6 +47,11 @@ from tis_compare import (
     load_video_base64,
     legacy_cogmap_objects,
     reconcile_views,
+    categories_text,
+    estimate_appearance,
+    estimate_room,
+    estimate_route,
+    extract_room,
 )
 
 SCENE_MIN = 0.0
@@ -240,20 +245,6 @@ TRANSFORM TO TOP FRAME:
 BUILD_RETRY_HINT = ('\n\nYour previous output was not usable (invalid JSON or empty). '
                     'Output ONLY valid JSON with every instance you can see; do not output an empty view.')
 
-ROOM_PROMPT = """Watch the video and estimate the room scale:
-- room width and depth in 10x10 grid cells
-- approximate room area in square meters
-Output ONLY JSON: {"width": w, "depth": d, "area_m2": a}"""
-
-APPEARANCE_PROMPT = """Watch the video. List the categories below in the order they first appear in the video (earliest first):
-{cats}
-Output ONLY JSON: {{"appearance_order": ["category1", "category2", ...]}}"""
-
-ROUTE_PROMPT = """You are a robot in the room shown in the video. Question:
-{question}
-Output ONLY JSON: {{"first_action": "turn back" | "turn left" | "turn right"}}"""
-
-
 def camera_text(view):
     c = CAMERAS[view]
     return {'position': c['position'], 'look_at': c['look_at'], 'look_up': c['look_up']}
@@ -261,7 +252,7 @@ def camera_text(view):
 
 def build_view(sample, view, model_name, sleep, dry_run=False, prev_views=None, retry_hint=None):
     cats = extract_categories(sample)
-    cats_text = ', '.join(cats) if cats else 'all objects visible in the scene'
+    cats_text = categories_text(sample)
     if dry_run:
         meta_scene = load_meta(sample['dataset']).get(sample['scene_name'], {})
         gt_map, _ = build_gt_map(sample, meta_scene)
@@ -305,69 +296,6 @@ def build_view_with_retry(sample, view, model_name, sleep, dry_run=False, prev_v
             if any(parsed['coords'].values()) or attempt == 1:
                 return raw, messages, None, cats
     return raw, messages, 'BUILD_PARSE_FAIL', cats
-
-
-def extract_room(raw):
-    if not raw:
-        return None
-    data = extract_json(raw)
-    if isinstance(data, dict) and isinstance(data.get('room'), dict):
-        try:
-            return float(data['room'].get('area_m2'))
-        except (TypeError, ValueError):
-            return None
-    return None
-
-
-def estimate_room(sample, model_name, sleep, video_b64, dry_run=False):
-    if dry_run:
-        meta_scene = load_meta(sample['dataset']).get(sample['scene_name'], {})
-        gt_map, _ = build_gt_map(sample, meta_scene)
-        return gt_map.get('room')
-    if not video_b64:
-        return None
-    raw = call_api(model_name, [{'role': 'system', 'content': SYSTEM_PROMPT},
-                                {'role': 'user', 'content': build_video_message(ROOM_PROMPT, video_b64)}],
-                   sleep_time=sleep)
-    if not raw:
-        return None
-    data = extract_json(raw)
-    if isinstance(data, dict):
-        area = data.get('area_m2')
-        try:
-            return float(area)
-        except (TypeError, ValueError):
-            return None
-
-def estimate_appearance(sample, model_name, sleep, video_b64, dry_run=False):
-    if dry_run or not video_b64:
-        return None
-    cats = extract_categories(sample)
-    prompt = APPEARANCE_PROMPT.format(cats=', '.join(cats) if cats else 'all visible categories')
-    raw = call_api(model_name, [{'role': 'system', 'content': SYSTEM_PROMPT},
-                                {'role': 'user', 'content': build_video_message(prompt, video_b64)}],
-                   sleep_time=sleep)
-    if not raw:
-        return None
-    data = extract_json(raw)
-    if isinstance(data, dict) and isinstance(data.get('appearance_order'), list):
-        return data['appearance_order']
-    return None
-
-def estimate_route(sample, model_name, sleep, video_b64, dry_run=False):
-    if dry_run or not video_b64:
-        return None
-    prompt = ROUTE_PROMPT.format(question=sample['question'])
-    raw = call_api(model_name, [{'role': 'system', 'content': SYSTEM_PROMPT},
-                                {'role': 'user', 'content': build_video_message(prompt, video_b64)}],
-                   sleep_time=sleep)
-    if not raw:
-        return None
-    data = extract_json(raw)
-    if isinstance(data, dict) and isinstance(data.get('first_action'), str):
-        return data['first_action']
-    return None
-
 def combined_map(parsed):
     return {
         'top': parsed['top']['coords'],
@@ -503,16 +431,7 @@ def apply_fixes(raw_view, fixes, view):
 
 def answer_unified(sample, answer_map, model_name, sleep, dry_run=False, video_b64=None):
     opts = options_text(sample)
-    template = answer_template(sample['question_type'])
-    text = MAP_PREAMBLE % unified_map_text(answer_map) + template.format(
-        question=sample['question'], options=opts)
-    if 'size' in sample['question_type']:
-        text += ('\nIf the map includes a room area (square meters), convert grid cells to meters using '
-                 '1 cell = sqrt(room_area)/10. Use that scale instead of assuming 1 cell = 1 meter.')
-    elif 'room' in sample['question_type']:
-        text += ('\nIf the map includes a room area (square meters), report that value directly as the room size.')
-    elif 'route' in sample['question_type']:
-        text += ('\nIf the map includes a first_action, select the option that matches it.')
+    text = build_answer_text(sample, answer_map)
     if dry_run:
         return 'ANSWER: %s' % sample['ground_truth'], None
     content = build_video_message(text, video_b64) if video_b64 else text
@@ -548,7 +467,7 @@ def process_sample(i, sample, args):
 
     for view in VIEWS:
         if args.strategy in (3, 5, 6, 7) and not args.dry_run:
-            cats_text = ', '.join(extract_categories(sample)) or 'all objects visible in the scene'
+            cats_text = categories_text(sample)
             prompt = CLEAN_BUILD_PROMPT.format(
                 name=CAMERAS[view]['name'], view_upper=view.upper(),
                 format_hint=FORMAT_HINTS[view], cats=cats_text, **camera_text(view))

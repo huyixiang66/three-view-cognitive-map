@@ -43,6 +43,7 @@ from tis_compare import (
     normalize_sizes,
     parse_counts,
     reconcile_views,
+    categories_text,
     legacy_cogmap_objects,
 )
 from tis_prompts import (
@@ -98,8 +99,7 @@ def options_text(sample):
     return '\n'.join(str(o) for o in opts)
 
 
-def map_prompt(arm, categories):
-    cats = ', '.join(categories)
+def map_prompt(arm, cats):
     if arm == 'baseline':
         return TIS_TOP_VIEW_PROMPT.format(categories_of_interest=cats) + TIS_ROOM_SUFFIX
     return TIS_THREE_VIEW_PROMPT.format(categories_of_interest=cats)
@@ -131,7 +131,7 @@ def run_arm(sample, arm, mode, model_name, sleep, dry_run):
         parsed = parse_map(raw_map, arm)
         return raw_map, raw_answer, None, categories, parsed
 
-    cats = ', '.join(categories)
+    cats = categories_text(sample)
     messages = [{'role': 'system', 'content': SYSTEM_PROMPT}]
 
     if arm == 'threeview_3pass':
@@ -195,7 +195,7 @@ def run_arm(sample, arm, mode, model_name, sleep, dry_run):
         parsed = parse_map(raw_map, 'threeview')
         raw_map = json.dumps({'counts': counts, 'map': parsed}, ensure_ascii=False)
     else:
-        prompt = map_prompt(arm, categories)
+        prompt = map_prompt(arm, cats)
         messages.append({'role': 'user', 'content': build_video_message(prompt, video_b64)})
         raw_map = call_api(model_name, messages, sleep_time=sleep)
         if not raw_map:

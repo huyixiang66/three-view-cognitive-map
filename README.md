@@ -85,6 +85,8 @@ GT 地图需要 `TIS_META_DIR` 指向 TIS 复现仓库的 meta_info 目录；met
 
 统一 clean 回答阶段（`run_clean_answer.py`）和 debate 的回答阶段都会同时提供视频与三视图 map；
 输出保留 Unity 兼容字段 `cogmap_objects`（`view/name/x/y/z` 扁平列表）和 `api_calls`。
+所有 arm 统一口径：建图只画题目相关的 QA 物体（TIS 风格 `Focus ONLY on these categories`）；
+`room` 随三视图同一次调用生成；`appearance` / `route` 只在对应题型通过额外视频调用生成字段。
 
 ## 多 agent debate（干净协议）
 

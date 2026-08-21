@@ -733,3 +733,85 @@ def legacy_cogmap_objects(pred):
                 rec[k1], rec[k2] = a, b
                 out.append(rec)
     return out
+
+
+def categories_text(sample):
+    """TIS-style category list; room questions fall back to all visible objects."""
+    cats = extract_categories(sample)
+    return ', '.join(cats) if cats else 'all objects visible in the scene'
+
+
+ROOM_PROMPT = """Watch the video and estimate the room scale:
+- room width and depth in 10x10 grid cells
+- approximate room area in square meters
+Output ONLY JSON: {"width": w, "depth": d, "area_m2": a}"""
+
+APPEARANCE_PROMPT = """Watch the video. List the categories below in the order they first appear in the video (earliest first):
+{cats}
+Output ONLY JSON: {{"appearance_order": ["category1", "category2", ...]}}"""
+
+ROUTE_PROMPT = """You are a robot in the room shown in the video. Question:
+{question}
+Output ONLY JSON: {{"first_action": "turn back" | "turn left" | "turn right"}}"""
+
+
+def extract_room(raw):
+    if not raw:
+        return None
+    data = extract_json(raw)
+    if isinstance(data, dict) and isinstance(data.get('room'), dict):
+        try:
+            return float(data['room'].get('area_m2'))
+        except (TypeError, ValueError):
+            return None
+    return None
+
+def estimate_room(sample, model_name, sleep, video_b64, dry_run=False):
+    if dry_run:
+        scene = sample.get('scene_name') or sample.get('scene')
+        meta_scene = load_meta(sample['dataset']).get(scene, {})
+        gt_map, _ = build_gt_map(sample, meta_scene)
+        return gt_map.get('room')
+    if not video_b64:
+        return None
+    raw = call_api(model_name, [{'role': 'system', 'content': SYSTEM_PROMPT},
+                                {'role': 'user', 'content': build_video_message(ROOM_PROMPT, video_b64)}],
+                   sleep_time=sleep)
+    if not raw:
+        return None
+    data = extract_json(raw)
+    if isinstance(data, dict):
+        try:
+            return float(data.get('area_m2'))
+        except (TypeError, ValueError):
+            return None
+    return None
+
+def estimate_appearance(sample, model_name, sleep, video_b64, dry_run=False):
+    if dry_run or not video_b64:
+        return None
+    cats = extract_categories(sample)
+    prompt = APPEARANCE_PROMPT.format(cats=', '.join(cats) if cats else 'all visible categories')
+    raw = call_api(model_name, [{'role': 'system', 'content': SYSTEM_PROMPT},
+                                {'role': 'user', 'content': build_video_message(prompt, video_b64)}],
+                   sleep_time=sleep)
+    if not raw:
+        return None
+    data = extract_json(raw)
+    if isinstance(data, dict) and isinstance(data.get('appearance_order'), list):
+        return data['appearance_order']
+    return None
+
+def estimate_route(sample, model_name, sleep, video_b64, dry_run=False):
+    if dry_run or not video_b64:
+        return None
+    prompt = ROUTE_PROMPT.format(question=sample['question'])
+    raw = call_api(model_name, [{'role': 'system', 'content': SYSTEM_PROMPT},
+                                {'role': 'user', 'content': build_video_message(prompt, video_b64)}],
+                   sleep_time=sleep)
+    if not raw:
+        return None
+    data = extract_json(raw)
+    if isinstance(data, dict) and isinstance(data.get('first_action'), str):
+        return data['first_action']
+    return None
