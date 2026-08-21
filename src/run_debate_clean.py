@@ -588,13 +588,12 @@ def process_sample(i, sample, args):
     metrics_final = compute_metrics(gt_map, answer_map, 'threeview')
     top_room = extract_room(finals.get('top') or raw_views.get('top'))
     extra_calls = 0
-    if args.strategy in (5, 6, 7) and ('room' in sample['question_type'] or 'size' in sample['question_type']):
-        if top_room is not None:
-            answer_map['room'] = top_room
-        else:
-            answer_map['room'] = estimate_room(
-                sample, args.model, args.sleep, video_b64, dry_run=args.dry_run)
-            extra_calls += 1
+    if top_room is not None:
+        answer_map['room'] = top_room
+    elif args.strategy in (5, 6, 7) and ('room' in sample['question_type'] or 'size' in sample['question_type']):
+        answer_map['room'] = estimate_room(
+            sample, args.model, args.sleep, video_b64, dry_run=args.dry_run)
+        extra_calls += 1
     if args.strategy in (5, 6, 7) and 'appearance' in sample['question_type']:
         answer_map['appearance_order'] = estimate_appearance(
             sample, args.model, args.sleep, video_b64, dry_run=args.dry_run)
