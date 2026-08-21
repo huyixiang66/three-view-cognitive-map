@@ -38,6 +38,16 @@ src/reevaluate.py
 src/cocosi_prompt_variants.py
 src/run_cocosi_prompt_batch.py
 src/debug_pipeline*.py
+AGENTS.md
+CLAUDE.md
+DOCS.md
+PROJECT.md
+STRUCTURE.md
+TODO.md
+UPDATE_LOG.md
+scripts/make_report.py
+src/vsi_debate_rest150.json
+/*.txt
 src/prompts.py
 src/test_pipeline_offline.py
 viz/test_write.py
