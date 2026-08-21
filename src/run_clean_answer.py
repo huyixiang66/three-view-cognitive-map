@@ -89,6 +89,7 @@ def process_record(i, sample, model_name, sleep, dry_run):
     pred = sample.get('pred_map') or sample.get('fused_map')
     if not pred:
         return i, None
+    opts = options_text(sample)
     video_b64 = load_video_base64(os.path.join(
         VIDEO_CACHE_DIR, sample['dataset'], sample['scene'] + '.mp4'))
     extra_calls = 0
