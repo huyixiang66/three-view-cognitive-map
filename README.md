@@ -112,6 +112,46 @@ python run_debate_clean.py --strategy ref_matrix_debate --samples vsi_debate_50.
 
 GT 指标需要 `TIS_META_DIR`；未配置 meta 时仍可跑建图与回答，只跳过 GT 地图指标。
 
+## VGGT 相机位姿提取（Unity 闭环）
+
+用 VGGT-1B 从视频提取每帧相机位姿、内参、深度和 3D 点云，输出 `.npz` 供 Unity 按位姿重渲染 `V'`。
+
+```bash
+# 1. 依赖
+pip install torch torchvision numpy opencv-python-headless
+
+# 2. 下载 VGGT 源码和权重（权重约 5GB）
+git clone https://github.com/facebookresearch/vggt.git
+# 权重：https://huggingface.co/facebook/VGGT-1B/blob/main/model.pt
+
+# 3. 运行（Windows 用 $env:VGGT_REPO=...）
+export VGGT_REPO=/path/to/vggt
+export VGGT_WEIGHTS=/path/to/model.pt
+python src/vggt_poses.py video.mp4 out.npz --frames 8
+```
+
+| 参数 | 作用 |
+|------|------|
+| `--frames` | 均匀抽帧数，默认 8 |
+| `--size` | 模型输入边长，默认 98（需为 14 的倍数） |
+| `--max-side` | 抽帧前最长边缩放，默认 384 |
+| `--threads` | CPU 线程数，默认 4 |
+| `--device` | `cpu` / `cuda`，默认 `cpu` |
+| `--frame-dir` | 帧输出目录，默认 `<输出文件名>_frames` |
+| `--vggt-repo` / `--weights` | VGGT 源码与权重路径，也可用 `VGGT_REPO` / `VGGT_WEIGHTS` |
+
+所有参数都有默认值，直接 `python src/vggt_poses.py video.mp4 out.npz` 即可。
+
+| 输出字段 | shape | 含义 |
+|------|------|------|
+| `extrinsic` | `(N, 3, 4)` | OpenCV 相机外参 `[R|t]`，世界系为第一帧相机 |
+| `intrinsic` | `(N, 3, 3)` | 内参 `K`，主点为图像中心 |
+| `depth` | `(N, H, W, 1)` | 每像素深度，VGGT 相对尺度 |
+| `point_map` | `(N, H, W, 3)` | 每像素世界坐标，即稠密点云 |
+| `frames` | `(N,)` | 实际使用的视频帧路径 |
+
+Unity 接入注意：`extrinsic + intrinsic` 可直接摆相机，但 VGGT 尺度不是米，先用 room area 或已知物体尺寸锚定尺度。脚本内置 Windows meta 加载修复，4C8G CPU 可跑，8 帧 98x98 约 26 秒。
+
 ## 数据
 
 `src/vsi_subset_50.json` 包含 50 个 VSI-Bench 样本，5 种题型：
@@ -140,6 +180,7 @@ GT 指标需要 `TIS_META_DIR`；未配置 meta 时仍可跑建图与回答，�
 |   +-- run_debate_clean.py    # 多 agent debate（简单/矩阵）runner
 |   +-- run_clean_answer.py    # 统一 clean 回答阶段
 |   +-- camera_utils.py        # 相机矩阵工具
+|   +-- vggt_poses.py          # VGGT 位姿/深度/点云提取（Unity 闭环）
 |   +-- prompts_3pass.py       # 3-pass prompt 模板
 |   +-- tis_compare.py         # 核心库（GT 地图/指标/API）
 |   +-- tis_prompts.py         # 单次三视图 size/room prompt
@@ -161,4 +202,10 @@ GT 指标需要 `TIS_META_DIR`；未配置 meta 时仍可跑建图与回答，�
 
 ```bash
 pip install openai numpy matplotlib
+```
+
+VGGT 位姿提取额外依赖：
+
+```bash
+pip install torch torchvision numpy opencv-python-headless
 ```
