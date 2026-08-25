@@ -11,6 +11,7 @@ import json
 import os
 import glob
 import threading
+import copy
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 from tis_compare import (
@@ -86,7 +87,7 @@ def answer_one(text, model_name, sleep, dry_run=False, video_b64=None):
 
 
 def process_record(i, sample, model_name, sleep, dry_run):
-    pred = sample.get('pred_map') or sample.get('fused_map')
+    pred = copy.deepcopy(sample.get('pred_map') or sample.get('fused_map'))
     if not pred:
         return i, None
     opts = options_text(sample)

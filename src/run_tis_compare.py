@@ -15,6 +15,7 @@ import os
 import sys
 import glob
 import threading
+import statistics
 from collections import deque
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
@@ -427,7 +428,7 @@ def summarize(results, arms):
                 1, sum(m['adjacent_pairs'] for m in metrics))
             ratios = [r2 for m in metrics for r2 in m['scale_ratios']]
             if ratios:
-                agg['scale_median'] = sorted(ratios)[len(ratios) // 2]
+                agg['scale_median'] = statistics.median(ratios)
             if arm in ('threeview', 'threeview_3pass', 'threeview_2stage'):
                 agg['cross_view_conflict_rate'] = sum(
                     m['cross_view_conflicts'] for m in metrics) / max(

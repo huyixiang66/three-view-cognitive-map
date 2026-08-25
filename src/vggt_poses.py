@@ -56,7 +56,7 @@ def build_model(vggt_repo, weights, device="cpu"):
         model = VGGT()
     try:
         sd = torch.load(weights, map_location="cpu", mmap=True)
-    except TypeError:
+    except (TypeError, RuntimeError):
         sd = torch.load(weights, map_location="cpu")
     model.load_state_dict(sd, assign=True)
     del sd
@@ -111,6 +111,10 @@ def main():
         ap.error("VGGT weights not found: %s (set VGGT_WEIGHTS or --weights)" % weights)
 
     size = args.size - args.size % 14
+    if args.frames < 1:
+        ap.error("--frames must be >= 1")
+    if size < 14:
+        ap.error("--size must be at least 14")
     torch.set_num_threads(args.threads)
     t0 = time.time()
     if args.device == "cuda" and not torch.cuda.is_available():
@@ -133,7 +137,7 @@ def main():
     images, _ = load_and_preprocess_images_square(paths, target_size=size)
     images = images.to(args.device)
 
-    with torch.no_grad():
+    with torch.inference_mode():
         images = images[None]
         print("aggregator start", flush=True)
         agg, ps = model.aggregator(images)
