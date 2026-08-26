@@ -25,7 +25,6 @@ Unity/CogMapSceneBuilder.cs   Unity 场景构建组件
 Unity/Editor/CogMapBatchBuilder.cs
 Unity/Editor/CogMapVGGTRenderer.cs
 Unity/Editor/CogMapSceneWithCameras.cs
-build_unity_scene_win.ps1     Windows 批量构建/渲染入口
 ```
 
 ## 示例：scene0353_00
@@ -91,7 +90,6 @@ Unity.exe -batchmode -quit -projectPath YOUR_PROJECT \
   -logFile render.log
 ```
 
-也可以直接使用 `build_unity_scene_win.ps1`，它封装了 fuse/build/render 三步。
 
 ## 口径说明
 
