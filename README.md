@@ -170,6 +170,10 @@ Unity 接入注意：`extrinsic + intrinsic` 可直接摆相机，但 VGGT 尺�
 
 完整 VSI-Bench: https://huggingface.co/datasets/nyu-visionx/VSI-Bench
 
+## Unity 场景重建与 V'
+
+完整的 `视频 → 三视图 → Unity → V'` 链路在分支 `codex/unity-pipeline`，入口是该分支的 `unity_pipeline/README.md`。三视图沿用模型输出，正式接入使用带 yaw 的三视图。
+
 ## 文件结构
 
 ```
