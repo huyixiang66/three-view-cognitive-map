@@ -152,6 +152,12 @@ python src/vggt_poses.py video.mp4 out.npz --frames 8
 
 Unity 接入注意：`extrinsic + intrinsic` 可直接摆相机，但 VGGT 尺度不是米，先用 room area 或已知物体尺寸锚定尺度。脚本内置 Windows meta 加载修复，4C8G CPU 可跑，8 帧 98x98 约 26 秒。
 
+## Unity 场景重建与 V'
+
+视频 -> 模型三视图 -> scene_3d -> Unity 场景 -> V' 的完整脚本在 `unity_pipeline/`，含三视图融合、yaw、VGGT 相机对齐、Unity C# 构建/渲染脚本和 Windows 批量入口。
+
+见 [unity_pipeline/README.md](unity_pipeline/README.md)。
+
 ## 数据
 
 `src/vsi_subset_50.json` 包含 50 个 VSI-Bench 样本，5 种题型：
