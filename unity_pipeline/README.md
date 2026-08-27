@@ -85,6 +85,16 @@ python unity_pipeline/align_lingbot_map_cameras.py \
 
 若原视频存在回环同视角帧，可加 `--loop-pairs 0=7,1=4` 把对应相机中心取平均、朝向保持不变。
 
+若 depth 点云对齐明显不对（相机贴地、朝向偏 90°），可先用 VGGT 生成一版已验证的 transform，再让 LingBot 复用：
+
+```bash
+python unity_pipeline/align_lingbot_map_cameras.py \
+  lingbot_out/predictions.npz scene0353_00 lingbot_cameras.json \
+  --transform-json vggt_cameras.transform.json --fixed-k --width 640 --height 480
+```
+
+`--fixed-k` 配合 `--width/--height` 时会在目标分辨率直接取 `fy=1.1*H`，避免 FOV 被缩放两次。
+
 之后 Unity 渲染 V' 的步骤与 VGGT 相同，把 `camerasJson` 换成 `lingbot_cameras.json`。
 
 注意：官方 `lingbot-map.pt` 不含 `point_head` 权重，对齐脚本默认用 depth 反投影，不要依赖 `world_points`。

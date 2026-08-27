@@ -60,8 +60,11 @@ def best_2d_similarity(src_perim, dst_perim):
     return best
 
 
-def build_vggt_similarity(points, gt_poly):
-    normal, _ = fit_floor(points)
+def build_vggt_similarity(points, gt_poly, floor_normal=None):
+    if floor_normal is None:
+        normal, _ = fit_floor(points)
+    else:
+        normal = floor_normal
     r_floor = floor_rotation(normal)
     rot_pts = points @ r_floor.T
     z = rot_pts[:, 2].copy()

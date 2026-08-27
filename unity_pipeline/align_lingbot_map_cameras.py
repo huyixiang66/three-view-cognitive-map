@@ -27,17 +27,6 @@ from align_vggt_cameras import (  # noqa: E402
 )
 
 
-def c2w_to_w2c(c2w):
-    n = c2w.shape[0]
-    out = np.zeros((n, 3, 4), dtype=c2w.dtype)
-    for i in range(n):
-        R = c2w[i, :3, :3]
-        t = c2w[i, :3, 3]
-        Rw = R.T
-        tw = -Rw @ t
-        out[i, :, :3] = Rw
-        out[i, :, 3] = tw
-    return out
 
 
 def unproject_depth_to_world(depth, intrinsic, c2w):
@@ -69,6 +58,10 @@ def main():
     ap.add_argument("--width", type=int, default=0, help="rescale output K to this width")
     ap.add_argument("--height", type=int, default=0, help="rescale output K to this height")
     ap.add_argument("--loop-pairs", default="", help="comma-separated same-view frame pairs, e.g. 0=7,1=4")
+    ap.add_argument("--use-camera-up", action="store_true",
+                    help="estimate floor normal from mean camera up instead of RANSAC")
+    ap.add_argument("--transform-json", default="",
+                    help="use an existing A/b/R transform JSON instead of fitting depth")
     args = ap.parse_args()
 
     d = np.load(args.npz)
@@ -76,7 +69,6 @@ def main():
         raise ValueError("npz must contain extrinsic/intrinsic; got " + str(d.files))
     c2w = d["extrinsic"]
     intr = d["intrinsic"]
-    w2c = c2w_to_w2c(c2w)
 
     frames = []
     info = pathlib.Path(args.npz).with_name("info.json")
@@ -98,25 +90,49 @@ def main():
     pts = pts[(pts >= lo).all(1) & (pts <= hi).all(1)]
 
     gt_poly = load_gt(args.scene_id)
-    v = build_vggt_similarity(pts, gt_poly)
-    g = build_grid_similarity(gt_poly)
-    c = combine(v, g)
-    print("lingbot->gt rmse(m):", round(v["rmse"], 3), "scale:", round(v["scale"], 3))
-    print("grid->gt rmse(m):", round(g["rmse"], 3), "scale:", round(g["scale"], 3))
-    print("combined scale:", round(c["scale"], 3), "det(R):", round(float(np.linalg.det(c["R"])), 3))
-    A = c["scale"] * c["R"]
-    b = c["b"]
+    floor_normal = None
+    if args.use_camera_up:
+        ups = np.array([c2w[i, :3, :3].T @ np.array([0.0, -1.0, 0.0]) for i in range(len(c2w))])
+        floor_normal = ups.mean(0)
+        floor_normal = floor_normal / np.linalg.norm(floor_normal)
+        print("camera-up floor normal:", np.round(floor_normal, 3), flush=True)
+    if args.transform_json:
+        tf = json.loads(pathlib.Path(args.transform_json).read_text(encoding="utf-8"))
+        A = np.array(tf["A"], dtype=float)
+        b = np.array(tf["b"], dtype=float)
+        cR = np.array(tf["R"], dtype=float)
+        scale_out = float(tf.get("scale", 1.0))
+        rmse_out = float(tf.get("lingbot_gt_rmse_m", tf.get("vggt_gt_rmse_m", 0.0)))
+        grid_rmse_out = float(tf.get("grid_gt_rmse_m", 0.0))
+        ling_scale_out = float(tf.get("lingbot_scale", tf.get("vggt_scale", 0.0)))
+        grid_scale_out = float(tf.get("grid_scale", 0.0))
+        print("using external transform:", args.transform_json, flush=True)
+    else:
+        v = build_vggt_similarity(pts, gt_poly, floor_normal=floor_normal)
+        g = build_grid_similarity(gt_poly)
+        c = combine(v, g)
+        print("lingbot->gt rmse(m):", round(v["rmse"], 3), "scale:", round(v["scale"], 3))
+        print("grid->gt rmse(m):", round(g["rmse"], 3), "scale:", round(g["scale"], 3))
+        print("combined scale:", round(c["scale"], 3), "det(R):", round(float(np.linalg.det(c["R"])), 3))
+        A = c["scale"] * c["R"]
+        b = c["b"]
+        cR = c["R"]
+        scale_out = c["scale"]
+        rmse_out = v["rmse"]
+        grid_rmse_out = g["rmse"]
+        ling_scale_out = v["scale"]
+        grid_scale_out = g["scale"]
 
     perm = np.array([[1.0, 0.0, 0.0], [0.0, 0.0, 1.0], [0.0, 1.0, 0.0]])
     cameras = []
     centers = []
-    for i in range(len(w2c)):
-        R = w2c[i, :, :3]
-        t = w2c[i, :, 3]
+    for i in range(len(c2w)):
+        R = c2w[i, :, :3]
+        t = c2w[i, :, 3]
         p0 = -R.T @ t
         p_gt = A @ p0 + b
         p_unity = perm @ p_gt
-        r_new = R @ c["R"].T
+        r_new = R @ cR.T
         r_unity = r_new @ perm.T
         if np.linalg.det(r_unity) < 0:
             r_unity = r_unity @ np.diag([-1.0, 1.0, 1.0])
@@ -131,16 +147,22 @@ def main():
         t_unity = -r_unity @ p_unity
         centers.append(p_unity)
         k = intr[i]
-        k_out = fixed_k(k) if args.fixed_k else [float(x) for row in k for x in row]
         w0 = int(round(2.0 * k[0, 2]))
         h0 = int(round(2.0 * k[1, 2]))
         if args.width > 0 and args.height > 0:
-            sx = args.width / float(w0)
-            sy = args.height / float(h0)
-            k_out = [k_out[0] * sx, 0.0, args.width / 2.0,
-                     0.0, k_out[4] * sy, args.height / 2.0,
-                     0.0, 0.0, 1.0]
             w0, h0 = args.width, args.height
+            if args.fixed_k:
+                fy = 1.1 * h0
+                k_out = [fy * w0 / h0, 0.0, w0 / 2.0,
+                         0.0, fy, h0 / 2.0, 0.0, 0.0, 1.0]
+            else:
+                sx = w0 / float(2.0 * k[0, 2])
+                sy = h0 / float(2.0 * k[1, 2])
+                k0 = [float(x) for row in k for x in row]
+                k_out = [k0[0] * sx, 0.0, w0 / 2.0,
+                         0.0, k0[4] * sy, h0 / 2.0, 0.0, 0.0, 1.0]
+        else:
+            k_out = fixed_k(k) if args.fixed_k else [float(x) for row in k for x in row]
         cameras.append({
             "R": [float(x) for row in r_unity for x in row],
             "t": [float(x) for x in t_unity],
@@ -177,12 +199,12 @@ def main():
     tf_out.write_text(json.dumps({
         "A": A.tolist(),
         "b": b.tolist(),
-        "scale": c["scale"],
-        "R": c["R"].tolist(),
-        "lingbot_gt_rmse_m": v["rmse"],
-        "grid_gt_rmse_m": g["rmse"],
-        "lingbot_scale": v["scale"],
-        "grid_scale": g["scale"],
+        "scale": scale_out,
+        "R": cR.tolist(),
+        "lingbot_gt_rmse_m": rmse_out,
+        "grid_gt_rmse_m": grid_rmse_out,
+        "lingbot_scale": ling_scale_out,
+        "grid_scale": grid_scale_out,
     }, indent=2), encoding="utf-8")
     print("saved transform:", tf_out)
 
