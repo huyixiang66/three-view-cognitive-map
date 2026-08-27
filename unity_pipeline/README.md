@@ -83,6 +83,8 @@ python unity_pipeline/align_lingbot_map_cameras.py \
   --width 640 --height 480
 ```
 
+若原视频存在回环同视角帧，可加 `--loop-pairs 0=7,1=4` 把对应相机中心取平均、朝向保持不变。
+
 之后 Unity 渲染 V' 的步骤与 VGGT 相同，把 `camerasJson` 换成 `lingbot_cameras.json`。
 
 注意：官方 `lingbot-map.pt` 不含 `point_head` 权重，对齐脚本默认用 depth 反投影，不要依赖 `world_points`。

@@ -68,6 +68,7 @@ def main():
     ap.add_argument("--fixed-k", action="store_true")
     ap.add_argument("--width", type=int, default=0, help="rescale output K to this width")
     ap.add_argument("--height", type=int, default=0, help="rescale output K to this height")
+    ap.add_argument("--loop-pairs", default="", help="comma-separated same-view frame pairs, e.g. 0=7,1=4")
     args = ap.parse_args()
 
     d = np.load(args.npz)
@@ -148,6 +149,18 @@ def main():
             "height": h0,
         })
 
+    if args.loop_pairs:
+        for part in args.loop_pairs.split(","):
+            part = part.strip()
+            if not part:
+                continue
+            a_str, b_str = part.split("=")
+            ia, ib = int(a_str), int(b_str)
+            p = (centers[ia] + centers[ib]) / 2.0
+            for idx in (ia, ib):
+                Rm = np.array(cameras[idx]["R"]).reshape(3, 3)
+                cameras[idx]["t"] = [float(x) for x in (-Rm @ p)]
+                centers[idx] = p
     centers = np.array(centers)
     print("camera centers (unity):")
     for i, p in enumerate(centers):
