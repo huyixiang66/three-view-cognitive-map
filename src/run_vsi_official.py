@@ -195,29 +195,38 @@ def main():
     ok = [r for r in results if not r.get('error')]
     total = len(ok)
     correct_n = sum(1 for r in ok if r.get('correct'))
-    acc = correct_n / total * 100 if total else 0.0
-    print('\nOverall: %d/%d (%.1f%%)' % (correct_n, total, acc))
+    print('\nSamples answered: %d, per-sample correct: %d (%.1f%%)' % (
+        total, correct_n, correct_n / total * 100 if total else 0.0))
 
-    by_family = {}
+    # Official aggregation (vision-x-nyu/thinking-in-space utils.py):
+    # per-type metric mean, rel_direction difficulties merged,
+    # overall = unweighted mean of the 8 type-level scores.
+    by_type = {}
     for r in ok:
-        by_family.setdefault(r['family'], []).append(r)
-    per_family = {}
-    for fam, recs in sorted(by_family.items()):
-        c = sum(1 for r in recs if r['correct'])
-        if recs[0]['metric'] == 'na':
+        by_type.setdefault(r['question_type'], []).append(r)
+    type_scores = {}
+    for qt, recs in sorted(by_type.items()):
+        if is_na(qt):
             vals = [r['mra'] or 0.0 for r in recs]
-            score = sum(vals) / len(vals) * 100
-            print('%s: %d/%d (%.1f%%) MRA %.1f%%' % (
-                fam, c, len(recs), 100.0 * c / len(recs), score))
+            type_scores[qt] = sum(vals) / len(vals) * 100
         else:
-            score = 100.0 * c / len(recs)
-            print('%s: %d/%d (%.1f%%)' % (fam, c, len(recs), score))
-        per_family[fam] = {
-            'correct': c,
-            'total': len(recs),
-            'accuracy_pct': round(100.0 * c / len(recs), 1),
-            'mra_pct': round(score, 1) if recs[0]['metric'] == 'na' else None,
-        }
+            c = sum(1 for r in recs if r['correct'])
+            type_scores[qt] = c / len(recs) * 100
+    dir_keys = sorted(k for k in type_scores if k.startswith('object_rel_direction'))
+    if dir_keys:
+        dir_val = sum(type_scores[k] for k in dir_keys) / len(dir_keys)
+        for k in dir_keys:
+            type_scores.pop(k)
+        type_scores['object_rel_direction'] = dir_val
+    overall = (sum(type_scores.values()) / len(type_scores)
+               if type_scores else 0.0)
+    order = ['object_counting', 'object_abs_distance', 'object_size_estimation',
+             'room_size_estimation', 'object_rel_distance',
+             'object_rel_direction', 'route_planning', 'obj_appearance_order']
+    for qt in order:
+        if qt in type_scores:
+            print('%s: %.2f%%' % (qt, type_scores[qt]))
+    print('Official overall (mean of type scores): %.2f%%' % overall)
 
     results.append({'__summary__': {
         'model': args.model,
@@ -226,8 +235,8 @@ def main():
         'correct': correct_n,
         'total_run': total,
         'skipped': len(selected) - total,
-        'accuracy_pct': round(acc, 1),
-        'per_family': per_family,
+        'overall_official_pct': round(overall, 1),
+        'per_type_pct': {k: round(v, 1) for k, v in type_scores.items()},
     }})
     with open(args.output, 'w', encoding='utf-8') as f:
         json.dump(results, f, indent=2, ensure_ascii=False)

@@ -36,7 +36,9 @@ NA_TYPES = {
 
 PRE_PROMPT = 'These are frames of a video.'
 MCA_INSTRUCTION = "Answer with the option's letter from the given choices directly."
+NA_INSTRUCTION_OPEN = 'Please answer the question using a single word or phrase.'
 NA_INSTRUCTION = 'Do not respond with anything other than a single number!'
+OPTIONS_HEADER = 'Options:'
 
 _MRA_THRESHOLDS = [t / 100.0 for t in range(50, 100, 5)]
 
@@ -61,15 +63,19 @@ def official_suffix(qtype):
     return NA_INSTRUCTION if is_na(qtype) else MCA_INSTRUCTION
 
 
-def build_direct_prompt(sample):
-    """Official-style direct-VLM text: pre-prompt + question + options."""
+def build_direct_prompt(sample, na_post='proprietary'):
+    """Official vsibench_doc_to_text prompt: pre + question + options/post."""
     qtype = sample.get('question_type', '')
-    lines = [PRE_PROMPT, sample.get('question', '')]
-    opts = sample.get('options') or []
-    for i, opt in enumerate(opts):
-        lines.append('%s. %s' % (chr(ord('A') + i), str(opt).strip()))
-    lines.append(official_suffix(qtype))
-    return '\n'.join(lines)
+    parts = [PRE_PROMPT, sample.get('question', '')]
+    if is_mca(qtype):
+        opts = sample.get('options') or []
+        if opts:
+            parts.append(OPTIONS_HEADER)
+            parts.extend(str(o) for o in opts)
+        parts.append(MCA_INSTRUCTION)
+        return '\n'.join(parts)
+    na = NA_INSTRUCTION_OPEN if na_post == 'open' else NA_INSTRUCTION
+    return '\n'.join([PRE_PROMPT, sample.get('question', ''), na])
 
 
 def extract_answer(text, qtype):
