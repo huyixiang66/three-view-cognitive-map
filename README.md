@@ -88,6 +88,25 @@ GT 地图需要 `TIS_META_DIR` 指向 TIS 复现仓库的 meta_info 目录；met
 所有 arm 统一口径：建图只画题目相关的 QA 物体（TIS 风格 `Focus ONLY on these categories`）；
 `room` 随三视图同一次调用生成；`appearance` / `route` 只在对应题型通过额外视频调用生成字段。
 
+## VSI-Bench 官方协议评测（8 类题型）
+
+按 TIS（Thinking in Space）Appendix 的官方口径直接评测：视频 → 答案。MCA 题型（方向/距离/出现顺序/路线）按选项字母判分，NA 题型（计数/绝对距离/尺寸/房间大小）按数值容差判分并汇总 MRA；判分规则集中在 `src/vsi_protocol.py`。
+
+```bash
+cd src
+# 先 dry-run 看 8 类题型的 prompt 分流
+python run_vsi_official.py --samples vsi_subset_200.json --n 12 --dry-run
+# 官方 direct baseline（200 样本）
+python run_vsi_official.py --samples vsi_subset_200.json --n 200 --output vsi_official_results.json
+```
+
+| 参数 | 作用 |
+|------|------|
+| `--samples vsi_subset_200.json` | 200 样本（8 类题型） |
+| `--n 200` | 样本数 |
+| `--dry-run` | 只打印 prompt，不调 API |
+| `--resume file.json` | 断点续跑（API 失败会重试） |
+
 ## 多 agent debate（干净协议）
 
 三视图多 agent 变体：独立 agent + 顺序参考建图，回答统一走 clean 协议（新会话给视频 + 地图文本）。矩阵 debate 把融合 3D 点经真实相机矩阵重投影回各视图再互评，简单 debate 使用共享轴偏移互评。
@@ -183,6 +202,8 @@ Unity 接入注意：`extrinsic + intrinsic` 可直接摆相机，但 VGGT 尺�
 |   +-- run_tis_compare.py     # TIS baseline vs 三视图对照（200 样本）
 |   +-- run_debate_clean.py    # 多 agent debate（简单/矩阵）runner
 |   +-- run_clean_answer.py    # 统一 clean 回答阶段
+|   +-- run_vsi_official.py    # 官方 VSI 8 类题型 direct 评测
+|   +-- vsi_protocol.py        # 官方判分协议（MCA accuracy / NA MRA）
 |   +-- camera_utils.py        # 相机矩阵工具
 |   +-- vggt_poses.py          # VGGT 位姿/深度/点云提取（Unity 闭环）
 |   +-- prompts_3pass.py       # 3-pass prompt 模板
