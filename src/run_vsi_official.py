@@ -99,6 +99,10 @@ def main():
     parser.add_argument('--output', default='vsi_official_results.json')
     parser.add_argument('--resume', default=None)
     parser.add_argument('--dry-run', action='store_true')
+    parser.add_argument('--pre', action='store_true',
+                        help='Include "These are frames of a video." (frame-based models only)')
+    parser.add_argument('--cot', action='store_true',
+                        help='Zero-shot CoT: append "Let\'s think step by step."')
     args = parser.parse_args()
 
     if args.model not in MODEL_REGISTRY:
@@ -150,7 +154,7 @@ def main():
                             'error': 'NO_VIDEO', 'correct': False,
                             'api_calls': 0})
             continue
-        text = build_direct_prompt(sample)
+        text = build_direct_prompt(sample, include_pre=args.pre, cot=args.cot)
         messages = [{'role': 'system', 'content': SYSTEM_PROMPT},
                     {'role': 'user',
                      'content': build_video_message(text, video_b64)}]

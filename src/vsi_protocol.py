@@ -63,19 +63,28 @@ def official_suffix(qtype):
     return NA_INSTRUCTION if is_na(qtype) else MCA_INSTRUCTION
 
 
-def build_direct_prompt(sample, na_post='proprietary'):
-    """Official vsibench_doc_to_text prompt: pre + question + options/post."""
+COT_SUFFIX = "Let's think step by step."
+
+def build_direct_prompt(sample, na_post='proprietary', include_pre=True, cot=False):
+    """Assemble the per-type prompt: [pre] + question [+ options] + post/CoT."""
     qtype = sample.get('question_type', '')
-    parts = [PRE_PROMPT, sample.get('question', '')]
+    parts = []
+    if include_pre:
+        parts.append(PRE_PROMPT)
+    parts.append(sample.get('question', ''))
     if is_mca(qtype):
         opts = sample.get('options') or []
         if opts:
             parts.append(OPTIONS_HEADER)
             parts.extend(str(o) for o in opts)
-        parts.append(MCA_INSTRUCTION)
-        return '\n'.join(parts)
-    na = NA_INSTRUCTION_OPEN if na_post == 'open' else NA_INSTRUCTION
-    return '\n'.join([PRE_PROMPT, sample.get('question', ''), na])
+        if not cot:
+            parts.append(MCA_INSTRUCTION)
+    elif not cot:
+        na = NA_INSTRUCTION_OPEN if na_post == 'open' else NA_INSTRUCTION
+        parts.append(na)
+    if cot:
+        parts.append(COT_SUFFIX)
+    return '\n'.join(parts)
 
 
 def extract_answer(text, qtype):
