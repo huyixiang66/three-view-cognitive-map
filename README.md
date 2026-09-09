@@ -170,6 +170,42 @@ Unity 接入注意：`extrinsic + intrinsic` 可直接摆相机，但 VGGT 尺�
 
 完整 VSI-Bench: https://huggingface.co/datasets/nyu-visionx/VSI-Bench
 
+## MMSI-Video-Bench（官方 runner + 三视图适配）
+
+MMSI 接入包含两个脚本：
+
+- `src/run_mmsi.py`：官方协议 runner，每题 1 次模型调用，直接按 MMSI 官方 prompt/抽样/判分口径评测。
+- `src/run_mmsi_threeview.py`：三视图适配层，每题 2 次调用（先建 TOP/FRONT/SIDE 认知地图，再带地图文本与原视觉作答），依赖同目录的 `run_mmsi.py`。
+
+前置条件：复制 `.env.example` 为 `.env` 并填入 `BOYUE_API_KEY`，安装 `openai`。
+
+数据布局（数据来自 https://huggingface.co/datasets/rbler/MMSI-Video-Bench）：
+
+```text
+{data_root}/
+├── mmsivideo.json   # 必选，annotation
+├── frames/          # 必选（官方预抽帧），三视图适配默认建议使用
+├── ref_images/      # 必选
+└── videos/          # 可选，只有 --input video 需要官方 mp4
+```
+
+```bash
+# 1. 离线校验（只打印题目/媒体数，不调 API）
+python src/run_mmsi.py --data-root <data_root> --dry-run --n 3
+python src/run_mmsi_threeview.py --data-root <data_root> --input frames --dry-run --n 3
+
+# 2. 三视图适配层小批跑（建议先 10-16 帧，避免长请求超时）
+python src/run_mmsi_threeview.py --data-root <data_root> --input frames --n 10 --max-frame 16 --output mmsi_threeview_results.json
+
+# 3. 官方协议 baseline（每题只调 1 次）
+python src/run_mmsi.py --data-root <data_root> --n 10 --output mmsi_results.json
+
+# 4. 直发 mp4 的三视图模式（需要下载 videos.zip，约 36.6 GB）
+python src/run_mmsi_threeview.py --data-root <data_root> --input video --n 10 --dry-run
+```
+
+`--start` / `--n` / `--resume` / `--output` 可断点续跑；输出 JSON 每条含 `id / type / ground_truth / extracted_answer / correct`，末尾 `__summary__` 汇总正确率。官方数据体积较大，最小可跑集合是 `mmsivideo.json + frames.zip + ref_images.zip`。
+
 ## 文件结构
 
 ```
