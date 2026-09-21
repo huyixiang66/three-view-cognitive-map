@@ -43,6 +43,27 @@ MODEL_REGISTRY = {
         'base_url': 'http://35.220.164.252:3888/v1',
         'model': 'gemini-3.5-flash',
     },
+    'gemini-3.5-flash-native': {
+        'api_key': os.environ.get('BOYUE_API_KEY', ''),
+        'base_url': 'http://35.220.164.252:3888/v1beta',
+        'model': 'gemini-3.5-flash',
+        'native': True,
+        'timeout': 900.0,
+    },
+    'qwen25vl': {
+        'api_key': os.environ.get('VLLM_API_KEY', 'EMPTY'),
+        'base_url': os.environ.get('VLLM_QWEN_BASE_URL', 'http://127.0.0.1:8200/v1'),
+        'video_frames': 24,
+        'model': 'qwen25vl',
+        'timeout': 600.0,
+    },
+    'internvl3': {
+        'api_key': os.environ.get('VLLM_API_KEY', 'EMPTY'),
+        'base_url': os.environ.get('VLLM_INTERNVL_BASE_URL', 'http://127.0.0.1:8300/v1'),
+        'video_frames': 24,
+        'model': 'internvl3',
+        'timeout': 600.0,
+    },
 }
 
 
@@ -67,7 +88,47 @@ def load_video_base64(video_path):
         return base64.b64encode(f.read()).decode('utf-8')
 
 
+def load_video_frames_base64(video_path, num_frames=24, quality=85):
+    """Uniformly sample num_frames from a video and return a list of JPEG base64 strings."""
+    import io as _io
+
+    import imageio.v2 as _iio
+    from PIL import Image as _Image
+
+    reader = _iio.get_reader(video_path)
+    try:
+        total = reader.count_frames()
+    except Exception:
+        meta = reader.get_meta_data()
+        total = int(meta.get("duration", 0) * meta.get("fps", 30))
+    if not total or total <= 0:
+        reader.close()
+        return None
+    if num_frames >= total:
+        indices = list(range(total))
+    else:
+        step = (total - 1) / float(num_frames - 1) if num_frames > 1 else 0.0
+        indices = sorted({int(round(i * step)) for i in range(num_frames)})
+    frames = []
+    for idx in indices:
+        try:
+            arr = reader.get_data(idx)
+        except Exception:
+            continue
+        buffer = _io.BytesIO()
+        _Image.fromarray(arr).save(buffer, format="JPEG", quality=quality)
+        frames.append(base64.b64encode(buffer.getvalue()).decode("utf-8"))
+    reader.close()
+    return frames or None
+
+
 def build_video_message(text, video_b64, mime_type='video/mp4'):
+    if isinstance(video_b64, (list, tuple)):
+        content = [{'type': 'text', 'text': text}]
+        for frame in video_b64:
+            url = 'data:image/jpeg;base64,' + frame
+            content.append({'type': 'image_url', 'image_url': {'url': url}})
+        return content
     """Build OpenAI-compatible message with video_url content.
 
     Returns [{"type": "text", ...}, {"type": "video_url", "video_url": {"url": "data:...;base64,..."}}]
@@ -78,22 +139,88 @@ def build_video_message(text, video_b64, mime_type='video/mp4'):
     ]
 
 
-def call_api(model_name, messages, timeout=120.0, sleep_time=2.0):
+
+def _call_gemini_native(cfg, model_name, messages, timeout, sleep_time, max_tokens, _retry=True):
+    """Call the Gemini native endpoint (/v1beta ...:generateContent) so that video really reaches the model."""
+    import urllib.error
+    import urllib.request
+
+    payload = {"contents": []}
+    system_text = []
+    for msg in messages:
+        role = msg.get("role")
+        content = msg.get("content")
+        if role == "system":
+            system_text.append(content if isinstance(content, str) else json.dumps(content, ensure_ascii=False))
+            continue
+        parts = []
+        if isinstance(content, str):
+            parts.append({"text": content})
+        else:
+            for item in content or []:
+                kind = item.get("type")
+                if kind == "text":
+                    parts.append({"text": item.get("text", "")})
+                elif kind in ("video_url", "image_url"):
+                    url = item[kind]["url"]
+                    head, _, b64 = url.partition(",")
+                    mime = head.split(":", 1)[1].split(";", 1)[0] if ":" in head else ("video/mp4" if kind == "video_url" else "image/png")
+                    parts.append({"inline_data": {"mime_type": mime, "data": b64}})
+        payload["contents"].append({"role": "user", "parts": parts})
+    if system_text:
+        payload["systemInstruction"] = {"parts": [{"text": "\n".join(system_text)}]}
+    payload["generationConfig"] = {"temperature": 0.1, "maxOutputTokens": max_tokens}
+
+    url = cfg["base_url"].rstrip("/") + "/models/" + cfg["model"] + ":generateContent"
+    req = urllib.request.Request(url, data=json.dumps(payload).encode(),
+                                 headers={"Content-Type": "application/json", "x-goog-api-key": cfg["api_key"]})
+    try:
+        with urllib.request.urlopen(req, timeout=cfg.get("timeout", timeout) or 900.0) as resp:
+            body = json.loads(resp.read().decode())
+    except urllib.error.HTTPError as e:
+        detail = e.read().decode(errors="ignore")[:300]
+        if e.code in (429, 500, 503) and _retry:
+            time.sleep(15.0)
+            return _call_gemini_native(cfg, model_name, messages, timeout, sleep_time, max_tokens, False)
+        print(f"API call failed (native {model_name}): HTTP {e.code} {detail}")
+        return None
+    except Exception as e:
+        print(f"API call failed (native {model_name}): {e!r}"[:300])
+        return None
+
+    um = body.get("usageMetadata") or {}
+    video_tokens = next((d.get("tokenCount") for d in (um.get("promptTokensDetails") or []) if d.get("modality") == "VIDEO"), 0)
+    print(f"[native-usage] {model_name} prompt={um.get('promptTokenCount')} video={video_tokens} out={um.get('candidatesTokenCount')}")
+    texts = []
+    for cand in body.get("candidates") or []:
+        for part in (cand.get("content") or {}).get("parts") or []:
+            if part.get("text"):
+                texts.append(part["text"])
+    content = "\n".join(texts).strip()
+    if not content:
+        print(f"API call returned no text (native {model_name}): {json.dumps(body)[:300]}")
+        return None
+    return content.replace(chr(8722), "-")
+
+
+def call_api(model_name, messages, timeout=120.0, sleep_time=2.0, max_tokens=4000):
     """Call LLM via OpenAI-compatible API with rate limit handling."""
     if model_name not in MODEL_REGISTRY:
         print(f'ERROR: Unknown model "{model_name}". Available: {list(MODEL_REGISTRY.keys())}')
         return None
 
     cfg = MODEL_REGISTRY[model_name]
+    if cfg.get('native'):
+        return _call_gemini_native(cfg, model_name, messages, timeout, sleep_time, max_tokens)
     api_key = cfg['api_key']
     base_url = cfg['base_url']
     model = cfg['model']
 
     try:
         import openai
-        client = openai.OpenAI(api_key=api_key, base_url=base_url, timeout=timeout)
+        client = openai.OpenAI(api_key=api_key, base_url=base_url, timeout=cfg.get('timeout', timeout))
         resp = client.chat.completions.create(
-            model=model, messages=messages, temperature=0.1, max_tokens=4000
+            model=model, messages=messages, temperature=0.1, max_tokens=max_tokens
         )
         content = resp.choices[0].message.content.strip()
         content = content.replace(chr(8722), '-')
@@ -106,7 +233,7 @@ def call_api(model_name, messages, timeout=120.0, sleep_time=2.0):
             print('Detected rate limit. Sleeping for 15 seconds before retry...')
             time.sleep(15.0)
             try:
-                return call_api(model_name, messages, timeout, sleep_time)
+                return call_api(model_name, messages, timeout, sleep_time, max_tokens)
             except Exception as retry_e:
                 print(f'Retry failed: {retry_e}')
         return None
